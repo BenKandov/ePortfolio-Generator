@@ -8,3 +8,11 @@ and open the template in the editor.
     Author     : benkandov
 */
 
+.site_viewer{
+    -fx-background-color:#95c7d2;
+    -fx-font-family:courier;
+}
+.page_editor{
+    -fx-background-color:#e5e29e;
+    -fx-font-family:courier;
+}

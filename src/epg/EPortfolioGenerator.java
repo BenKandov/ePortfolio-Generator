@@ -22,7 +22,7 @@ public class EPortfolioGenerator extends Application {
     
     WorkspaceView workspaceView = new WorkspaceView();
      public void start(Stage primaryStage) {
-      
+         workspaceView.startUI();
     }
 
     /**
