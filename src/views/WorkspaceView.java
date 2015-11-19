@@ -286,6 +286,18 @@ public class WorkspaceView {
         chooseComponentFont.setOnAction(e -> {
 	    DialogController.chooseComponentFont();
 	});
+        updatePageTitle.setOnAction(e -> {
+	    DialogController.updatePageTitle();
+	});
+        updateStudentName.setOnAction(e -> {
+	   DialogController.updateStudentName();
+	});
+        updateFooter.setOnAction(e -> {
+	   DialogController.updateFooter();
+	});
+        addTextComponent.setOnAction(e -> {
+	   DialogController.addTextComponent();
+	});
     }
     
   

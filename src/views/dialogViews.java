@@ -8,6 +8,8 @@ package views;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -70,9 +72,11 @@ public class dialogViews {
         primaryStage.show(); 
     }
     public void selectBannerImage(){
+        Button g = new Button("Okay");
         VBox body = new VBox();
         Text t = new Text("Select a banner image:");
         body.getChildren().add(t);
+        body.getChildren().add(g);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -105,6 +109,106 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show(); 
     }
-    
+    public void updatePageTitle(){
+        Text t = new Text("Enter a new page title:");
+        TextArea b = new TextArea();
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,b,g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void updateStudentName(){
+        Text t = new Text("Enter a new student name:");
+        TextArea b = new TextArea();
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,b,g);
+        
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void updateFooter(){
+        Text t = new Text("Enter new footer text content:");
+        TextArea b = new TextArea();
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,b,g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void addTextComponent(){
+        primaryStage.setWidth(bounds.getWidth()/4);
+	primaryStage.setHeight(bounds.getHeight()/6); 
+        Text t = new Text("What kind of text component would you like to create?");
+        Button a = new Button("Paragraph");
+        Button b = new Button("List");
+        Button c = new Button("Header");
+        FlowPane dummy = new FlowPane(a,b,c);
+       
+        VBox body = new VBox(t,dummy);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        a.setOnAction(e -> {
+	   this.createParagraph();
+	});
+         b.setOnAction(e -> {
+	   this.listItems();
+	});
+        c.setOnAction(e -> {
+	   this.createHeader();
+	});
+    }
+    public void createParagraph(){
+        primaryStage.setWidth(bounds.getWidth()/4);
+	primaryStage.setHeight(bounds.getHeight()/6);
+        Text t = new Text("Write paragraph:");
+        TextArea r = new TextArea();
+        VBox body = new VBox(t,r);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void createHeader(){
+        primaryStage.setWidth(bounds.getWidth()/4);
+	primaryStage.setHeight(bounds.getHeight()/6); 
+        Text t = new Text("Write Header:");
+        TextArea r = new TextArea();
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,r,g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void listItems(){
+        Text t = new Text("How many items?");
+        TextArea n = new TextArea();
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,n,g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+         g.setOnAction(e -> {
+	   this.createList(5);
+	});
+    }
+    public void createList(int num){
+        primaryStage.setWidth(bounds.getWidth()/4);
+	primaryStage.setHeight(bounds.getHeight()/4); 
+        VBox body = new VBox();
+        for(int i = 0;i<num;i++){
+            TextField a = new TextField("List Item " + i+1);
+            body.getChildren().add(a);
+        }
+        Button g = new Button("Okay");
+        body.getChildren().add(g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void addImageComponent(){
+        Text t = new Text("");
+    }
     
 }

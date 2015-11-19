@@ -33,6 +33,18 @@ public class dialogController {
     public void chooseComponentFont(){
         dV.chooseComponentFont();
     }
+    public void updatePageTitle(){
+        dV.updatePageTitle();
+    }
+    public void updateStudentName(){
+        dV.updateStudentName();
+    }
+    public void updateFooter(){
+        dV.updateFooter();
+    }
+    public void addTextComponent(){
+        dV.addTextComponent();
+    }
     
     
 }
