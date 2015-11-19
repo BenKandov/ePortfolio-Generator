@@ -45,6 +45,32 @@ public class dialogController {
     public void addTextComponent(){
         dV.addTextComponent();
     }
-    
+    public void addImageComponent(){
+        dV.addImageComponent();
+    }
+    public void addSlideShowComponent(){
+        dV.addSlideshowComponent();
+    }
+    public void addVideoComponent(){
+        dV.addVideoComponent();
+    }
+    public void removeComponent(){
+        dV.removeComponent();
+    }
+    public void editTextComponent(){
+        dV.editTextComponent();
+    }
+    public void editImageComponent(){
+        dV.editImageComponent();
+    }
+    public void editVideoComponent(){
+        dV.editVideoComponent();
+    }
+    public void addTextHyperlink(){
+        dV.addTextHyperlink();
+    }
+    public void editTextHyperlink(){
+        dV.editTextHyperlink();
+    }
     
 }

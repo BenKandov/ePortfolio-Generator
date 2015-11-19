@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -194,23 +195,41 @@ public class WorkspaceView {
          pageEditorToolbar.getChildren().add(editTextHyperlink);
          
          setButtonImage(selectLayoutTemplate,"Icons/selectLayoutTemplate.png");
+         selectLayoutTemplate.setTooltip(new Tooltip("Select layout template"));
          setButtonImage(selectBannerImage,"Icons/selectBannerImage.png");
+         selectBannerImage.setTooltip(new Tooltip("Select Button Image"));
          setButtonImage(selectColorTemplate,"Icons/selectColorTemplate.png");
+         selectColorTemplate.setTooltip(new Tooltip("Select Color Template"));
          setButtonImage(chooseComponentFont,"Icons/chooseComponentFont.png");
+         chooseComponentFont.setTooltip(new Tooltip("Select Component Font"));
          setButtonImage(updatePageTitle,"Icons/UpdatePageTitle.png");
+         updatePageTitle.setTooltip(new Tooltip("Update Page Title"));
          setButtonImage(updateStudentName,"Icons/updateStudentName.png");
+         updateStudentName.setTooltip(new Tooltip("Update Student Name"));
          setButtonImage(updateFooter,"Icons/updateFooter.png");
+         updateFooter.setTooltip(new Tooltip("Update Footer"));
          setButtonImage(addTextComponent,"Icons/addTextComponent.png");
+         addTextComponent.setTooltip(new Tooltip("Add Text Component"));
          setButtonImage(addImageComponent,"Icons/addImageComponent.png");
+         addImageComponent.setTooltip(new Tooltip("Add Image Component"));
          setButtonImage(addSlideshowComponent,"Icons/addSlideshowComponent.png");
+         addSlideshowComponent.setTooltip(new Tooltip("Add Slideshow Component"));
          setButtonImage(addVideoComponent,"Icons/addVideoComponent.png");
+         addVideoComponent.setTooltip(new Tooltip("Add Video Component"));
          setButtonImage(removeComponent,"Icons/removeComponent.png");
+         removeComponent.setTooltip(new Tooltip("Add Remove Component"));
          setButtonImage(editTextComponent,"Icons/editTextComponent.png");
+         editTextComponent.setTooltip(new Tooltip("Edit Text Component"));
          setButtonImage(editImageComponent,"Icons/editImageComponent.png");
+         editImageComponent.setTooltip(new Tooltip("Edit Image Component"));
          setButtonImage(editSlideshowComponent,"Icons/editSlideshowComponent.png");
+         editSlideshowComponent.setTooltip(new Tooltip("Edit Slideshow Component"));
          setButtonImage(editVideoComponent,"Icons/editVideoComponent.png");
+         editVideoComponent.setTooltip(new Tooltip("Add Video Component"));
          setButtonImage(addTextHyperlink,"Icons/addTextHyperlink.png");
+         addTextHyperlink.setTooltip(new Tooltip("Add Text Hyperlink"));
          setButtonImage(editTextHyperlink,"Icons/editTextHyperlink.png");
+         editTextHyperlink.setTooltip(new Tooltip("Edit Text Hyperlink"));
          //Buttons
          
          
@@ -234,11 +253,17 @@ public class WorkspaceView {
         
         //Button initialization
         setButtonImage(newPortfolio,"Icons/NewPortfolio.png");
+        newPortfolio.setTooltip(new Tooltip("New Portfolio"));
         setButtonImage(loadPortfolio,"Icons/LoadPortfolio.png");
+        loadPortfolio.setTooltip(new Tooltip("Load Portfolio"));
         setButtonImage(savePortfolio,"Icons/SavePortfolio.png");
+        savePortfolio.setTooltip(new Tooltip("Save Portfolio"));
         setButtonImage(saveAsPortfolio,"Icons/SaveAsPortfolio.png");
+        saveAsPortfolio.setTooltip(new Tooltip("Save As Portfolio"));
         setButtonImage(exportPortfolio,"Icons/ExportPortfolio.png");
+        exportPortfolio.setTooltip(new Tooltip("Export Portfolio"));
         setButtonImage(exitPortfolio,"Icons/ExitPortfolio.png");
+        exitPortfolio.setTooltip(new Tooltip("Exit Portfolio"));
         
         FileToolbar.getChildren().add(newPortfolio);
         FileToolbar.getChildren().add(loadPortfolio);
@@ -252,7 +277,9 @@ public class WorkspaceView {
     public void initWorkspaceModeToolbar(){
         workspaceModeToolbar = new FlowPane();
         setButtonImage(selectSiteViewerWorkspace,"Icons/SiteViewer.png");
+        selectSiteViewerWorkspace.setTooltip(new Tooltip("Select Site Viewer Workspace"));
         setButtonImage(selectPageEditorWorkspace,"Icons/PageEditor.png");
+        selectPageEditorWorkspace.setTooltip(new Tooltip("Select Page Editor Workspace"));
         workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
     }
     public void setButtonImage(Button butt,String img){
@@ -297,6 +324,18 @@ public class WorkspaceView {
 	});
         addTextComponent.setOnAction(e -> {
 	   DialogController.addTextComponent();
+	});
+        addImageComponent.setOnAction(e -> {
+	   DialogController.addImageComponent();
+	});
+        addSlideshowComponent.setOnAction(e -> {
+	   DialogController.addSlideShowComponent();
+	});
+        addVideoComponent.setOnAction(e -> {
+	   DialogController.addVideoComponent();
+	});
+        removeComponent.setOnAction(e -> {
+	   DialogController.removeComponent();
 	});
     }
     

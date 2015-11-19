@@ -5,16 +5,24 @@
  */
 package views;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -75,12 +83,14 @@ public class dialogViews {
         Button g = new Button("Okay");
         VBox body = new VBox();
         Text t = new Text("Select a banner image:");
+        Button choose = new Button("Choose");
         body.getChildren().add(t);
         body.getChildren().add(g);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
+   ;
     public void chooseComponentFont(){
         primaryStage.setWidth(bounds.getWidth()/5);
 	primaryStage.setHeight(bounds.getHeight()/6); 
@@ -208,7 +218,64 @@ public class dialogViews {
         primaryStage.show();
     }
     public void addImageComponent(){
-        Text t = new Text("");
+        Text t = new Text("Select Image to add:");
+        Button g = new Button("Okay");
+        VBox body = new VBox(t,g);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        /**
+         * TODO add file chooser functionality to this and banner image chooser
+         */
     }
-    
+    public void addSlideshowComponent(){
+        
+        
+    }
+    public void addVideoComponent(){
+          Text t = new Text("Select Video to add:");
+        
+        Button g = new Button("Okay");
+        Text r = new Text("Input width: ");
+        TextArea q = new TextArea();
+        Text s = new Text("Input height: ");
+        TextArea f = new TextArea();
+        VBox body = new VBox(t,g,r,q,s,f);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        /**
+         * TODO add file chooser functionality to this 
+         */
+    }
+    public void removeComponent(){
+         primaryStage.setWidth(bounds.getWidth()/4);
+	primaryStage.setHeight(bounds.getHeight()/4); 
+        Text t = new Text("Are you sure you wish to remove this component?");
+        Button yes = new Button("Yes");
+        Button no =  new Button("No");
+        FlowPane dummy = new FlowPane(yes,no);
+        VBox body = new VBox(t,dummy);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+    }
+    public void editTextComponent(){
+        
+    }
+    public void editImageComponent(){
+        
+    }
+    public void editSlideshowComponent(){
+        
+    }
+    public void editVideoComponent(){
+        
+    }
+    public void addTextHyperlink(){
+        
+    }
+    public void editTextHyperlink(){
+        
+    }
 }
