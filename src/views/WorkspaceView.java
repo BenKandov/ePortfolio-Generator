@@ -6,6 +6,7 @@
 package views;
 
 
+import controller.dialogController;
 import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -79,9 +80,12 @@ public class WorkspaceView {
     //Site toolbar
     
     
+    //controllers
+    private dialogController DialogController;
+    //controllers
     
     
-    GridPane SiteToolbar;
+   
    
     public WorkspaceView(){
         this.newPortfolio = new Button();
@@ -173,7 +177,7 @@ public class WorkspaceView {
          pageEditorToolbar.getChildren().add(selectLayoutTemplate);
          pageEditorToolbar.getChildren().add(selectColorTemplate);
          pageEditorToolbar.getChildren().add(selectBannerImage);
-         pageEditorToolbar.getChildren().add(selectComponent);
+        // pageEditorToolbar.getChildren().add(selectComponent);
          pageEditorToolbar.getChildren().add(chooseComponentFont);
          pageEditorToolbar.getChildren().add(updatePageTitle);
          pageEditorToolbar.getChildren().add(updateStudentName);
@@ -187,15 +191,31 @@ public class WorkspaceView {
          pageEditorToolbar.getChildren().add(editSlideshowComponent);
          pageEditorToolbar.getChildren().add(editVideoComponent);
          pageEditorToolbar.getChildren().add(addTextHyperlink);
-        pageEditorToolbar.getChildren().add(editTextHyperlink);
- 
-   
-
-   
+         pageEditorToolbar.getChildren().add(editTextHyperlink);
+         
+         setButtonImage(selectLayoutTemplate,"Icons/selectLayoutTemplate.png");
+         setButtonImage(selectBannerImage,"Icons/selectBannerImage.png");
+         setButtonImage(selectColorTemplate,"Icons/selectColorTemplate.png");
+         setButtonImage(chooseComponentFont,"Icons/chooseComponentFont.png");
+         setButtonImage(updatePageTitle,"Icons/UpdatePageTitle.png");
+         setButtonImage(updateStudentName,"Icons/updateStudentName.png");
+         setButtonImage(updateFooter,"Icons/updateFooter.png");
+         setButtonImage(addTextComponent,"Icons/addTextComponent.png");
+         setButtonImage(addImageComponent,"Icons/addImageComponent.png");
+         setButtonImage(addSlideshowComponent,"Icons/addSlideshowComponent.png");
+         setButtonImage(addVideoComponent,"Icons/addVideoComponent.png");
+         setButtonImage(removeComponent,"Icons/removeComponent.png");
+         setButtonImage(editTextComponent,"Icons/editTextComponent.png");
+         setButtonImage(editImageComponent,"Icons/editImageComponent.png");
+         setButtonImage(editSlideshowComponent,"Icons/editSlideshowComponent.png");
+         setButtonImage(editVideoComponent,"Icons/editVideoComponent.png");
+         setButtonImage(addTextHyperlink,"Icons/addTextHyperlink.png");
+         setButtonImage(editTextHyperlink,"Icons/editTextHyperlink.png");
          //Buttons
          
          
          pageEditorPane.setTop(siteToolbar);
+         pageEditorPane.setRight(pageEditorToolbar);
          pageEditorPane.getStylesheets().add("css/style.css");
          pageEditorPane.getStyleClass().add("page_editor");
          
@@ -240,6 +260,9 @@ public class WorkspaceView {
 	butt.setGraphic(new ImageView(buttonImage));
     }
     public void setEventHandlers(){
+       dialogViews dialogs = new dialogViews();
+       DialogController = new dialogController(this,dialogs);
+       
        selectSiteViewerWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectSiteViewerWorkspace);
             workspaceModeToolbar.getChildren().add(selectPageEditorWorkspace);
@@ -250,6 +273,18 @@ public class WorkspaceView {
             workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
             
               mainPane.setCenter(pageEditorPane);
+	});
+           selectLayoutTemplate.setOnAction(e -> {
+	    DialogController.selectLayoutTemplate();
+	});
+           selectColorTemplate.setOnAction(e -> {
+	    DialogController.selectColorTemplate();
+	});
+           selectBannerImage.setOnAction(e -> {
+	    DialogController.selectBannerImage();
+	});
+        chooseComponentFont.setOnAction(e -> {
+	    DialogController.chooseComponentFont();
 	});
     }
     
