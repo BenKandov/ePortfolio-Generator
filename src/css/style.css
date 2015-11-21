@@ -8,11 +8,38 @@ and open the template in the editor.
     Author     : benkandov
 */
 
+.tabPane{
+    -fx-background-color:#666666;
+}
+.toolbar{
+    -fx-background-color: #000000;
+}
 .site_viewer{
     -fx-background-color:#95c7d2;
     -fx-font-family:courier;
 }
 .page_editor{
-    -fx-background-color:#e5e29e;
+    -fx-background-color:#ffffff;
     -fx-font-family:courier;
+}
+.dialog_box{
+    -fx-vgap: 20;
+    -fx-hgap: 20;
+    -fx-background-color: #000000;
+    
+}
+.dialog_text{
+    -fx-fill:white;
+    -fx-font: 20px serif;
+}
+.dialog_button{
+    -fx-background-color: #ffffff;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding:15;
+    -fx-font:15px sans-serif;
+    
 }

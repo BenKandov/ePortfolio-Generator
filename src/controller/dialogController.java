@@ -72,5 +72,22 @@ public class dialogController {
     public void editTextHyperlink(){
         dV.editTextHyperlink();
     }
-    
+    public void newPortfolio(){
+        dV.newPortfolio();
+    }
+    public void loadPortfolio(){
+        dV.loadPortfolio();
+    }
+    public void savePortfolio(){
+        dV.savePortfolio();
+    }
+    public void saveAsPortfolio(){
+        dV.saveAsPortfolio();
+    }
+    public void exportPortfolio(){
+        dV.exportPortfolio();
+    }
+    public void exitPortfolio(){
+        dV.exitPortfolio();
+    }
 }

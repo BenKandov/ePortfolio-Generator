@@ -7,7 +7,9 @@ package views;
 
 
 import controller.dialogController;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -126,9 +128,10 @@ public class WorkspaceView {
         mainPane.setTop(FileToolbar);
         mainPane.setCenter(pageEditorPane);
         this.primaryScene = new Scene(mainPane);
-        
-  
-        
+        primaryScene.getStylesheets().add("css/style.css");
+         FileToolbar.getStyleClass().add("toolbar");
+         pageEditorToolbar.getStyleClass().add("toolbar");
+        siteToolbar.getStyleClass().add("tabPane");
         
          
         
@@ -168,7 +171,10 @@ public class WorkspaceView {
     public void initPageEditorWorkspace(){
          pageEditorPane = new BorderPane();
          pageEditorToolbar = new FlowPane(Orientation.VERTICAL);
-         
+         pageEditorToolbar.setHgap(15);
+         pageEditorToolbar.setVgap(20);
+       //  pageEditorToolbar.setAlignment(Pos.CENTER);
+         pageEditorToolbar.setPadding(new Insets(10,40,10,40));
          siteToolbar = new TabPane();
          Tab tab = new Tab();
          tab.setText("example tab");
@@ -250,7 +256,7 @@ public class WorkspaceView {
     }
     public void initFileToolbar(){
         FileToolbar = new FlowPane();
-        
+       
         //Button initialization
         setButtonImage(newPortfolio,"Icons/NewPortfolio.png");
         newPortfolio.setTooltip(new Tooltip("New Portfolio"));
@@ -336,6 +342,32 @@ public class WorkspaceView {
 	});
         removeComponent.setOnAction(e -> {
 	   DialogController.removeComponent();
+	});
+        addTextHyperlink.setOnAction(e -> {
+	   DialogController.addTextHyperlink();
+	});
+        editTextHyperlink.setOnAction(e ->{
+            
+        });
+        
+        
+        newPortfolio.setOnAction(e -> {
+	   DialogController.newPortfolio();
+	});
+        loadPortfolio.setOnAction(e -> {
+	   DialogController.loadPortfolio();
+	});
+        savePortfolio.setOnAction(e -> {
+	   DialogController.savePortfolio();
+	});
+        saveAsPortfolio.setOnAction(e -> {
+	   DialogController.saveAsPortfolio();
+	});
+        exportPortfolio.setOnAction(e -> {
+	   DialogController.exportPortfolio();
+	});
+        exitPortfolio.setOnAction(e -> {
+	   DialogController.exitPortfolio();
 	});
     }
     
