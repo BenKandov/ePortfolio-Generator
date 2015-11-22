@@ -313,7 +313,7 @@ public class dialogViews {
 	   this.createParagraph();
 	});
          b.setOnAction(e -> {
-	   this.listItems();
+	   this.createList();
 	});
         c.setOnAction(e -> {
 	   this.createHeader();
@@ -413,6 +413,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
+    /**
     public void listItems(){
          primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
 	primaryStage.setY(300);
@@ -433,27 +434,60 @@ public class dialogViews {
 	   this.createList(5);
 	});
     }
-    public void createList(int num){
+    * **/
+    public void createList(){
          primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
-        primaryStage.setWidth(bounds.getWidth()/4);
-	primaryStage.setHeight(300); 
+	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/4);
+        primaryStage.setWidth(300);
+	primaryStage.setHeight(500); 
         VBox body = new VBox();
-        for(int i = 0;i<num;i++){
-            int du = i+1;
-            TextField a = new TextField("List Item " + du);
-            body.getChildren().add(a);
-        }
-        Button g = new Button("Okay");
-        body.getChildren().add(g);
-          body.getStylesheets().add("css/style.css");
-            body.setAlignment(Pos.TOP_CENTER);
-         body.getStyleClass().add("dialog_box");
-         g.getStyleClass().add("dialog_button");
-            body.setSpacing(20);
-        primaryScene = new Scene(body);
+       
+        ScrollPane scrollPane = new ScrollPane(body);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        Button add = new Button("Add Item");
+       
+        Button g = new Button("Finished");
+      
+        FlowPane rand = new FlowPane(add,g);
+        rand.setHgap(60);
+        body.getChildren().add(rand);
+       TextField a = new TextField("List Item");
+       
+       
+       Button r1 = new Button("X");    
+        
+       
+         FlowPane dummy = new FlowPane(a,r1);
+         
+        body.getChildren().add(dummy);
+        r1.setOnAction(e1 -> {
+          
+            body.getChildren().remove(dummy);
+        });
+        body.getStylesheets().add("css/style.css");
+        body.setAlignment(Pos.TOP_CENTER);
+        body.getStyleClass().add("dialog_box");
+        g.getStyleClass().add("dialog_button");
+        add.getStyleClass().add("dialog_button");
+        r1.getStyleClass().add("dialog_button");
+        body.setSpacing(20);
+        primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        
+        add.setOnAction(e -> {
+            TextField b = new TextField("List Item");
+            body.getChildren().add(b);
+            Button r2 = new Button("X");
+            FlowPane stupid = new FlowPane(b,r2);
+            body.getChildren().add(stupid);
+            r2.getStyleClass().add("dialog_button");
+                 r2.setOnAction(e3 -> {
+          
+                     body.getChildren().remove(stupid);
+                 });
+        });
     }
     public void addImageComponent(){
           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
@@ -461,6 +495,13 @@ public class dialogViews {
         primaryStage.setWidth(600);
 	primaryStage.setHeight(600); 
        ImageView comp = new ImageView();
+       Image d = new Image("Icons/question.png");
+       comp.setImage(d);
+       double scaledHeight = 200;
+      double perc = scaledHeight / d.getHeight();
+       double scaledWidth = d.getWidth() * perc;
+        comp.setFitWidth(scaledWidth);
+         comp.setFitHeight(scaledHeight);
        Text c = new Text("Caption");
        TextField caption = new TextField();
         FileChooser fileChooser = new FileChooser();
@@ -504,11 +545,11 @@ public class dialogViews {
                              comp.setImage(slideImage);
                              
                              
-                            double scaledWidth = 350;
-                            double perc = scaledWidth / slideImage.getWidth();
-                            double scaledHeight = slideImage.getHeight() * perc;
-                            comp.setFitWidth(scaledWidth);
-                            comp.setFitHeight(scaledHeight);
+                                 double scaledHeight = 200;
+                                 double perc = scaledHeight / slideImage.getHeight();
+                                  double scaledWidth = slideImage.getWidth() * perc;
+                                  comp.setFitWidth(scaledWidth);
+                                  comp.setFitHeight(scaledHeight);
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -523,18 +564,23 @@ public class dialogViews {
     public void addSlideshowComponent(){
         
         FileChooser fileChooser = new FileChooser();
-       
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
+        primaryStage.setWidth(900);
+	primaryStage.setHeight(1000); 
+        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/3);
 	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
      
         
         ArrayList<ImageView> images = new ArrayList();
         ArrayList<Text> captions = new ArrayList();
         ArrayList<Button> buttons = new ArrayList();
+        ArrayList<Button> removes = new ArrayList();
         
         VBox body = new VBox(15);
         ScrollPane scrollPane = new ScrollPane(body);
         scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        
+        
         body.getStylesheets().add("css/style.css");
         
         body.getStyleClass().add("dialog_box");
@@ -543,28 +589,41 @@ public class dialogViews {
  
  
         
-        Button newSlide = new Button("+");
+        Button newSlide = new Button("Add Slide");
         newSlide.getStyleClass().add("dialog_button");
         body.getChildren().add(newSlide);
         newSlide.setOnAction(e -> {
             counter++;
             FlowPane dummy = new FlowPane();
             Button bt = new Button("Choose...");
+            Button r = new Button("Remove");
             buttons.add(bt);
-            ImageView img = new ImageView();
+            removes.add(r);
+           ImageView img = new ImageView();
             images.add(img);
+            Image d = new Image("Icons/question.png");
+             img.setImage(d);
+              double scaledWidth = 300;
+          double perc = scaledWidth / d.getWidth();
+          double scaledHeight = d.getHeight() * perc;
+          img.setFitWidth(scaledWidth);
+          img.setFitHeight(scaledHeight);
+            
             Text txt = new Text();
             captions.add(txt);
             Text c = new Text("Caption:");
             TextField cap = new TextField();
+            dummy.getChildren().add(bt);
             dummy.getChildren().add(img);
             dummy.getChildren().add(c);
-             dummy.getChildren().add(cap);
-             
-               dummy.getChildren().add(bt);
+            dummy.getChildren().add(cap);
+            dummy.getChildren().add(r);
+            
+            dummy.setHgap(20);
             body.getChildren().add(dummy);
             c.getStyleClass().add("dialog_text");
             bt.getStyleClass().add("dialog_button");
+            r.getStyleClass().add("dialog_button");
             
             buttons.get(counter-1).setOnAction((final ActionEvent e1) -> {
                 File file = fileChooser.showOpenDialog(fileChooserStage);
@@ -579,12 +638,21 @@ public class dialogViews {
                     }
                 }
             });
+            r.setOnAction(e2 -> {
+                images.remove(counter-1);
+                removes.remove(counter-1);
+                buttons.remove(counter-1);
+                captions.remove(counter-1);
+                counter--;
+                body.getChildren().remove(dummy);
+            });
+                
             
             
 	});
         
  
-        primaryScene = new Scene(body);
+        primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         
@@ -593,7 +661,12 @@ public class dialogViews {
     public void imageFileToImageView(ImageView view ,URL fileURL,File file) throws MalformedURLException{
         fileURL = file.toURI().toURL();
          Image slideImage = new Image(fileURL.toExternalForm());
-          view.setImage(slideImage);                
+          view.setImage(slideImage);      
+          
+           
+          
+          
+          
           double scaledWidth = 350;
           double perc = scaledWidth / slideImage.getWidth();
           double scaledHeight = slideImage.getHeight() * perc;
