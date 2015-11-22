@@ -7,6 +7,12 @@ package views;
 
 
 import controller.dialogController;
+import java.io.File;
+import java.net.MalformedURLException;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -29,6 +36,8 @@ import javafx.stage.Stage;
  * @author benkandov
  */
 public class WorkspaceView {
+   
+    
     Stage primaryStage;
     Scene primaryScene;
     
@@ -60,7 +69,7 @@ public class WorkspaceView {
     //Page Editor Pane
     
     
-    BorderPane siteViewerPane;
+    WebView siteViewerPane;
     
     //Workspace Mode Toolbar
     FlowPane workspaceModeToolbar;
@@ -127,10 +136,11 @@ public class WorkspaceView {
         this.mainPane = new BorderPane();
         mainPane.setTop(FileToolbar);
         mainPane.setCenter(pageEditorPane);
+       
         this.primaryScene = new Scene(mainPane);
         primaryScene.getStylesheets().add("css/style.css");
-         FileToolbar.getStyleClass().add("toolbar");
-         pageEditorToolbar.getStyleClass().add("toolbar");
+        FileToolbar.getStyleClass().add("toolbar");
+        pageEditorToolbar.getStyleClass().add("toolbar");
         siteToolbar.getStyleClass().add("tabPane");
         
          
@@ -154,7 +164,7 @@ public class WorkspaceView {
 	return primaryStage;
     }
     
-    public void startUI(){
+    public void startUI() throws MalformedURLException{
         initWorkspaceModeToolbar();
         
         initFileToolbar();
@@ -168,18 +178,41 @@ public class WorkspaceView {
         
         initWindow();
     }
+   private Tab createAndSelectNewTab(final TabPane tabPane, final String title) {
+        Tab tab = new Tab(title);
+        final ObservableList<Tab> tabs = tabPane.getTabs();
+         tab.closableProperty().bind(Bindings.size(tabs).greaterThan(2));
+        tabs.add(tabs.size(), tab);
+        tabPane.getSelectionModel().select(tab);
+        return tab;
+  }
     public void initPageEditorWorkspace(){
          pageEditorPane = new BorderPane();
          pageEditorToolbar = new FlowPane(Orientation.VERTICAL);
          pageEditorToolbar.setHgap(15);
-         pageEditorToolbar.setVgap(20);
+         pageEditorToolbar.setVgap(25);
        //  pageEditorToolbar.setAlignment(Pos.CENTER);
          pageEditorToolbar.setPadding(new Insets(10,40,10,40));
          siteToolbar = new TabPane();
-         Tab tab = new Tab();
-         tab.setText("example tab");
-         siteToolbar.getTabs().add(tab);
+         
+       
+         Tab addTab = new Tab("+");
+         addTab.setClosable(false);
+          siteToolbar.getTabs().add(addTab);
+         createAndSelectNewTab(siteToolbar,"First tab");
         
+          siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+                public void changed(ObservableValue<? extends Tab> observable,
+                     Tab oldSelectedTab, Tab newSelectedTab) {
+                    if (newSelectedTab == addTab) {
+                          createAndSelectNewTab(siteToolbar, "Untitled");
+                     }
+             }
+    });
+         
+    
+         
          //Buttons
          pageEditorToolbar.getChildren().add(selectLayoutTemplate);
          pageEditorToolbar.getChildren().add(selectColorTemplate);
@@ -240,6 +273,7 @@ public class WorkspaceView {
          
          
          pageEditorPane.setTop(siteToolbar);
+     
          pageEditorPane.setRight(pageEditorToolbar);
          pageEditorPane.getStylesheets().add("css/style.css");
          pageEditorPane.getStyleClass().add("page_editor");
@@ -248,15 +282,19 @@ public class WorkspaceView {
          
          
     }
-    public void initSiteViewerWorkspace(){
-        siteViewerPane = new BorderPane();
-        siteViewerPane.getStylesheets().add("css/style.css");
-        siteViewerPane.getStyleClass().add("site_viewer");
+    public void initSiteViewerWorkspace() throws MalformedURLException{
+         siteViewerPane = new WebView();
+    //    siteViewerPane.getStylesheets().add("css/style.css");
+      //  siteViewerPane.getStyleClass().add("site_viewer");
+       //  File source = new File("/sites/index.html");
+        siteViewerPane.getEngine().load("sites/index.html");
+     
         
     }
     public void initFileToolbar(){
         FileToolbar = new FlowPane();
-       
+        FileToolbar.setHgap(20);
+        FileToolbar.setVgap(20);
         //Button initialization
         setButtonImage(newPortfolio,"Icons/NewPortfolio.png");
         newPortfolio.setTooltip(new Tooltip("New Portfolio"));
@@ -299,7 +337,9 @@ public class WorkspaceView {
        selectSiteViewerWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectSiteViewerWorkspace);
             workspaceModeToolbar.getChildren().add(selectPageEditorWorkspace);
-             mainPane.setCenter(siteViewerPane);
+         
+            mainPane.setCenter(siteViewerPane);
+             System.out.println("Hello");
 	});
         selectPageEditorWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectPageEditorWorkspace);
@@ -369,6 +409,9 @@ public class WorkspaceView {
         exitPortfolio.setOnAction(e -> {
 	   DialogController.exitPortfolio();
 	});
+    }
+    public void dummyComponents(){
+        
     }
     
   
