@@ -43,3 +43,22 @@ and open the template in the editor.
     -fx-font:15px sans-serif;
     
 }
+.dialog_button:hover{
+    -fx-background-color: #333333;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding:15;
+    -fx-font:15px sans-serif;
+    
+}
+.white{
+     -fx-background-color: #ffffff;
+     
+}
+.white:hover{
+    -fx-background-color: #c1c1c1;
+     
+}

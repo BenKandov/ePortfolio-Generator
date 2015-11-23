@@ -52,7 +52,7 @@ public class dialogController {
         dV.addSlideshowComponent();
     }
     public void addVideoComponent(){
-        dV.addVideoComponent();
+        dV.addVideoComponent("");
     }
     public void removeComponent(){
         dV.removeComponent();
@@ -61,17 +61,18 @@ public class dialogController {
         dV.editTextComponent();
     }
     public void editImageComponent(){
-        dV.editImageComponent();
+        dV.addImageComponent();
     }
-    public void editVideoComponent(){
-        dV.editVideoComponent();
+    public void editVideoComponent(String url){
+        dV.addVideoComponent(url);
     }
     public void addTextHyperlink(){
         dV.addTextHyperlink();
     }
-    public void editTextHyperlink(){
-        dV.editTextHyperlink();
+    public void editListComponent(){
+        dV.editListComponent();
     }
+  
     public void newPortfolio(){
         dV.newPortfolio();
     }

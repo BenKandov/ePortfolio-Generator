@@ -6,8 +6,6 @@
 package views;
 
 import java.awt.Desktop;
-import static java.awt.SystemColor.desktop;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,10 +13,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -54,21 +51,18 @@ public class dialogViews {
     Rectangle2D bounds = screen.getVisualBounds();
     public dialogViews(){
         fileChooserStage = new Stage();
-        fileChooserStage.setX(bounds.getMinX()+bounds.getHeight()/2);
-	fileChooserStage.setY(bounds.getMinY()+bounds.getWidth()/4);
+      
 	fileChooserStage.setWidth(bounds.getWidth()/6);
 	fileChooserStage.setHeight(bounds.getHeight()/7); 
         
         
         primaryStage = new Stage();
-        primaryStage.setX(bounds.getMinX()+bounds.getHeight()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getWidth()/4);
+      
 	primaryStage.setWidth(bounds.getWidth()/6);
 	primaryStage.setHeight(bounds.getHeight()/7); 
     }
     public void selectLayoutTemplate(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+       
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(200); 
 
@@ -108,8 +102,7 @@ public class dialogViews {
         primaryStage.show();      
     }
     public void selectColorTemplate(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        
 	primaryStage.setWidth(350);
 	primaryStage.setHeight(200); 
 
@@ -141,8 +134,7 @@ public class dialogViews {
         primaryStage.show(); 
     }
     public void selectBannerImage(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+  
 	primaryStage.setWidth(350);
 	primaryStage.setHeight(200); 
         VBox body = new VBox(20);
@@ -179,8 +171,7 @@ public class dialogViews {
     }
    ;
     public void chooseComponentFont(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+      
 	
         primaryStage.setWidth(bounds.getWidth()/3);
 	primaryStage.setHeight(bounds.getHeight()/5); 
@@ -224,8 +215,7 @@ public class dialogViews {
         primaryStage.show(); 
     }
     public void updatePageTitle(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+    
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
         
@@ -245,8 +235,8 @@ public class dialogViews {
         primaryStage.show();
     }
     public void updateStudentName(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+      
+	
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
         Text t = new Text("Enter a new student name:");
@@ -265,8 +255,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void updateFooter(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+ 
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
         Text t = new Text("Enter new footer text content:");
@@ -284,8 +273,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void addTextComponent(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+    
         primaryStage.setWidth(450);
 	primaryStage.setHeight(200); 
         Text t = new Text("What kind of text component would you like to create?");
@@ -320,8 +308,7 @@ public class dialogViews {
 	});
     }
     public void createParagraph(){
-         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+    
         primaryStage.setWidth(450);
 	primaryStage.setHeight(400);
         
@@ -368,8 +355,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void createHeader(){
-         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+    
         primaryStage.setWidth(450);
 	primaryStage.setHeight(350); 
         Text t = new Text("Write Header:");
@@ -436,8 +422,7 @@ public class dialogViews {
     }
     * **/
     public void createList(){
-         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/4);
+ 
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
         VBox body = new VBox();
@@ -490,8 +475,7 @@ public class dialogViews {
         });
     }
     public void addImageComponent(){
-          primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+
         primaryStage.setWidth(600);
 	primaryStage.setHeight(600); 
        ImageView comp = new ImageView();
@@ -588,10 +572,13 @@ public class dialogViews {
   
  
  
-        
+        Button g = new Button("Finished");
         Button newSlide = new Button("Add Slide");
         newSlide.getStyleClass().add("dialog_button");
         body.getChildren().add(newSlide);
+        body.getChildren().add(g);
+        g.getStyleClass().add("dialog_button");
+        body.setSpacing(10);
         newSlide.setOnAction(e -> {
             counter++;
             FlowPane dummy = new FlowPane();
@@ -673,11 +660,10 @@ public class dialogViews {
           view.setFitWidth(scaledWidth);
           view.setFitHeight(scaledHeight);
     }
-    public void addVideoComponent(){
+    public void addVideoComponent(String tot){
         FileChooser fileChooser = new FileChooser();
-        TextField comp = new TextField();
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        TextField comp = new TextField(tot);
+       
         primaryStage.setWidth(600);
 	primaryStage.setHeight(600); 
         Text t = new Text("Caption:");
@@ -718,8 +704,7 @@ public class dialogViews {
             });
     }
     public void removeComponent(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        
         primaryStage.setWidth(450);
 	primaryStage.setHeight(150); 
         Text t = new Text("Are you sure you wish to remove this component?");
@@ -742,20 +727,94 @@ public class dialogViews {
         primaryStage.show();
     }
     public void editTextComponent(){
+        primaryStage.setWidth(450);
+	primaryStage.setHeight(300); 
+        Text t = new Text("Edit text content:");
+        TextArea a = new TextArea("Sample paragraph content");
+        Button g = new Button("Finished");
+        Button hyper = new Button("Begin adding hyperlink");
+        Button hyper2 = new Button("Finish adding hyperlink");
+        TextField url = new TextField("url");
+        FlowPane dummy = new FlowPane(hyper,hyper2,url);
+        VBox body = new VBox(20);
+        body.getChildren().add(t);
+        body.getChildren().add(a);
+        body.getChildren().add(g);
+        body.getChildren().add(dummy);
+        dummy.setHgap(10);
+        dummy.setAlignment(Pos.CENTER);
+        body.getStylesheets().add("css/style.css");
+        body.getStyleClass().add("dialog_box");
+        t.getStyleClass().add("dialog_text");
+        g.getStyleClass().add("dialog_button");
+        hyper.getStyleClass().add("dialog_button");
+        hyper2.getStyleClass().add("dialog_button");
+        body.setAlignment(Pos.CENTER);
+        
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
         
     }
-    public void editImageComponent(){
+    public void editListComponent(){
+        primaryStage.setWidth(300);
+	primaryStage.setHeight(500); 
+        VBox body = new VBox();
+       
+        ScrollPane scrollPane = new ScrollPane(body);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        Button add = new Button("Add Item");
+       
+        Button g = new Button("Finished");
+      
+        FlowPane rand = new FlowPane(add,g);
+        rand.setHgap(60);
+        body.getChildren().add(rand);
+       TextField a = new TextField("Sample list item");
+       
+       
+       Button r1 = new Button("X");    
         
+       
+         FlowPane dummy = new FlowPane(a,r1);
+         
+        body.getChildren().add(dummy);
+        r1.setOnAction(e1 -> {
+          
+            body.getChildren().remove(dummy);
+        });
+        body.getStylesheets().add("css/style.css");
+        body.setAlignment(Pos.TOP_CENTER);
+        body.getStyleClass().add("dialog_box");
+        g.getStyleClass().add("dialog_button");
+        add.getStyleClass().add("dialog_button");
+        r1.getStyleClass().add("dialog_button");
+        body.setSpacing(20);
+        primaryScene = new Scene(scrollPane);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        
+        add.setOnAction(e -> {
+            TextField b = new TextField("List Item");
+            body.getChildren().add(b);
+            Button r2 = new Button("X");
+            FlowPane stupid = new FlowPane(b,r2);
+            body.getChildren().add(stupid);
+            r2.getStyleClass().add("dialog_button");
+                 r2.setOnAction(e3 -> {
+          
+                     body.getChildren().remove(stupid);
+                 });
+        });
     }
+    
     public void editSlideshowComponent(){
         
     }
-    public void editVideoComponent(){
-        
-    }
+   
     public void addTextHyperlink(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        
         primaryStage.setWidth(300);
 	primaryStage.setHeight(200); 
         Text t = new Text("Enter url of hyperlink:");
@@ -782,13 +841,9 @@ public class dialogViews {
            body.getChildren().add(r);
 	});
     }
-    public void editTextHyperlink(){
-   
-        
-    }
+  
     public void newPortfolio(){
-        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+      
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("New EPortfolio Created:");
@@ -805,8 +860,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void loadPortfolio(){
-         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Choose portfolio to load:");
@@ -823,8 +877,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void savePortfolio(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+         
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("EPortfolio succesfully Saved:");
@@ -841,8 +894,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void saveAsPortfolio(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+        
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Select location for ePortfolio");
@@ -862,8 +914,7 @@ public class dialogViews {
 	});
     }
     public void exportPortfolio(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+           
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Portfolio succesfully exported");
@@ -880,8 +931,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void exitPortfolio(){
-           primaryStage.setX(bounds.getMinX()+bounds.getWidth()/4);
-	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Do you wish to save before exiting?");

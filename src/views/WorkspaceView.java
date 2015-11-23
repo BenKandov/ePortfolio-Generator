@@ -7,12 +7,14 @@ package views;
 
 
 import controller.dialogController;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -24,9 +26,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -37,6 +42,7 @@ import javafx.stage.Stage;
  */
 public class WorkspaceView {
    
+    Tab currentTab;
     
     Stage primaryStage;
     Scene primaryScene;
@@ -59,13 +65,10 @@ public class WorkspaceView {
     Button addImageComponent;
     Button addSlideshowComponent;
     Button addVideoComponent;
-    Button removeComponent;
-    Button editTextComponent;
-    Button editImageComponent;
-    Button editSlideshowComponent;
-    Button editVideoComponent;
-    Button addTextHyperlink;
-    Button editTextHyperlink;
+  
+    
+  
+
     //Page Editor Pane
     
     
@@ -122,13 +125,10 @@ public class WorkspaceView {
         addImageComponent = new Button();
         addSlideshowComponent = new Button();
         addVideoComponent = new Button();
-        removeComponent = new Button();
-        editTextComponent = new Button();
-        editImageComponent = new Button();
-        editSlideshowComponent = new Button();
-        editVideoComponent = new Button();
-        addTextHyperlink = new Button();
-        editTextHyperlink = new Button();
+       
+     
+       
+        
         
       
     }
@@ -184,15 +184,111 @@ public class WorkspaceView {
          tab.closableProperty().bind(Bindings.size(tabs).greaterThan(2));
         tabs.add(tabs.size(), tab);
         tabPane.getSelectionModel().select(tab);
+      
+        Button removeTab = new Button("Remove Page");
+       
+        Button sampleImage = new Button();
+        setButtonImage(sampleImage,"Icons/question.png");
+        Button samplePara = new Button("This is a sample paragraph.");
+        Button sampleList = new Button("Sample List Item");
+        Button sampleVideo = new Button("This is a sample video");
+        Button sampleSlideshow = new Button("This is a sample slideshow");
+        
+        VBox test = new VBox();
+        test.setAlignment(Pos.CENTER);
+        test.setSpacing(20);
+        
+        test.getStylesheets().add("css/style.css");
+        test.getStyleClass().add("dialog_box");
+        test.getChildren().add(removeTab);
+        
+         FlowPane sample1 = new FlowPane(sampleImage);
+         sample1.getStyleClass().add("white");
+         sample1.setAlignment(Pos.CENTER);
+         test.getChildren().add(sample1);
+         FlowPane sample2 = new FlowPane(samplePara);
+          sample2.setAlignment(Pos.CENTER);
+          sample2.getStyleClass().add("white");
+         test.getChildren().add(sample2);
+         FlowPane sample3 = new FlowPane(sampleList);
+          sample3.setAlignment(Pos.CENTER);
+          sample3.getStyleClass().add("white");
+         test.getChildren().add(sample3);
+         FlowPane sample4 = new FlowPane(sampleVideo);
+          sample4.setAlignment(Pos.CENTER);
+         sample4.getStyleClass().add("white");
+         test.getChildren().add(sample4);
+         FlowPane sample5 = new FlowPane(sampleSlideshow);
+          sample5.setAlignment(Pos.CENTER);
+          sample5.getStyleClass().add("white");
+         test.getChildren().add(sample5);
+        removeTab.getStyleClass().add("dialog_button");
+        samplePara.getStyleClass().add("dialog_button");
+        sampleList.getStyleClass().add("dialog_button");
+        sampleImage.getStyleClass().add("dialog_button");
+        sampleVideo.getStyleClass().add("dialog_button");
+        sampleSlideshow.getStyleClass().add("dialog_button");
+        tab.setContent(test);
+         sample1.setOnMouseClicked(new EventHandler<MouseEvent>(){
+             @Override
+             public void handle(MouseEvent event){
+                 DialogController.removeComponent();
+             }
+         });
+         sample2.setOnMouseClicked(new EventHandler<MouseEvent>(){
+             @Override
+             public void handle(MouseEvent event){
+                 DialogController.removeComponent();
+             }
+         });
+         sample3.setOnMouseClicked(new EventHandler<MouseEvent>(){
+             @Override
+             public void handle(MouseEvent event){
+                 DialogController.removeComponent();
+             }
+         });
+         sample4.setOnMouseClicked(new EventHandler<MouseEvent>(){
+             @Override
+             public void handle(MouseEvent event){
+                 DialogController.removeComponent();
+             }
+         });
+         sample5.setOnMouseClicked(new EventHandler<MouseEvent>(){
+             @Override
+             public void handle(MouseEvent event){
+                 DialogController.removeComponent();
+             }
+         });
+         sampleList.setOnAction(e -> {
+	   DialogController.editListComponent();
+	});
+         samplePara.setOnAction(e -> {
+	   DialogController.editTextComponent();
+	});
+           sampleImage.setOnAction(e -> {
+	   DialogController.editImageComponent();
+	});
+           sampleVideo.setOnAction(e -> {
+	   DialogController.editVideoComponent("someURL");
+	}); 
+           sampleSlideshow.setOnAction(e -> {
+	   DialogController.addSlideShowComponent();
+	});
+          
+        
+         currentTab = tab;
+         removeTab.setOnAction(e -> {
+             tab.getTabPane().getTabs().remove(tab);
+         });
         return tab;
   }
     public void initPageEditorWorkspace(){
          pageEditorPane = new BorderPane();
-         pageEditorToolbar = new FlowPane(Orientation.VERTICAL);
-         pageEditorToolbar.setHgap(15);
+         pageEditorToolbar = new FlowPane();
+         pageEditorToolbar.setHgap(20);
          pageEditorToolbar.setVgap(25);
-       //  pageEditorToolbar.setAlignment(Pos.CENTER);
-         pageEditorToolbar.setPadding(new Insets(10,40,10,40));
+         pageEditorToolbar.setAlignment(Pos.CENTER);
+         pageEditorToolbar.setPadding(new Insets(20,40,20,40));
          siteToolbar = new TabPane();
          
        
@@ -226,12 +322,10 @@ public class WorkspaceView {
          pageEditorToolbar.getChildren().add(addImageComponent);
          pageEditorToolbar.getChildren().add(addSlideshowComponent);
          pageEditorToolbar.getChildren().add(addVideoComponent);
-         pageEditorToolbar.getChildren().add(removeComponent);
-         pageEditorToolbar.getChildren().add(editTextComponent);
-         pageEditorToolbar.getChildren().add(editSlideshowComponent);
-         pageEditorToolbar.getChildren().add(editVideoComponent);
-         pageEditorToolbar.getChildren().add(addTextHyperlink);
-         pageEditorToolbar.getChildren().add(editTextHyperlink);
+         
+         
+     
+        
          
          setButtonImage(selectLayoutTemplate,"Icons/selectLayoutTemplate.png");
          selectLayoutTemplate.setTooltip(new Tooltip("Select layout template"));
@@ -255,26 +349,17 @@ public class WorkspaceView {
          addSlideshowComponent.setTooltip(new Tooltip("Add Slideshow Component"));
          setButtonImage(addVideoComponent,"Icons/addVideoComponent.png");
          addVideoComponent.setTooltip(new Tooltip("Add Video Component"));
-         setButtonImage(removeComponent,"Icons/removeComponent.png");
-         removeComponent.setTooltip(new Tooltip("Add Remove Component"));
-         setButtonImage(editTextComponent,"Icons/editTextComponent.png");
-         editTextComponent.setTooltip(new Tooltip("Edit Text Component"));
-         setButtonImage(editImageComponent,"Icons/editImageComponent.png");
-         editImageComponent.setTooltip(new Tooltip("Edit Image Component"));
-         setButtonImage(editSlideshowComponent,"Icons/editSlideshowComponent.png");
-         editSlideshowComponent.setTooltip(new Tooltip("Edit Slideshow Component"));
-         setButtonImage(editVideoComponent,"Icons/editVideoComponent.png");
-         editVideoComponent.setTooltip(new Tooltip("Add Video Component"));
-         setButtonImage(addTextHyperlink,"Icons/addTextHyperlink.png");
-         addTextHyperlink.setTooltip(new Tooltip("Add Text Hyperlink"));
-         setButtonImage(editTextHyperlink,"Icons/editTextHyperlink.png");
-         editTextHyperlink.setTooltip(new Tooltip("Edit Text Hyperlink"));
+         
+        
+         
+        
+ 
          //Buttons
          
          
          pageEditorPane.setTop(siteToolbar);
-     
-         pageEditorPane.setRight(pageEditorToolbar);
+         pageEditorPane.setCenter(currentTab.getContent());
+         pageEditorPane.setBottom(pageEditorToolbar);
          pageEditorPane.getStylesheets().add("css/style.css");
          pageEditorPane.getStyleClass().add("page_editor");
          
@@ -286,8 +371,9 @@ public class WorkspaceView {
          siteViewerPane = new WebView();
     //    siteViewerPane.getStylesheets().add("css/style.css");
       //  siteViewerPane.getStyleClass().add("site_viewer");
-       //  File source = new File("/sites/index.html");
-        siteViewerPane.getEngine().load("sites/index.html");
+         File source = new File("/sites/index.html");
+        siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+        //  siteViewerPane.getEngine().load("https://www.google.com/");
      
         
     }
@@ -368,9 +454,11 @@ public class WorkspaceView {
         updateFooter.setOnAction(e -> {
 	   DialogController.updateFooter();
 	});
+      
         addTextComponent.setOnAction(e -> {
 	   DialogController.addTextComponent();
 	});
+        
         addImageComponent.setOnAction(e -> {
 	   DialogController.addImageComponent();
 	});
@@ -380,15 +468,7 @@ public class WorkspaceView {
         addVideoComponent.setOnAction(e -> {
 	   DialogController.addVideoComponent();
 	});
-        removeComponent.setOnAction(e -> {
-	   DialogController.removeComponent();
-	});
-        addTextHyperlink.setOnAction(e -> {
-	   DialogController.addTextHyperlink();
-	});
-        editTextHyperlink.setOnAction(e ->{
-            
-        });
+       
         
         
         newPortfolio.setOnAction(e -> {
