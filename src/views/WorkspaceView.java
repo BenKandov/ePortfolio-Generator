@@ -10,6 +10,7 @@ import controller.dialogController;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -343,10 +344,13 @@ public class WorkspaceView {
     //    siteViewerPane.getStylesheets().add("css/style.css");
       //  siteViewerPane.getStyleClass().add("site_viewer");
          File dir = new File("sites");
-         File source = new File(dir,"index.html");
-      //  siteViewerPane.getEngine().load(source.toURI().toURL().toString());
-          siteViewerPane.getEngine().load("https://www.ic.sunysb.edu/Stu/bkandov/Layouts/index.html");
-       // siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+         File source = new File("sites/index.html");
+    //      URL urlHello = getClass().getResource("sites/index.html");
+        
+       siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+        //  siteViewerPane.getEngine().load("https://www.ic.sunysb.edu/Stu/bkandov/Layouts/index.html");
+     //   siteViewerPane.getEngine().load("file:///"+"/sites/index.html");
+     //  siteViewerPane.getEngine().load(urlHello.toExternalForm());
      
         
     }
