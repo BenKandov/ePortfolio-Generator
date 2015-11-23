@@ -229,36 +229,21 @@ public class WorkspaceView {
         sampleVideo.getStyleClass().add("dialog_button");
         sampleSlideshow.getStyleClass().add("dialog_button");
         tab.setContent(test);
-         sample1.setOnMouseClicked(new EventHandler<MouseEvent>(){
-             @Override
-             public void handle(MouseEvent event){
-                 DialogController.removeComponent();
-             }
-         });
-         sample2.setOnMouseClicked(new EventHandler<MouseEvent>(){
-             @Override
-             public void handle(MouseEvent event){
-                 DialogController.removeComponent();
-             }
-         });
-         sample3.setOnMouseClicked(new EventHandler<MouseEvent>(){
-             @Override
-             public void handle(MouseEvent event){
-                 DialogController.removeComponent();
-             }
-         });
-         sample4.setOnMouseClicked(new EventHandler<MouseEvent>(){
-             @Override
-             public void handle(MouseEvent event){
-                 DialogController.removeComponent();
-             }
-         });
-         sample5.setOnMouseClicked(new EventHandler<MouseEvent>(){
-             @Override
-             public void handle(MouseEvent event){
-                 DialogController.removeComponent();
-             }
-         });
+         sample1.setOnMouseClicked((MouseEvent event) -> {
+             DialogController.removeComponent();
+        });
+         sample2.setOnMouseClicked((MouseEvent event) -> {
+             DialogController.removeComponent();
+        });
+         sample3.setOnMouseClicked((MouseEvent event) -> {
+             DialogController.removeComponent();
+        });
+         sample4.setOnMouseClicked((MouseEvent event) -> {
+             DialogController.removeComponent();
+        });
+         sample5.setOnMouseClicked((MouseEvent event) -> {
+             DialogController.removeComponent();
+        });
          sampleList.setOnAction(e -> {
 	   DialogController.editListComponent();
 	});
@@ -295,7 +280,7 @@ public class WorkspaceView {
          Tab addTab = new Tab("+");
          addTab.setClosable(false);
           siteToolbar.getTabs().add(addTab);
-         createAndSelectNewTab(siteToolbar,"First tab");
+         createAndSelectNewTab(siteToolbar,"Untitled");
         
           siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
@@ -306,10 +291,7 @@ public class WorkspaceView {
                      }
              }
     });
-         
-    
-         
-         //Buttons
+     //Buttons
          pageEditorToolbar.getChildren().add(selectLayoutTemplate);
          pageEditorToolbar.getChildren().add(selectColorTemplate);
          pageEditorToolbar.getChildren().add(selectBannerImage);
@@ -322,11 +304,7 @@ public class WorkspaceView {
          pageEditorToolbar.getChildren().add(addImageComponent);
          pageEditorToolbar.getChildren().add(addSlideshowComponent);
          pageEditorToolbar.getChildren().add(addVideoComponent);
-         
-         
-     
         
-         
          setButtonImage(selectLayoutTemplate,"Icons/selectLayoutTemplate.png");
          selectLayoutTemplate.setTooltip(new Tooltip("Select layout template"));
          setButtonImage(selectBannerImage,"Icons/selectBannerImage.png");
@@ -349,11 +327,7 @@ public class WorkspaceView {
          addSlideshowComponent.setTooltip(new Tooltip("Add Slideshow Component"));
          setButtonImage(addVideoComponent,"Icons/addVideoComponent.png");
          addVideoComponent.setTooltip(new Tooltip("Add Video Component"));
-         
-        
-         
-        
- 
+
          //Buttons
          
          
@@ -362,18 +336,17 @@ public class WorkspaceView {
          pageEditorPane.setBottom(pageEditorToolbar);
          pageEditorPane.getStylesheets().add("css/style.css");
          pageEditorPane.getStyleClass().add("page_editor");
-         
-         
-         
-         
+   
     }
     public void initSiteViewerWorkspace() throws MalformedURLException{
          siteViewerPane = new WebView();
     //    siteViewerPane.getStylesheets().add("css/style.css");
       //  siteViewerPane.getStyleClass().add("site_viewer");
-         File source = new File("/sites/index.html");
-        siteViewerPane.getEngine().load(source.toURI().toURL().toString());
-        //  siteViewerPane.getEngine().load("https://www.google.com/");
+         File dir = new File("sites");
+         File source = new File(dir,"index.html");
+      //  siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+          siteViewerPane.getEngine().load("https://www.ic.sunysb.edu/Stu/bkandov/Layouts/index.html");
+       // siteViewerPane.getEngine().load(source.toURI().toURL().toString());
      
         
     }
