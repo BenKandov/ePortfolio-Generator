@@ -5,6 +5,7 @@
  */
 package views;
 
+import components.paragraphComponent;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
+import model.ePortfolioModel;
 
 /**
  *
@@ -61,7 +63,7 @@ public class dialogViews {
 	primaryStage.setWidth(bounds.getWidth()/6);
 	primaryStage.setHeight(bounds.getHeight()/7); 
     }
-    public void selectLayoutTemplate(){
+    public void selectLayoutTemplate(ePortfolioModel ePortfolio){
        
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(200); 
@@ -101,7 +103,7 @@ public class dialogViews {
           
         primaryStage.show();      
     }
-    public void selectColorTemplate(){
+    public void selectColorTemplate(ePortfolioModel ePortfolio){
         
 	primaryStage.setWidth(350);
 	primaryStage.setHeight(200); 
@@ -133,7 +135,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show(); 
     }
-    public void selectBannerImage(){
+    public void selectBannerImage(ePortfolioModel ePortfolio){
   
 	primaryStage.setWidth(350);
 	primaryStage.setHeight(200); 
@@ -170,7 +172,7 @@ public class dialogViews {
         primaryStage.show();
     }
    ;
-    public void chooseComponentFont(){
+    public void chooseComponentFont(ePortfolioModel ePortfolio){
       
 	
         primaryStage.setWidth(bounds.getWidth()/3);
@@ -214,7 +216,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show(); 
     }
-    public void updatePageTitle(){
+    public void updatePageTitle(ePortfolioModel ePortfolio){
     
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
@@ -234,7 +236,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void updateStudentName(){
+    public void updateStudentName(ePortfolioModel ePortfolio){
       
 	
 	primaryStage.setWidth(300);
@@ -254,7 +256,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void updateFooter(){
+    public void updateFooter(ePortfolioModel ePortfolio){
  
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
@@ -272,7 +274,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void addTextComponent(){
+    public void addTextComponent(ePortfolioModel ePortfolio){
     
         primaryStage.setWidth(450);
 	primaryStage.setHeight(200); 
@@ -298,16 +300,16 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         a.setOnAction(e -> {
-	   this.createParagraph();
+	   this.createParagraph(ePortfolio);
 	});
          b.setOnAction(e -> {
-	   this.createList();
+	   this.createList(ePortfolio);
 	});
         c.setOnAction(e -> {
-	   this.createHeader();
+	   this.createHeader(ePortfolio);
 	});
     }
-    public void createParagraph(){
+    public void createParagraph(ePortfolioModel ePortfolio){
     
         primaryStage.setWidth(450);
 	primaryStage.setHeight(400);
@@ -353,8 +355,14 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+         g.setOnAction(e1 -> {
+             paragraphComponent para = new paragraphComponent(r.getText());
+             ePortfolio.getSelectedPage().addComponent(para);
+             primaryStage.close();
+	});
+        
     }
-    public void createHeader(){
+    public void createHeader(ePortfolioModel ePortfolio){
     
         primaryStage.setWidth(450);
 	primaryStage.setHeight(350); 
@@ -421,7 +429,7 @@ public class dialogViews {
 	});
     }
     * **/
-    public void createList(){
+    public void createList(ePortfolioModel ePortfolio){
  
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
@@ -474,7 +482,7 @@ public class dialogViews {
                  });
         });
     }
-    public void addImageComponent(){
+    public void addImageComponent(ePortfolioModel ePortfolio){
 
         primaryStage.setWidth(600);
 	primaryStage.setHeight(600); 
@@ -545,7 +553,7 @@ public class dialogViews {
                 }
             });
     }
-    public void addSlideshowComponent(){
+    public void addSlideshowComponent(ePortfolioModel ePortfolio){
         
         FileChooser fileChooser = new FileChooser();
         primaryStage.setWidth(900);
@@ -703,7 +711,7 @@ public class dialogViews {
                 }
             });
     }
-    public void removeComponent(){
+    public void removeComponent(ePortfolioModel ePortfolio){
         
         primaryStage.setWidth(450);
 	primaryStage.setHeight(150); 
@@ -726,7 +734,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void editTextComponent(){
+    public void editTextComponent(ePortfolioModel ePortfolio){
         primaryStage.setWidth(450);
 	primaryStage.setHeight(300); 
         Text t = new Text("Edit text content:");
@@ -756,7 +764,7 @@ public class dialogViews {
         primaryStage.show();
         
     }
-    public void editListComponent(){
+    public void editListComponent(ePortfolioModel ePortfolio){
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
         VBox body = new VBox();
@@ -809,11 +817,11 @@ public class dialogViews {
         });
     }
     
-    public void editSlideshowComponent(){
+    public void editSlideshowComponent(ePortfolioModel ePortfolio){
         
     }
    
-    public void addTextHyperlink(){
+    public void addTextHyperlink(ePortfolioModel ePortfolio){
         
         primaryStage.setWidth(300);
 	primaryStage.setHeight(200); 
@@ -842,7 +850,7 @@ public class dialogViews {
 	});
     }
   
-    public void newPortfolio(){
+    public void newPortfolio(ePortfolioModel ePortfolio){
       
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -858,8 +866,12 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+         g.setOnAction(e -> {
+           primaryStage.close();
+          
+	});
     }
-    public void loadPortfolio(){
+    public void loadPortfolio(ePortfolioModel ePortfolio){
         
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -876,7 +888,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void savePortfolio(){
+    public void savePortfolio(ePortfolioModel ePortfolio){
          
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -893,7 +905,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void saveAsPortfolio(){
+    public void saveAsPortfolio(ePortfolioModel ePortfolio){
         
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -910,10 +922,10 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         g.setOnAction(e -> {
-	   this.savePortfolio();
+	   this.savePortfolio(ePortfolio);
 	});
     }
-    public void exportPortfolio(){
+    public void exportPortfolio(ePortfolioModel ePortfolio){
            
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -930,7 +942,7 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void exitPortfolio(){
+    public void exitPortfolio(ePortfolioModel ePortfolio){
 
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);

@@ -14,4 +14,5 @@ public class textComponent extends component {
     public textComponent(){
         
     }
+    
 }

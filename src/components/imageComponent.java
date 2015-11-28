@@ -32,6 +32,9 @@ public class imageComponent extends component {
     public void setFloatValue(String fl){
         this.floatVal=fl;
     }
-    
+    @Override
+      public String getType(){
+        return "Image Component";
+    }
     
 }

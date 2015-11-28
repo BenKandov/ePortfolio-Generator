@@ -22,4 +22,8 @@ public class paragraphComponent extends textComponent {
     public String getContent(){
         return this.content;
     }
+    @Override
+     public String getType(){
+        return "Paragraph Component";
+    }
 }

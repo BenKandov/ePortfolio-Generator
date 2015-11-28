@@ -5,6 +5,7 @@
  */
 package controller;
 
+import model.ePortfolioModel;
 import views.WorkspaceView;
 import views.dialogViews;
 
@@ -16,79 +17,80 @@ public class dialogController {
     
     private WorkspaceView ui;
     private dialogViews dV;
+ 
     
     public dialogController(WorkspaceView u, dialogViews d){
         this.ui = u;
         this.dV = d;
     }   
-    public void selectLayoutTemplate(){
-        dV.selectLayoutTemplate();
+    public void selectLayoutTemplate(ePortfolioModel e){
+        dV.selectLayoutTemplate(e);
     }
-    public void selectColorTemplate(){
-        dV.selectColorTemplate();
+    public void selectColorTemplate(ePortfolioModel e){
+        dV.selectColorTemplate(e);
     }
-    public void selectBannerImage(){
-        dV.selectBannerImage();
+    public void selectBannerImage(ePortfolioModel e){
+        dV.selectBannerImage(e);
     }
-    public void chooseComponentFont(){
-        dV.chooseComponentFont();
+    public void chooseComponentFont(ePortfolioModel e){
+        dV.chooseComponentFont(e);
     }
-    public void updatePageTitle(){
-        dV.updatePageTitle();
+    public void updatePageTitle(ePortfolioModel e){
+        dV.updatePageTitle(e);
     }
-    public void updateStudentName(){
-        dV.updateStudentName();
+    public void updateStudentName(ePortfolioModel e){
+        dV.updateStudentName(e);
     }
-    public void updateFooter(){
-        dV.updateFooter();
+    public void updateFooter(ePortfolioModel e){
+        dV.updateFooter(e);
     }
-    public void addTextComponent(){
-        dV.addTextComponent();
+    public void addTextComponent(ePortfolioModel e){
+        dV.addTextComponent(e);
     }
-    public void addImageComponent(){
-        dV.addImageComponent();
+    public void addImageComponent(ePortfolioModel e){
+        dV.addImageComponent(e);
     }
-    public void addSlideShowComponent(){
-        dV.addSlideshowComponent();
+    public void addSlideShowComponent(ePortfolioModel e){
+        dV.addSlideshowComponent(e);
     }
-    public void addVideoComponent(){
+    public void addVideoComponent(ePortfolioModel e){
         dV.addVideoComponent("");
     }
-    public void removeComponent(){
-        dV.removeComponent();
+    public void removeComponent(ePortfolioModel e){
+        dV.removeComponent(e);
     }
-    public void editTextComponent(){
-        dV.editTextComponent();
+    public void editTextComponent(ePortfolioModel e){
+        dV.editTextComponent(e);
     }
-    public void editImageComponent(){
-        dV.addImageComponent();
+    public void editImageComponent(ePortfolioModel e){
+        dV.addImageComponent(e);
     }
-    public void editVideoComponent(String url){
+    public void editVideoComponent(String url,ePortfolioModel e){
         dV.addVideoComponent(url);
     }
-    public void addTextHyperlink(){
-        dV.addTextHyperlink();
+    public void addTextHyperlink(ePortfolioModel e){
+        dV.addTextHyperlink(e);
     }
-    public void editListComponent(){
-        dV.editListComponent();
+    public void editListComponent(ePortfolioModel e){
+        dV.editListComponent(e);
     }
   
-    public void newPortfolio(){
-        dV.newPortfolio();
+    public void newPortfolio(ePortfolioModel e){
+        dV.newPortfolio(e);
     }
-    public void loadPortfolio(){
-        dV.loadPortfolio();
+    public void loadPortfolio(ePortfolioModel e){
+        dV.loadPortfolio(e);
     }
-    public void savePortfolio(){
-        dV.savePortfolio();
+    public void savePortfolio(ePortfolioModel e){
+        dV.savePortfolio(e);
     }
-    public void saveAsPortfolio(){
-        dV.saveAsPortfolio();
+    public void saveAsPortfolio(ePortfolioModel e){
+        dV.saveAsPortfolio(e);
     }
-    public void exportPortfolio(){
-        dV.exportPortfolio();
+    public void exportPortfolio(ePortfolioModel e){
+        dV.exportPortfolio(e);
     }
-    public void exitPortfolio(){
-        dV.exitPortfolio();
+    public void exitPortfolio(ePortfolioModel e){
+        dV.exitPortfolio(e);
     }
 }

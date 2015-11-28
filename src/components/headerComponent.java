@@ -21,4 +21,8 @@ public class headerComponent extends textComponent {
        public String getContent(){
         return this.content;
     }
+    @Override
+    public String getType(){
+        return "Header Component";
+    }
 }

@@ -62,3 +62,6 @@ and open the template in the editor.
     -fx-background-color: #c1c1c1;
      
 }
+.list-cell {
+  -fx-cell-size: 50 ;
+}

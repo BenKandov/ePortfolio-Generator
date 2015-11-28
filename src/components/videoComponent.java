@@ -39,6 +39,8 @@ public class videoComponent extends component {
     public int getHeight(){
         return this.height;
     }
-            
-    
+            @Override
+      public String getType(){
+        return "Video Component";
+    }
 }

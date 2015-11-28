@@ -10,5 +10,8 @@ package components;
  * @author benkandov
  */
 public class slideshowComponent extends component {
-    
+    @Override
+      public String getType(){
+        return "Slideshow Component";
+    }
 }

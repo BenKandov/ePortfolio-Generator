@@ -5,6 +5,7 @@
  */
 package epg;
 
+import fileManager.ePortfolioFileManager;
 import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,8 +21,8 @@ import views.WorkspaceView;
  * @author benkandov
  */
 public class EPortfolioGenerator extends Application {
-    
-    WorkspaceView workspaceView = new WorkspaceView();
+    ePortfolioFileManager fm = new ePortfolioFileManager();
+    WorkspaceView workspaceView = new WorkspaceView(fm);
      public void start(Stage primaryStage) throws MalformedURLException {
          workspaceView.startUI();
     }

@@ -17,6 +17,8 @@ public class component {
     public component(){
         
     }
-    
+    public String getType(){
+        return "Component";
+    }
     
 }

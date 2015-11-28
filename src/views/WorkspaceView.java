@@ -7,6 +7,8 @@ package views;
 
 
 import controller.dialogController;
+import controller.fileController;
+import fileManager.ePortfolioFileManager;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -14,6 +16,7 @@ import java.net.URL;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -22,6 +25,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
@@ -36,13 +40,14 @@ import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.ePortfolioModel;
 
 /**
  *
  * @author benkandov
  */
 public class WorkspaceView {
-   
+    
     Tab currentTab;
     
     Stage primaryStage;
@@ -96,14 +101,19 @@ public class WorkspaceView {
     //Site toolbar
     
     
-    //controllers
+    //controllers and things
     private dialogController DialogController;
-    //controllers
+    private ePortfolioFileManager fileManager;
+    ePortfolioModel ePortfolio;
+    //controllers and things
     
     
    
    
-    public WorkspaceView(){
+    public WorkspaceView(ePortfolioFileManager initFileManager){
+        ePortfolio = new ePortfolioModel(this);
+        fileManager = initFileManager;
+        
         this.newPortfolio = new Button();
         this.loadPortfolio = new Button();
         this.savePortfolio = new Button();
@@ -132,6 +142,9 @@ public class WorkspaceView {
         
         
       
+    }
+    public ePortfolioModel getEPortfolio(){
+        return this.ePortfolio;
     }
     public void initWindow(){
         this.mainPane = new BorderPane();
@@ -188,21 +201,19 @@ public class WorkspaceView {
       
         Button removeTab = new Button("Remove Page");
        
-        Button sampleImage = new Button();
-        setButtonImage(sampleImage,"Icons/question.png");
-        Button samplePara = new Button("This is a sample paragraph.");
-        Button sampleList = new Button("Sample List Item");
-        Button sampleVideo = new Button("This is a sample video");
-        Button sampleSlideshow = new Button("This is a sample slideshow");
-        
-        VBox test = new VBox();
-        test.setAlignment(Pos.CENTER);
-        test.setSpacing(20);
-        
-        test.getStylesheets().add("css/style.css");
-        test.getStyleClass().add("dialog_box");
-        test.getChildren().add(removeTab);
-        
+       
+       ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
+       page.getStylesheets().add("css/style.css");
+       page.getSelectionModel().getSelectedItem();
+       tab.setContent(page);
+      page.setOnMouseClicked(new EventHandler<MouseEvent>(){
+          @Override
+          public void handle(MouseEvent event){
+              System.out.println(page.getSelectionModel().getSelectedItem());
+          }
+      });
+       
+        /**
          FlowPane sample1 = new FlowPane(sampleImage);
          sample1.getStyleClass().add("white");
          sample1.setAlignment(Pos.CENTER);
@@ -260,7 +271,7 @@ public class WorkspaceView {
            sampleSlideshow.setOnAction(e -> {
 	   DialogController.addSlideShowComponent();
 	});
-          
+          **/
         
          currentTab = tab;
          removeTab.setOnAction(e -> {
@@ -268,6 +279,7 @@ public class WorkspaceView {
          });
         return tab;
   }
+   
     public void initPageEditorWorkspace(){
          pageEditorPane = new BorderPane();
          pageEditorToolbar = new FlowPane();
@@ -394,6 +406,7 @@ public class WorkspaceView {
 	butt.setGraphic(new ImageView(buttonImage));
     }
     public void setEventHandlers(){
+       fileController fileControl = new fileController(this,fileManager);
        dialogViews dialogs = new dialogViews();
        DialogController = new dialogController(this,dialogs);
        
@@ -411,60 +424,61 @@ public class WorkspaceView {
               mainPane.setCenter(pageEditorPane);
 	});
            selectLayoutTemplate.setOnAction(e -> {
-	    DialogController.selectLayoutTemplate();
+	    DialogController.selectLayoutTemplate(ePortfolio);
 	});
            selectColorTemplate.setOnAction(e -> {
-	    DialogController.selectColorTemplate();
+	    DialogController.selectColorTemplate(ePortfolio);
 	});
            selectBannerImage.setOnAction(e -> {
-	    DialogController.selectBannerImage();
+	    DialogController.selectBannerImage(ePortfolio);
 	});
         chooseComponentFont.setOnAction(e -> {
-	    DialogController.chooseComponentFont();
+	    DialogController.chooseComponentFont(ePortfolio);
 	});
         updatePageTitle.setOnAction(e -> {
-	    DialogController.updatePageTitle();
+	    DialogController.updatePageTitle(ePortfolio);
 	});
         updateStudentName.setOnAction(e -> {
-	   DialogController.updateStudentName();
+	   DialogController.updateStudentName(ePortfolio);
 	});
         updateFooter.setOnAction(e -> {
-	   DialogController.updateFooter();
+	   DialogController.updateFooter(ePortfolio);
 	});
       
         addTextComponent.setOnAction(e -> {
-	   DialogController.addTextComponent();
+	   DialogController.addTextComponent(ePortfolio);
 	});
         
         addImageComponent.setOnAction(e -> {
-	   DialogController.addImageComponent();
+	   DialogController.addImageComponent(ePortfolio);
 	});
         addSlideshowComponent.setOnAction(e -> {
-	   DialogController.addSlideShowComponent();
+	   DialogController.addSlideShowComponent(ePortfolio);
 	});
         addVideoComponent.setOnAction(e -> {
-	   DialogController.addVideoComponent();
+	   DialogController.addVideoComponent(ePortfolio);
 	});
        
         
         
         newPortfolio.setOnAction(e -> {
-	   DialogController.newPortfolio();
+           fileControl.handleNewEportfolioRequest();
+	   DialogController.newPortfolio(ePortfolio);
 	});
         loadPortfolio.setOnAction(e -> {
-	   DialogController.loadPortfolio();
+	   DialogController.loadPortfolio(ePortfolio);
 	});
         savePortfolio.setOnAction(e -> {
-	   DialogController.savePortfolio();
+	   DialogController.savePortfolio(ePortfolio);
 	});
         saveAsPortfolio.setOnAction(e -> {
-	   DialogController.saveAsPortfolio();
+	   DialogController.saveAsPortfolio(ePortfolio);
 	});
         exportPortfolio.setOnAction(e -> {
-	   DialogController.exportPortfolio();
+	   DialogController.exportPortfolio(ePortfolio);
 	});
         exitPortfolio.setOnAction(e -> {
-	   DialogController.exitPortfolio();
+	   DialogController.exitPortfolio(ePortfolio);
 	});
     }
     public void dummyComponents(){

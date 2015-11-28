@@ -33,7 +33,10 @@ public class listComponent extends textComponent{
     public void addItem(int position,String item){
         this.content.add(position, item);
     }
-    
+    @Override
+  public String getType(){
+        return "List Component";
+    }    
     
     
 }
