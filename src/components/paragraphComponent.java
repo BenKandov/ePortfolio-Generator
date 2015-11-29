@@ -11,9 +11,11 @@ package components;
  */
 public class paragraphComponent extends textComponent {
     private String content;
+    private String font;
     
-    public paragraphComponent(String content){
+    public paragraphComponent(String content,String font){
         this.content=content;
+        this.font = font;
     }
     
     public void setContent(String c){
@@ -26,4 +28,10 @@ public class paragraphComponent extends textComponent {
      public String getType(){
         return "Paragraph Component";
     }
+     public String getFont(){
+         return this.font;
+     }
+     public void setFont(String font){
+         this.font = font;
+     }
 }

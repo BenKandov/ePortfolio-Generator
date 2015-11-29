@@ -6,9 +6,14 @@
 package views;
 
 
+import components.component;
+import components.headerComponent;
+import components.listComponent;
+import components.paragraphComponent;
 import controller.dialogController;
 import controller.fileController;
 import fileManager.ePortfolioFileManager;
+import java.awt.Component;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -201,17 +206,46 @@ public class WorkspaceView {
       
         Button removeTab = new Button("Remove Page");
        
+       FlowPane pageHead = new FlowPane();
+       Text pageTitle = new Text(ePortfolio.getSelectedPage().getTitle());
+       Text studentName = new Text(ePortfolio.getSelectedPage().getStudentName());
+       pageHead.getChildren().add(pageTitle);
+       pageHead.getChildren().add(studentName);
+       pageHead.setAlignment(Pos.CENTER);
+       pageHead.setHgap(30);
        
        ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
        page.getStylesheets().add("css/style.css");
        page.getSelectionModel().getSelectedItem();
-       tab.setContent(page);
-      page.setOnMouseClicked(new EventHandler<MouseEvent>(){
+       VBox body = new VBox();
+       body.getStylesheets().add("css/style.css");
+       pageHead.getStyleClass().add("dialog_box");
+       pageTitle.getStyleClass().add("dialog_text");
+       studentName.getStyleClass().add("dialog_text");
+       body.getChildren().add(pageHead);
+       body.getChildren().add(page);
+       
+       tab.setContent(body);
+       
+       dialogViews dum = new dialogViews();
+       page.setOnMouseClicked(new EventHandler<MouseEvent>(){
           @Override
           public void handle(MouseEvent event){
-              System.out.println(page.getSelectionModel().getSelectedItem());
+              char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
+              int intex = Character.getNumericValue(index);
+              component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
+              if(selected.getType().equals("Paragraph Component")){
+                 dum.editParagraphComponent((paragraphComponent) selected);
+              }
+              else if(selected.getType().equals("Header Component")){
+                  dum.editHeaderComponent((headerComponent) selected);
+              }
+              else if(selected.getType().equals("List Component")){
+                  dum.editListComponent((listComponent) selected);
+              }
+              System.out.println(index);
           }
-      });
+        });
        
         /**
          FlowPane sample1 = new FlowPane(sampleImage);

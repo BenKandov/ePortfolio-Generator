@@ -5,6 +5,8 @@
  */
 package controller;
 
+import components.listComponent;
+import components.paragraphComponent;
 import model.ePortfolioModel;
 import views.WorkspaceView;
 import views.dialogViews;
@@ -59,8 +61,8 @@ public class dialogController {
     public void removeComponent(ePortfolioModel e){
         dV.removeComponent(e);
     }
-    public void editTextComponent(ePortfolioModel e){
-        dV.editTextComponent(e);
+    public void editParagraphComponent(paragraphComponent p){
+        dV.editParagraphComponent(p);
     }
     public void editImageComponent(ePortfolioModel e){
         dV.addImageComponent(e);
@@ -71,8 +73,8 @@ public class dialogController {
     public void addTextHyperlink(ePortfolioModel e){
         dV.addTextHyperlink(e);
     }
-    public void editListComponent(ePortfolioModel e){
-        dV.editListComponent(e);
+    public void editListComponent(listComponent list){
+        dV.editListComponent(list);
     }
   
     public void newPortfolio(ePortfolioModel e){

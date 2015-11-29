@@ -22,6 +22,7 @@ public class listComponent extends textComponent{
         return this.content;
     }
     
+    @Override
     public String getItem(int i){
         return this.content.get(i);
     }
@@ -37,6 +38,9 @@ public class listComponent extends textComponent{
   public String getType(){
         return "List Component";
     }    
+  public void removeItem(String item){
+      this.content.remove(item);
+  }
     
     
 }

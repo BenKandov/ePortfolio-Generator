@@ -11,8 +11,9 @@ package components;
  */
 public class headerComponent extends textComponent {
     private String content;
+    private String font;
     
-    public headerComponent(String content){
+    public headerComponent(String content,String font){
         this.content = content;
     }
     public void setContent(String c){
@@ -25,4 +26,10 @@ public class headerComponent extends textComponent {
     public String getType(){
         return "Header Component";
     }
+     public String getFont(){
+         return this.font;
+     }
+     public void setFont(String font){
+         this.font = font;
+     }
 }

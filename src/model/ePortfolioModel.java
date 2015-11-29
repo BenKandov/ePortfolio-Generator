@@ -14,16 +14,18 @@ import views.WorkspaceView;
  * @author benkandov
  */
 public class ePortfolioModel {
-    ObservableList<page> pages = FXCollections.observableArrayList();
-    page selectedPage;
+    ObservableList<Page> pages = FXCollections.observableArrayList();
+    Page selectedPage;
+    WorkspaceView ui;
      
     public ePortfolioModel(WorkspaceView ui){
-       page HomePage = new page();
+       this.ui=ui;
+       Page HomePage = new Page();
        pages.add(HomePage);
        this.selectedPage=HomePage;
     }
     
-    public void addPage(page p){
+    public void addPage(Page p){
         pages.add(p);
     }
     public void getPage(int position){
@@ -32,12 +34,15 @@ public class ePortfolioModel {
     public void selectPage(int position){
         this.selectedPage=pages.get(position);
     }
-    public page getSelectedPage(){
+    public Page getSelectedPage(){
         return this.selectedPage;
     }
     public void reset(){
         selectedPage= null;
         pages.clear();
+    }
+    public WorkspaceView getUI(){
+        return this.ui;
     }
 
     

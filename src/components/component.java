@@ -20,5 +20,7 @@ public class component {
     public String getType(){
         return "Component";
     }
-    
+    public String getItem(int i){
+        return "";
+    }
 }

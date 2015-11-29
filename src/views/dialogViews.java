@@ -5,6 +5,9 @@
  */
 package views;
 
+import components.component;
+import components.headerComponent;
+import components.listComponent;
 import components.paragraphComponent;
 import java.awt.Desktop;
 import java.io.File;
@@ -21,9 +24,11 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +49,7 @@ import model.ePortfolioModel;
  */
 public class dialogViews {
     int counter=0;
+    private listComponent du;
     private Desktop desktop = Desktop.getDesktop();
     Stage fileChooserStage;
     Scene fileScene;
@@ -235,6 +241,15 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+         g.setOnAction(e -> {
+	   ePortfolio.getSelectedPage().setTitle(b.getText());
+           primaryStage.close();
+            try {
+                ePortfolio.getUI().startUI();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+            }
+	});
     }
     public void updateStudentName(ePortfolioModel ePortfolio){
       
@@ -313,25 +328,31 @@ public class dialogViews {
     
         primaryStage.setWidth(450);
 	primaryStage.setHeight(400);
-        
+        ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
         Text t = new Text("Write paragraph:");
         TextArea r = new TextArea();
-        Button a = new Button("Font A");
+        RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
-        Button b = new Button("Font B");
+        a.setSelected(true);
+        a.setToggleGroup(fonts);
+        RadioButton b = new RadioButton("Font B");
         b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
         b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
-        Button c = new Button("Font C");
+        b.setToggleGroup(fonts);
+        RadioButton c = new RadioButton("Font C");
         c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
         c.setStyle("-fx-font-family: 'Indie Flower' ;");
-        Button d = new Button("Font D");
+        c.setToggleGroup(fonts);
+        RadioButton d = new RadioButton("Font D");
         d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
         d.setStyle("-fx-font-family: 'Poiret One' ;");
-        Button e = new Button("Font E");
+        d.setToggleGroup(fonts);
+        RadioButton e = new RadioButton("Font E");
         e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
         e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
+        e.setToggleGroup(fonts);
         
         a.getStyleClass().add("dialog_button");
         b.getStyleClass().add("dialog_button");
@@ -355,8 +376,10 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        String font = "";
          g.setOnAction(e1 -> {
-             paragraphComponent para = new paragraphComponent(r.getText());
+             
+             paragraphComponent para = new paragraphComponent(r.getText(),fonts.getSelectedToggle().toString());
              ePortfolio.getSelectedPage().addComponent(para);
              primaryStage.close();
 	});
@@ -368,22 +391,30 @@ public class dialogViews {
 	primaryStage.setHeight(350); 
         Text t = new Text("Write Header:");
         TextField r = new TextField();
+         ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
-        Button a = new Button("Font A");
+       
+        RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
-        Button b = new Button("Font B");
+        a.setSelected(true);
+        a.setToggleGroup(fonts);
+        RadioButton b = new RadioButton("Font B");
         b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
         b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
-        Button c = new Button("Font C");
+        b.setToggleGroup(fonts);
+        RadioButton c = new RadioButton("Font C");
         c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
         c.setStyle("-fx-font-family: 'Indie Flower' ;");
-        Button d = new Button("Font D");
+        c.setToggleGroup(fonts);
+        RadioButton d = new RadioButton("Font D");
         d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
         d.setStyle("-fx-font-family: 'Poiret One' ;");
-        Button e = new Button("Font E");
+        d.setToggleGroup(fonts);
+        RadioButton e = new RadioButton("Font E");
         e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
         e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
+        e.setToggleGroup(fonts);
         
         a.getStyleClass().add("dialog_button");
         b.getStyleClass().add("dialog_button");
@@ -406,35 +437,21 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-    }
-    /**
-    public void listItems(){
-         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/2);
-	primaryStage.setY(300);
-        Text t = new Text("How many items?");
-        TextArea n = new TextArea();
-        Button g = new Button("Okay");
-        VBox body = new VBox(t,n,g);
-         body.getStylesheets().add("css/style.css");
-         body.setAlignment(Pos.TOP_CENTER);
-         body.getStyleClass().add("dialog_box");
-           g.getStyleClass().add("dialog_button");
-          t.getStyleClass().add("dialog_text");
-             body.setSpacing(20);
-        primaryScene = new Scene(body);
-        primaryStage.setScene(primaryScene);
-        primaryStage.show();
-         g.setOnAction(e -> {
-	   this.createList(5);
+            g.setOnAction(e1 -> {
+             
+             headerComponent header = new headerComponent(r.getText(),fonts.getSelectedToggle().toString());
+             ePortfolio.getSelectedPage().addComponent(header);
+             primaryStage.close();
 	});
     }
-    * **/
+   
     public void createList(ePortfolioModel ePortfolio){
  
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
         VBox body = new VBox();
-       
+        ArrayList<TextField> contents = new ArrayList();
+        
         ScrollPane scrollPane = new ScrollPane(body);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
@@ -446,7 +463,7 @@ public class dialogViews {
         rand.setHgap(60);
         body.getChildren().add(rand);
        TextField a = new TextField("List Item");
-       
+       contents.add(a);
        
        Button r1 = new Button("X");    
         
@@ -455,7 +472,7 @@ public class dialogViews {
          
         body.getChildren().add(dummy);
         r1.setOnAction(e1 -> {
-          
+           contents.remove(a);
             body.getChildren().remove(dummy);
         });
         body.getStylesheets().add("css/style.css");
@@ -471,16 +488,27 @@ public class dialogViews {
         
         add.setOnAction(e -> {
             TextField b = new TextField("List Item");
+            contents.add(b);
             body.getChildren().add(b);
             Button r2 = new Button("X");
             FlowPane stupid = new FlowPane(b,r2);
             body.getChildren().add(stupid);
             r2.getStyleClass().add("dialog_button");
                  r2.setOnAction(e3 -> {
-          
+                    contents.remove(b);
                      body.getChildren().remove(stupid);
                  });
         });
+        g.setOnAction(e1 -> {
+            ArrayList<String> lists = new ArrayList();
+            for(int i = 0;i<contents.size();i++){
+                lists.add(contents.get(i).getText());
+            }
+            listComponent l = new listComponent(lists);
+            System.out.println(l.getItem(0));
+            ePortfolio.getSelectedPage().addComponent(l);
+            primaryStage.close();
+	});
     }
     public void addImageComponent(ePortfolioModel ePortfolio){
 
@@ -734,70 +762,167 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void editTextComponent(ePortfolioModel ePortfolio){
-        primaryStage.setWidth(450);
-	primaryStage.setHeight(300); 
-        Text t = new Text("Edit text content:");
-        TextArea a = new TextArea("Sample paragraph content");
-        Button g = new Button("Finished");
-        Button hyper = new Button("Begin adding hyperlink");
-        Button hyper2 = new Button("Finish adding hyperlink");
-        TextField url = new TextField("url");
-        FlowPane dummy = new FlowPane(hyper,hyper2,url);
-        VBox body = new VBox(20);
-        body.getChildren().add(t);
-        body.getChildren().add(a);
-        body.getChildren().add(g);
-        body.getChildren().add(dummy);
-        dummy.setHgap(10);
-        dummy.setAlignment(Pos.CENTER);
-        body.getStylesheets().add("css/style.css");
-        body.getStyleClass().add("dialog_box");
-        t.getStyleClass().add("dialog_text");
-        g.getStyleClass().add("dialog_button");
-        hyper.getStyleClass().add("dialog_button");
-        hyper2.getStyleClass().add("dialog_button");
-        body.setAlignment(Pos.CENTER);
+    public void editParagraphComponent(paragraphComponent para){
+       primaryStage.setWidth(450);
+	primaryStage.setHeight(400);
+        ToggleGroup fonts = new ToggleGroup();
+        Button g = new Button("Okay");
+        Text t = new Text("Write paragraph:");
+        TextArea r = new TextArea();
+        r.setText(para.getContent());
+        RadioButton a = new RadioButton("Font A");
+        a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
+        a.setStyle("-fx-font-family: 'Architects Daughter' ;");
+        a.setSelected(true);
+        a.setToggleGroup(fonts);
+        RadioButton b = new RadioButton("Font B");
+        b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
+        b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
+        b.setToggleGroup(fonts);
+        RadioButton c = new RadioButton("Font C");
+        c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
+        c.setStyle("-fx-font-family: 'Indie Flower' ;");
+        c.setToggleGroup(fonts);
+        RadioButton d = new RadioButton("Font D");
+        d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
+        d.setStyle("-fx-font-family: 'Poiret One' ;");
+        d.setToggleGroup(fonts);
+        RadioButton e = new RadioButton("Font E");
+        e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
+        e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
+        e.setToggleGroup(fonts);
         
+        a.getStyleClass().add("dialog_button");
+        b.getStyleClass().add("dialog_button");
+        c.getStyleClass().add("dialog_button");
+        d.getStyleClass().add("dialog_button");
+        e.getStyleClass().add("dialog_button");
+        
+        
+        
+        HBox dummy = new HBox(a,b,c,d,e);
+        dummy.setSpacing(10);
+        dummy.setAlignment(Pos.CENTER);
+        
+        VBox body = new VBox(t,r,dummy,g);
+         body.getStylesheets().add("css/style.css");
+         body.setAlignment(Pos.TOP_CENTER);
+         body.getStyleClass().add("dialog_box");
+           g.getStyleClass().add("dialog_button");
+           t.getStyleClass().add("dialog_text");
+             body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        String font = "";
+         g.setOnAction(e1 -> {
+             para.setContent(r.getText());
+             primaryStage.close();
+	});
         
     }
-    public void editListComponent(ePortfolioModel ePortfolio){
+    
+    public void editHeaderComponent(headerComponent header){
+    
+        primaryStage.setWidth(450);
+	primaryStage.setHeight(350); 
+        Text t = new Text("Write Header:");
+        TextField r = new TextField();
+        r.setText(header.getContent());
+         ToggleGroup fonts = new ToggleGroup();
+        Button g = new Button("Okay");
+       
+        RadioButton a = new RadioButton("Font A");
+        a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
+        a.setStyle("-fx-font-family: 'Architects Daughter' ;");
+        a.setSelected(true);
+        a.setToggleGroup(fonts);
+        RadioButton b = new RadioButton("Font B");
+        b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
+        b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
+        b.setToggleGroup(fonts);
+        RadioButton c = new RadioButton("Font C");
+        c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
+        c.setStyle("-fx-font-family: 'Indie Flower' ;");
+        c.setToggleGroup(fonts);
+        RadioButton d = new RadioButton("Font D");
+        d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
+        d.setStyle("-fx-font-family: 'Poiret One' ;");
+        d.setToggleGroup(fonts);
+        RadioButton e = new RadioButton("Font E");
+        e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
+        e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
+        e.setToggleGroup(fonts);
+        
+        a.getStyleClass().add("dialog_button");
+        b.getStyleClass().add("dialog_button");
+        c.getStyleClass().add("dialog_button");
+        d.getStyleClass().add("dialog_button");
+        e.getStyleClass().add("dialog_button");
+        
+        
+        
+        HBox dummy = new HBox(a,b,c,d,e);
+        dummy.setSpacing(10);
+        dummy.setAlignment(Pos.CENTER);
+        VBox body = new VBox(t,r,dummy,g);
+          body.getStylesheets().add("css/style.css");
+            body.setAlignment(Pos.TOP_CENTER);
+         body.getStyleClass().add("dialog_box");
+           g.getStyleClass().add("dialog_button");
+           t.getStyleClass().add("dialog_text");
+             body.setSpacing(20);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+            g.setOnAction(e1 -> {
+             
+             
+             header.setContent(r.getText());
+             primaryStage.close();
+	});
+    }
+    
+    public void editListComponent(listComponent list){
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
         VBox body = new VBox();
-       
+        ArrayList<TextField> contents = new ArrayList();
+        
         ScrollPane scrollPane = new ScrollPane(body);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        Button add = new Button("Add Item");
+             Button add = new Button("Add Item");
        
         Button g = new Button("Finished");
       
         FlowPane rand = new FlowPane(add,g);
         rand.setHgap(60);
         body.getChildren().add(rand);
-       TextField a = new TextField("Sample list item");
-       
-       
-       Button r1 = new Button("X");    
+        for(int i =0;i<list.getList().size();i++){
+             TextField a = new TextField(list.getItem(i));
+             contents.add(a);
+             Button r1 = new Button("X");    
+             FlowPane dummy = new FlowPane(a,r1);
+             body.getChildren().add(dummy);
+             r1.setOnAction(e1 -> {
+                 contents.remove(a);
+                body.getChildren().remove(dummy);
+                
+          });
+              r1.getStylesheets().add("css/style.css");
+              r1.getStyleClass().add("dialog_button");
+        }
         
-       
-         FlowPane dummy = new FlowPane(a,r1);
-         
-        body.getChildren().add(dummy);
-        r1.setOnAction(e1 -> {
-          
-            body.getChildren().remove(dummy);
-        });
+   
+      
+        
         body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
         body.getStyleClass().add("dialog_box");
         g.getStyleClass().add("dialog_button");
         add.getStyleClass().add("dialog_button");
-        r1.getStyleClass().add("dialog_button");
+       
         body.setSpacing(20);
         primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
@@ -805,16 +930,38 @@ public class dialogViews {
         
         add.setOnAction(e -> {
             TextField b = new TextField("List Item");
+            contents.add(b);
+            System.out.println(b.getText());
             body.getChildren().add(b);
             Button r2 = new Button("X");
             FlowPane stupid = new FlowPane(b,r2);
             body.getChildren().add(stupid);
             r2.getStyleClass().add("dialog_button");
                  r2.setOnAction(e3 -> {
-          
+                    contents.remove(b);
                      body.getChildren().remove(stupid);
                  });
         });
+        g.setOnAction(e1 -> {
+            ArrayList<String> lists = new ArrayList();
+            
+            for(int i = 0;i<contents.size();i++){
+                lists.add(contents.get(i).getText());
+            }
+            du = new listComponent(lists);
+            System.out.print(du.getItem(0));
+            //System.out.println(l.getItem(0));
+            
+            list.getList().clear();
+            for(int i =0;i<du.getList().size();i++){
+                list.addItem(i, du.getItem(i));
+            }
+            primaryStage.close();
+            
+            
+	});
+        
+        //return du;
     }
     
     public void editSlideshowComponent(ePortfolioModel ePortfolio){
