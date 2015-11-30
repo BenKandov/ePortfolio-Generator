@@ -8,6 +8,7 @@ package views;
 
 import components.component;
 import components.headerComponent;
+import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
 import controller.dialogController;
@@ -45,6 +46,7 @@ import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.Page;
 import model.ePortfolioModel;
 
 /**
@@ -52,7 +54,9 @@ import model.ePortfolioModel;
  * @author benkandov
  */
 public class WorkspaceView {
-    
+    Text pageTitle;
+    Text studentName;
+    Text footerText;
     Tab currentTab;
     
     Stage primaryStage;
@@ -151,6 +155,67 @@ public class WorkspaceView {
     public ePortfolioModel getEPortfolio(){
         return this.ePortfolio;
     }
+    
+    public void loadSelectedPage(){
+        Tab currentTab = siteToolbar.getSelectionModel().getSelectedItem();
+        FlowPane pageHead = new FlowPane();
+       pageTitle = new Text(ePortfolio.getSelectedPage().getTitle());
+       studentName = new Text(ePortfolio.getSelectedPage().getStudentName());
+       pageHead.getChildren().add(pageTitle);
+       pageHead.getChildren().add(studentName);
+       pageHead.setAlignment(Pos.CENTER);
+       pageHead.setHgap(30);
+       
+       ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
+       page.getStylesheets().add("css/style.css");
+       page.getSelectionModel().getSelectedItem();
+       BorderPane body = new BorderPane();
+       body.getStylesheets().add("css/style.css");
+       pageHead.getStyleClass().add("dialog_box");
+       pageTitle.getStyleClass().add("dialog_text");
+       studentName.getStyleClass().add("dialog_text");
+       body.setTop(pageHead);
+       body.setCenter(page);
+       FlowPane footer = new FlowPane();
+       footer.setAlignment(Pos.CENTER);
+       
+       footerText = new Text(ePortfolio.getSelectedPage().getFooter());
+       footer.getChildren().add(footerText);
+       body.setBottom(footer);
+       footer.getStyleClass().add("dialog_box");
+       footerText.getStyleClass().add("dialog_text");
+       
+       currentTab.setContent(body);
+       
+       dialogViews dum = new dialogViews();
+       page.setOnMouseClicked(new EventHandler<MouseEvent>(){
+          @Override
+          public void handle(MouseEvent event){
+              char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
+              int intex = Character.getNumericValue(index);
+              component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
+              if(selected.getType().equals("Paragraph Component")){
+                 dum.editParagraphComponent((paragraphComponent) selected);
+              }
+              else if(selected.getType().equals("Header Component")){
+                  dum.editHeaderComponent((headerComponent) selected);
+              }
+              else if(selected.getType().equals("List Component")){
+                  dum.editListComponent((listComponent) selected);
+              }
+              else if(selected.getType().equals("Image Component")){
+                  dum.editImageComponent((imageComponent) selected);
+              }
+              System.out.println(index);
+          }
+        });
+        
+        
+        Page actualPage = ePortfolio.getSelectedPage();
+        pageTitle.setText(actualPage.getTitle());
+        studentName.setText(actualPage.getStudentName());
+        footerText.setText(actualPage.getFooter());
+    }
     public void initWindow(){
         this.mainPane = new BorderPane();
         mainPane.setTop(FileToolbar);
@@ -200,117 +265,39 @@ public class WorkspaceView {
    private Tab createAndSelectNewTab(final TabPane tabPane, final String title) {
         Tab tab = new Tab(title);
         final ObservableList<Tab> tabs = tabPane.getTabs();
-         tab.closableProperty().bind(Bindings.size(tabs).greaterThan(2));
+        // tab.closableProperty().bind(Bindings.size(tabs).greaterThan(1));
         tabs.add(tabs.size(), tab);
         tabPane.getSelectionModel().select(tab);
-      
+        Page page = new Page("untitled");
+        ePortfolio.addPage(page);
+        ePortfolio.selectPage(page);
+        page.setTab(tab);
+        
+        
         Button removeTab = new Button("Remove Page");
        
-       FlowPane pageHead = new FlowPane();
-       Text pageTitle = new Text(ePortfolio.getSelectedPage().getTitle());
-       Text studentName = new Text(ePortfolio.getSelectedPage().getStudentName());
-       pageHead.getChildren().add(pageTitle);
-       pageHead.getChildren().add(studentName);
-       pageHead.setAlignment(Pos.CENTER);
-       pageHead.setHgap(30);
        
-       ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
-       page.getStylesheets().add("css/style.css");
-       page.getSelectionModel().getSelectedItem();
-       VBox body = new VBox();
-       body.getStylesheets().add("css/style.css");
-       pageHead.getStyleClass().add("dialog_box");
-       pageTitle.getStyleClass().add("dialog_text");
-       studentName.getStyleClass().add("dialog_text");
-       body.getChildren().add(pageHead);
-       body.getChildren().add(page);
        
-       tab.setContent(body);
-       
-       dialogViews dum = new dialogViews();
-       page.setOnMouseClicked(new EventHandler<MouseEvent>(){
-          @Override
-          public void handle(MouseEvent event){
-              char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
-              int intex = Character.getNumericValue(index);
-              component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
-              if(selected.getType().equals("Paragraph Component")){
-                 dum.editParagraphComponent((paragraphComponent) selected);
-              }
-              else if(selected.getType().equals("Header Component")){
-                  dum.editHeaderComponent((headerComponent) selected);
-              }
-              else if(selected.getType().equals("List Component")){
-                  dum.editListComponent((listComponent) selected);
-              }
-              System.out.println(index);
-          }
-        });
-       
-        /**
-         FlowPane sample1 = new FlowPane(sampleImage);
-         sample1.getStyleClass().add("white");
-         sample1.setAlignment(Pos.CENTER);
-         test.getChildren().add(sample1);
-         FlowPane sample2 = new FlowPane(samplePara);
-          sample2.setAlignment(Pos.CENTER);
-          sample2.getStyleClass().add("white");
-         test.getChildren().add(sample2);
-         FlowPane sample3 = new FlowPane(sampleList);
-          sample3.setAlignment(Pos.CENTER);
-          sample3.getStyleClass().add("white");
-         test.getChildren().add(sample3);
-         FlowPane sample4 = new FlowPane(sampleVideo);
-          sample4.setAlignment(Pos.CENTER);
-         sample4.getStyleClass().add("white");
-         test.getChildren().add(sample4);
-         FlowPane sample5 = new FlowPane(sampleSlideshow);
-          sample5.setAlignment(Pos.CENTER);
-          sample5.getStyleClass().add("white");
-         test.getChildren().add(sample5);
-        removeTab.getStyleClass().add("dialog_button");
-        samplePara.getStyleClass().add("dialog_button");
-        sampleList.getStyleClass().add("dialog_button");
-        sampleImage.getStyleClass().add("dialog_button");
-        sampleVideo.getStyleClass().add("dialog_button");
-        sampleSlideshow.getStyleClass().add("dialog_button");
-        tab.setContent(test);
-         sample1.setOnMouseClicked((MouseEvent event) -> {
-             DialogController.removeComponent();
-        });
-         sample2.setOnMouseClicked((MouseEvent event) -> {
-             DialogController.removeComponent();
-        });
-         sample3.setOnMouseClicked((MouseEvent event) -> {
-             DialogController.removeComponent();
-        });
-         sample4.setOnMouseClicked((MouseEvent event) -> {
-             DialogController.removeComponent();
-        });
-         sample5.setOnMouseClicked((MouseEvent event) -> {
-             DialogController.removeComponent();
-        });
-         sampleList.setOnAction(e -> {
-	   DialogController.editListComponent();
-	});
-         samplePara.setOnAction(e -> {
-	   DialogController.editTextComponent();
-	});
-           sampleImage.setOnAction(e -> {
-	   DialogController.editImageComponent();
-	});
-           sampleVideo.setOnAction(e -> {
-	   DialogController.editVideoComponent("someURL");
-	}); 
-           sampleSlideshow.setOnAction(e -> {
-	   DialogController.addSlideShowComponent();
-	});
-          **/
+      
         
          currentTab = tab;
          removeTab.setOnAction(e -> {
              tab.getTabPane().getTabs().remove(tab);
+             ePortfolio.remove(ePortfolio.pageByTab(tab));
+             
+             
          });
+         tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Tab> arg0,
+                    Tab arg1, Tab arg2) {
+                    ePortfolio.selectPage(ePortfolio.pageByTab(arg2));
+                 
+            }
+        });
+         
+         this.loadSelectedPage();
         return tab;
   }
    
@@ -327,8 +314,16 @@ public class WorkspaceView {
          Tab addTab = new Tab("+");
          addTab.setClosable(false);
           siteToolbar.getTabs().add(addTab);
-         createAndSelectNewTab(siteToolbar,"Untitled");
-        
+     //    createAndSelectNewTab(siteToolbar,"HomePage");
+          Tab tab = new Tab("HomePage");
+          final ObservableList<Tab> tabs = siteToolbar.getTabs();
+        // tab.closableProperty().bind(Bindings.size(tabs).greaterThan(1));
+           tabs.add(tabs.size(), tab);
+          siteToolbar.getSelectionModel().select(tab); 
+          ePortfolio.getSelectedPage().setTab(tab);
+          tab.setClosable(false);
+         this.loadSelectedPage();
+         currentTab =tab;
           siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
                 public void changed(ObservableValue<? extends Tab> observable,
@@ -471,9 +466,11 @@ public class WorkspaceView {
 	});
         updatePageTitle.setOnAction(e -> {
 	    DialogController.updatePageTitle(ePortfolio);
+            pageTitle.setText(ePortfolio.getSelectedPage().getTitle());
 	});
         updateStudentName.setOnAction(e -> {
 	   DialogController.updateStudentName(ePortfolio);
+           studentName.setText(ePortfolio.getSelectedPage().getStudentName());
 	});
         updateFooter.setOnAction(e -> {
 	   DialogController.updateFooter(ePortfolio);

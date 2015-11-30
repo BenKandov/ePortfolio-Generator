@@ -6,8 +6,15 @@
 package fileManager;
 
 
+import components.headerComponent;
+import components.imageComponent;
+import components.listComponent;
+import components.paragraphComponent;
+import components.slideshowComponent;
+import components.videoComponent;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import javax.json.Json;
 import javax.json.JsonObject;
 import model.ePortfolioModel;
@@ -45,6 +52,46 @@ public class ePortfolioFileManager {
              
 		.build();
 	return jso;
+    }
+    private JsonObject makeParagraphComponentJsonObject(paragraphComponent para){
+        JsonObject jso = Json.createObjectBuilder()
+                .add("content",para.getContent())
+                .add("font",para.getFont())
+                .build();
+        return jso;
+    }
+     private JsonObject makeHeaderComponentJsonObject(headerComponent header){
+         JsonObject jso = Json.createObjectBuilder()
+                 .add("content",header.getContent())
+                 .add("font", header.getFont())
+                 .build();
+        return jso;
+    } 
+     private JsonObject makeListComponentJsonObject(listComponent list){
+        JsonObject jso = Json.createObjectBuilder()
+                
+                
+                .build();
+        return null;
+    }
+     private JsonObject makeImageComponentJsonObject(imageComponent image){
+         JsonObject jso = Json.createObjectBuilder()
+                 .add("src",image.getSource())
+                 .add("float", image.getFloatValue())
+                 .add("caption", image.getCaption()) 
+                .build();
+        return jso;
+    } 
+     private JsonObject makeVideoComponentJsonObject(videoComponent video){
+            JsonObject jso = Json.createObjectBuilder()
+                 .add("src",video.getSource())
+                 .add("width", video.getWidth())
+                 .add("height", video.getHeight()) 
+                .build();
+        return null;
+    }
+     private JsonObject makeSlideshowComponentJsonObject(slideshowComponent slideshow){
+        return null;
     }
     
         

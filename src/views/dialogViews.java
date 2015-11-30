@@ -7,6 +7,7 @@ package views;
 
 import components.component;
 import components.headerComponent;
+import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
 import java.awt.Desktop;
@@ -49,7 +50,10 @@ import model.ePortfolioModel;
  */
 public class dialogViews {
     int counter=0;
+    
+    private String url;
     private listComponent du;
+    private imageComponent dv;
     private Desktop desktop = Desktop.getDesktop();
     Stage fileChooserStage;
     Scene fileScene;
@@ -228,7 +232,7 @@ public class dialogViews {
 	primaryStage.setHeight(250); 
         
         Text t = new Text("Enter a new page title:");
-        TextArea b = new TextArea();
+        TextField b = new TextField();
         
         Button g = new Button("Okay");
         VBox body = new VBox(t,b,g);
@@ -244,11 +248,9 @@ public class dialogViews {
          g.setOnAction(e -> {
 	   ePortfolio.getSelectedPage().setTitle(b.getText());
            primaryStage.close();
-            try {
-                ePortfolio.getUI().startUI();
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           ePortfolio.getUI().loadSelectedPage();
+          
+           
 	});
     }
     public void updateStudentName(ePortfolioModel ePortfolio){
@@ -257,7 +259,7 @@ public class dialogViews {
 	primaryStage.setWidth(300);
 	primaryStage.setHeight(250); 
         Text t = new Text("Enter a new student name:");
-        TextArea b = new TextArea();
+        TextField b = new TextField();
         Button g = new Button("Okay");
         
         VBox body = new VBox(t,b,g);
@@ -270,6 +272,12 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+           g.setOnAction(e -> {
+	   ePortfolio.getSelectedPage().setStudentName(b.getText());
+           primaryStage.close();
+          ePortfolio.getUI().loadSelectedPage();
+           
+	});
     }
     public void updateFooter(ePortfolioModel ePortfolio){
  
@@ -277,6 +285,7 @@ public class dialogViews {
 	primaryStage.setHeight(250); 
         Text t = new Text("Enter new footer text content:");
         TextArea b = new TextArea();
+        b.setText(ePortfolio.getSelectedPage().getFooter());
         Button g = new Button("Okay");
         VBox body = new VBox(t,b,g);
          body.getStylesheets().add("css/style.css");
@@ -288,6 +297,12 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        g.setOnAction(e -> {
+	   ePortfolio.getSelectedPage().setFooter(b.getText());
+           primaryStage.close();
+          ePortfolio.getUI().loadSelectedPage();
+           
+	});
     }
     public void addTextComponent(ePortfolioModel ePortfolio){
     
@@ -528,10 +543,15 @@ public class dialogViews {
         Button fileChoose = new Button("Select Image...");
         fileChooser.setTitle("Open Resource File");
      //   fileChooser.showOpenDialog(stage);
+        ToggleGroup floats = new ToggleGroup();
         
-        Button left = new Button("Float Left");
-        Button right = new Button("Float Right");
-        Button neither = new Button("Neither");
+        RadioButton left = new RadioButton("Float Left");
+        left.setSelected(true);
+        left.setToggleGroup(floats);
+        RadioButton right = new RadioButton("Float Right");
+        right.setToggleGroup(floats);
+        RadioButton neither = new RadioButton("Neither");
+        neither.setToggleGroup(floats);
         HBox dummy = new HBox(left,right,neither);
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
@@ -561,6 +581,7 @@ public class dialogViews {
                         URL fileURL;
                         try {
                             fileURL = file.toURI().toURL();
+                             url = fileURL.toExternalForm();
                              Image slideImage = new Image(fileURL.toExternalForm());
                              comp.setImage(slideImage);
                              
@@ -580,6 +601,110 @@ public class dialogViews {
                     }
                 }
             });
+        g.setOnAction(e1 -> {
+            RadioButton aq =  (RadioButton) floats.getSelectedToggle();
+           imageComponent img = new imageComponent(url,aq.getText(),caption.getText());
+           ePortfolio.getSelectedPage().addComponent(img);
+           primaryStage.close();
+	});
+           
+    }
+        public void editImageComponent(imageComponent image){
+
+        primaryStage.setWidth(600);
+	primaryStage.setHeight(600); 
+       ImageView comp = new ImageView();
+       Image d = new Image(image.getSource());
+       comp.setImage(d);
+       double scaledHeight = 200;
+      double perc = scaledHeight / d.getHeight();
+       double scaledWidth = d.getWidth() * perc;
+        comp.setFitWidth(scaledWidth);
+         comp.setFitHeight(scaledHeight);
+       Text c = new Text("Caption");
+       TextField caption = new TextField();
+       caption.setText(image.getCaption());
+        FileChooser fileChooser = new FileChooser();
+        Button fileChoose = new Button("Select Image...");
+        fileChooser.setTitle("Open Resource File");
+     //   fileChooser.showOpenDialog(stage);
+        ToggleGroup floats = new ToggleGroup();
+        
+        RadioButton left = new RadioButton("Float Left");
+        if(image.getFloatValue().equals("Float Left")){
+            left.setSelected(true);
+        }
+        
+        left.setToggleGroup(floats);
+        RadioButton right = new RadioButton("Float Right");
+        right.setToggleGroup(floats);
+        if(image.getFloatValue().equals("Float Right")){
+            right.setSelected(true);
+        }
+        RadioButton neither = new RadioButton("Neither");
+        if(image.getFloatValue().equals("Neither")){
+            neither.setSelected(true);
+        }
+        neither.setToggleGroup(floats);
+        HBox dummy = new HBox(left,right,neither);
+        dummy.setSpacing(10);
+        dummy.setAlignment(Pos.CENTER);
+        Button g = new Button("Okay");
+        VBox body = new VBox(c,caption,comp,fileChoose,dummy,g);
+        body.getStylesheets().add("css/style.css");
+        body.setAlignment(Pos.TOP_CENTER);
+         body.getStyleClass().add("dialog_box");
+         c.getStyleClass().add("dialog_text");
+         g.getStyleClass().add("dialog_button");
+        fileChoose.getStyleClass().add("dialog_button");
+         left.getStyleClass().add("dialog_button");
+         right.getStyleClass().add("dialog_button");
+         neither.getStyleClass().add("dialog_button");
+           body.setSpacing(20);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+         url = image.getSource();
+           fileChoose.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    File file = fileChooser.showOpenDialog(fileChooserStage);
+                    if (file != null) {
+                        // GET AND SET THE IMAGE
+                        URL fileURL;
+                        try {
+                            fileURL = file.toURI().toURL();
+                             url = fileURL.toExternalForm();
+                             Image slideImage = new Image(fileURL.toExternalForm());
+                             comp.setImage(slideImage);
+                             
+                             
+                                 double scaledHeight = 200;
+                                 double perc = scaledHeight / slideImage.getHeight();
+                                  double scaledWidth = slideImage.getWidth() * perc;
+                                  comp.setFitWidth(scaledWidth);
+                                  comp.setFitHeight(scaledHeight);
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                      
+	    
+	 
+
+                    }
+                }
+            });
+        g.setOnAction(e1 -> {
+            RadioButton aq = (RadioButton) floats.getSelectedToggle();
+           imageComponent dv= new imageComponent(url,aq.getText(),caption.getText());
+           image.setCaption(dv.getCaption());
+           image.setSource(dv.getSource());
+           image.setFloatValue(dv.getFloatValue());
+           System.out.println(dv.getFloatValue());
+           primaryStage.close();
+	});
+           
     }
     public void addSlideshowComponent(ePortfolioModel ePortfolio){
         

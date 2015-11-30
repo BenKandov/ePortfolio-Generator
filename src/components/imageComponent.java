@@ -12,11 +12,14 @@ package components;
 public class imageComponent extends component {
     private String source;
     private String floatVal;
+    private String caption;
     
     
-    public imageComponent(String src,String fl){
+    
+    public imageComponent(String src,String fl,String c){
         this.source=src;   
         this.floatVal=fl;
+        this.caption=c;
     }
     
     public void setSource(String src){
@@ -25,6 +28,12 @@ public class imageComponent extends component {
     
     public String getSource(){
         return this.source;
+    }
+    public String getCaption(){
+        return this.caption;
+    }
+    public void setCaption(String c){
+        this.caption = c;
     }
     public String getFloatValue(){
         return this.floatVal; 

@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Tab;
 
 /**
  *
@@ -23,11 +24,25 @@ public class Page {
     private String layoutTemplate;
     private String colorTemplate;
     private String bannerImage;
+    private String footerText;
+    private Tab tab;
     
-    public Page(){
-        
+    public Page(String title){
+        this.footerText = " ";
+        this.title = title;
     }
-    
+    public void setTab(Tab tab){
+        this.tab = tab;
+    }
+    public Tab getTab(){
+        return this.tab;
+    }    
+    public String getFooter(){
+        return this.footerText;
+    }
+    public void setFooter(String s){
+        this.footerText=s;
+    }
     public void addComponent(component c){
         content.add(c);
         components.add(c.getType() + content.size());

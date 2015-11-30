@@ -13,6 +13,7 @@ public class paragraphComponent extends textComponent {
     private String content;
     private String font;
     
+    
     public paragraphComponent(String content,String font){
         this.content=content;
         this.font = font;
