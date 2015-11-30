@@ -59,6 +59,8 @@ public class WorkspaceView {
     Text footerText;
     Tab currentTab;
     
+    Boolean homie = false;
+    
     Stage primaryStage;
     Scene primaryScene;
     
@@ -157,6 +159,8 @@ public class WorkspaceView {
     }
     
     public void loadSelectedPage(){
+       
+       
         Tab currentTab = siteToolbar.getSelectionModel().getSelectedItem();
         FlowPane pageHead = new FlowPane();
        pageTitle = new Text(ePortfolio.getSelectedPage().getTitle());
@@ -188,31 +192,29 @@ public class WorkspaceView {
        currentTab.setContent(body);
        
        dialogViews dum = new dialogViews();
-       page.setOnMouseClicked(new EventHandler<MouseEvent>(){
-          @Override
-          public void handle(MouseEvent event){
-              char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
-              int intex = Character.getNumericValue(index);
-              component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
-              if(selected.getType().equals("Paragraph Component")){
-                 dum.editParagraphComponent((paragraphComponent) selected);
-              }
-              else if(selected.getType().equals("Header Component")){
-                  dum.editHeaderComponent((headerComponent) selected);
-              }
-              else if(selected.getType().equals("List Component")){
-                  dum.editListComponent((listComponent) selected);
-              }
-              else if(selected.getType().equals("Image Component")){
-                  dum.editImageComponent((imageComponent) selected);
-              }
-              System.out.println(index);
-          }
+       page.setOnMouseClicked((MouseEvent event) -> {
+           char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
+           int intex = Character.getNumericValue(index);
+           component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
+           if(selected.getType().equals("Paragraph Component")){
+               dum.editParagraphComponent((paragraphComponent) selected);
+           }
+           else if(selected.getType().equals("Header Component")){
+               dum.editHeaderComponent((headerComponent) selected);
+           }
+           else if(selected.getType().equals("List Component")){
+               dum.editListComponent((listComponent) selected);
+           }
+           else if(selected.getType().equals("Image Component")){
+               dum.editImageComponent((imageComponent) selected);
+           }
+           System.out.println(index);
         });
         
         
         Page actualPage = ePortfolio.getSelectedPage();
         pageTitle.setText(actualPage.getTitle());
+        actualPage.getTab().setText(actualPage.getTitle());
         studentName.setText(actualPage.getStudentName());
         footerText.setText(actualPage.getFooter());
     }
@@ -324,6 +326,29 @@ public class WorkspaceView {
           tab.setClosable(false);
          this.loadSelectedPage();
          currentTab =tab;
+         
+         siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Tab> arg0,
+                    Tab arg1, Tab arg2) {
+                    if(arg2.equals(tab)){
+                        ePortfolio.selectPage(ePortfolio.getPages().get(0));
+                        currentTab=arg2;
+                        siteToolbar.getSelectionModel().select(arg2);
+                        
+                        System.out.println("swag" + ePortfolio.getSelectedPage().getTitle());
+                        System.out.println(arg2.getText());
+                        homie = true;
+                        loadSelectedPage();
+                    }
+                    
+                 
+                 
+            }
+        });
+      
+         
           siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
                 public void changed(ObservableValue<? extends Tab> observable,
@@ -437,6 +462,7 @@ public class WorkspaceView {
     public void setEventHandlers(){
        fileController fileControl = new fileController(this,fileManager);
        dialogViews dialogs = new dialogViews();
+      
        DialogController = new dialogController(this,dialogs);
        
        selectSiteViewerWorkspace.setOnAction(e -> {
@@ -453,62 +479,147 @@ public class WorkspaceView {
               mainPane.setCenter(pageEditorPane);
 	});
            selectLayoutTemplate.setOnAction(e -> {
+               if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	    DialogController.selectLayoutTemplate(ePortfolio);
 	});
            selectColorTemplate.setOnAction(e -> {
+               if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	    DialogController.selectColorTemplate(ePortfolio);
 	});
            selectBannerImage.setOnAction(e -> {
+               if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	    DialogController.selectBannerImage(ePortfolio);
 	});
         chooseComponentFont.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	    DialogController.chooseComponentFont(ePortfolio);
 	});
         updatePageTitle.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	    DialogController.updatePageTitle(ePortfolio);
             pageTitle.setText(ePortfolio.getSelectedPage().getTitle());
 	});
         updateStudentName.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.updateStudentName(ePortfolio);
            studentName.setText(ePortfolio.getSelectedPage().getStudentName());
 	});
         updateFooter.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.updateFooter(ePortfolio);
 	});
       
         addTextComponent.setOnAction(e -> {
+              if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
+                 
 	   DialogController.addTextComponent(ePortfolio);
 	});
         
         addImageComponent.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+                     homie=false;
+                }
 	   DialogController.addImageComponent(ePortfolio);
 	});
         addSlideshowComponent.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.addSlideShowComponent(ePortfolio);
 	});
         addVideoComponent.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.addVideoComponent(ePortfolio);
 	});
        
         
         
         newPortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
            fileControl.handleNewEportfolioRequest();
 	   DialogController.newPortfolio(ePortfolio);
 	});
         loadPortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.loadPortfolio(ePortfolio);
 	});
         savePortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.savePortfolio(ePortfolio);
 	});
         saveAsPortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.saveAsPortfolio(ePortfolio);
 	});
         exportPortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.exportPortfolio(ePortfolio);
 	});
         exitPortfolio.setOnAction(e -> {
+            if(homie){
+                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
+              
+                     homie=false;
+                }
 	   DialogController.exitPortfolio(ePortfolio);
 	});
     }
