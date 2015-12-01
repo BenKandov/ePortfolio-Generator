@@ -10,6 +10,7 @@ import components.headerComponent;
 import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
+import fileManager.ePortfolioFileManager;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -602,10 +603,14 @@ public class dialogViews {
                 }
             });
         g.setOnAction(e1 -> {
+            if(comp.getImage().equals(d)){
+                
+            }else{
             RadioButton aq =  (RadioButton) floats.getSelectedToggle();
            imageComponent img = new imageComponent(url,aq.getText(),caption.getText());
            ePortfolio.getSelectedPage().addComponent(img);
            primaryStage.close();
+            }
 	});
            
     }
@@ -1160,10 +1165,12 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void savePortfolio(ePortfolioModel ePortfolio){
+    public void savePortfolio(ePortfolioModel ePortfolio) throws IOException{
          
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
+        ePortfolioFileManager fm = new ePortfolioFileManager();
+        fm.savePage(ePortfolio.getSelectedPage());
         Text t = new Text("EPortfolio succesfully Saved:");
         Button g = new Button("OK");
         VBox body = new VBox(t,g);
@@ -1194,7 +1201,11 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         g.setOnAction(e -> {
-	   this.savePortfolio(ePortfolio);
+            try {
+                this.savePortfolio(ePortfolio);
+            } catch (IOException ex) {
+                Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	});
     }
     public void exportPortfolio(ePortfolioModel ePortfolio){

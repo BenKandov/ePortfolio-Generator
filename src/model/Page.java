@@ -86,6 +86,9 @@ public class Page {
     public void setBannerImage(String src){
         this.bannerImage=src;
     }
+    public ArrayList<component> getContent(){
+        return this.content;
+    }
             
       
 }

@@ -295,6 +295,9 @@ public class WorkspaceView {
             public void changed(ObservableValue<? extends Tab> arg0,
                     Tab arg1, Tab arg2) {
                     ePortfolio.selectPage(ePortfolio.pageByTab(arg2));
+                    if(arg2.getText().equals("HomePage")){
+                        ePortfolio.selectPage(ePortfolio.getPages().get(0));
+                    }
                  
             }
         });
@@ -327,26 +330,7 @@ public class WorkspaceView {
          this.loadSelectedPage();
          currentTab =tab;
          
-         siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Tab> arg0,
-                    Tab arg1, Tab arg2) {
-                    if(arg2.equals(tab)){
-                        ePortfolio.selectPage(ePortfolio.getPages().get(0));
-                        currentTab=arg2;
-                        siteToolbar.getSelectionModel().select(arg2);
-                        
-                        System.out.println("swag" + ePortfolio.getSelectedPage().getTitle());
-                        System.out.println(arg2.getText());
-                        homie = true;
-                        loadSelectedPage();
-                    }
-                    
-                 
-                 
-            }
-        });
+         
       
          
           siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -479,147 +463,82 @@ public class WorkspaceView {
               mainPane.setCenter(pageEditorPane);
 	});
            selectLayoutTemplate.setOnAction(e -> {
-               if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+            
 	    DialogController.selectLayoutTemplate(ePortfolio);
 	});
            selectColorTemplate.setOnAction(e -> {
-               if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+            
 	    DialogController.selectColorTemplate(ePortfolio);
 	});
            selectBannerImage.setOnAction(e -> {
-               if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+            
 	    DialogController.selectBannerImage(ePortfolio);
 	});
         chooseComponentFont.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
 	    DialogController.chooseComponentFont(ePortfolio);
 	});
         updatePageTitle.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+        
 	    DialogController.updatePageTitle(ePortfolio);
             pageTitle.setText(ePortfolio.getSelectedPage().getTitle());
 	});
         updateStudentName.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
+           
 	   DialogController.updateStudentName(ePortfolio);
            studentName.setText(ePortfolio.getSelectedPage().getStudentName());
 	});
         updateFooter.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+         
 	   DialogController.updateFooter(ePortfolio);
 	});
       
         addTextComponent.setOnAction(e -> {
-              if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
                  
 	   DialogController.addTextComponent(ePortfolio);
 	});
         
         addImageComponent.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-                     homie=false;
-                }
+           
 	   DialogController.addImageComponent(ePortfolio);
 	});
         addSlideshowComponent.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+           
 	   DialogController.addSlideShowComponent(ePortfolio);
 	});
         addVideoComponent.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+        
 	   DialogController.addVideoComponent(ePortfolio);
 	});
        
         
         
         newPortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
            fileControl.handleNewEportfolioRequest();
 	   DialogController.newPortfolio(ePortfolio);
 	});
         loadPortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+           
 	   DialogController.loadPortfolio(ePortfolio);
 	});
         savePortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+           
 	   DialogController.savePortfolio(ePortfolio);
 	});
         saveAsPortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
 	   DialogController.saveAsPortfolio(ePortfolio);
 	});
         exportPortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+           
+          
 	   DialogController.exportPortfolio(ePortfolio);
 	});
         exitPortfolio.setOnAction(e -> {
-            if(homie){
-                     ePortfolio.selectPage(ePortfolio.getPages().get(0));
-              
-                     homie=false;
-                }
+          
 	   DialogController.exitPortfolio(ePortfolio);
 	});
     }
