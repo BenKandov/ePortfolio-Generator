@@ -292,7 +292,10 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
          g.setOnAction(e -> {
-	   ePortfolio.getSelectedPage().setTitle(b.getText());
+           
+            ePortfolio.getSelectedPage().setTitle(b.getText());
+           
+	  
            primaryStage.close();
            
            
@@ -1237,6 +1240,9 @@ public class dialogViews {
     public void loadPortfolio(ePortfolioModel ePortfolio){
         ePortfolioFileManager fm = new ePortfolioFileManager();
         DirectoryChooser chooser = new DirectoryChooser();
+        File file = new File("projects");
+        file.mkdir();
+        chooser.setInitialDirectory(file);
         Button fileChoose = new Button("Choose portfolio to load");
         
         primaryStage.setWidth(300);
@@ -1264,11 +1270,12 @@ public class dialogViews {
                         // GET AND SET THE IMAGE
                         URL fileURL;
                         try {
-                            fileURL = file.toURI().toURL();
+                         //   fileURL = file.toURI().toURL();
                             
-                             url = fileURL.toExternalForm();
-                             url = fileURL.getPath();
-                            fm.loadEPortfolio(ePortfolio, url);
+                           //  url = fileURL.toExternalForm();
+                         //    url = fileURL.getPath();
+                           url = file.getName();
+                            fm.loadEPortfolio(ePortfolio, "projects"+"/"+url,ePortfolio.getUI().siteToolbar,ePortfolio.getUI());
                              
                              
                         } catch (MalformedURLException ex) {

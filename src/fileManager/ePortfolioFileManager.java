@@ -25,7 +25,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -37,6 +43,7 @@ import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 import model.ePortfolioModel;
 import model.Page;
+import views.WorkspaceView;
 
 /**
  *
@@ -190,14 +197,14 @@ public class ePortfolioFileManager {
          JsonArray jA = jsb.build();
          return jA;
      }
-     public void loadEPortfolio(ePortfolioModel ePortfolioToLoad,String folderFilePath) throws IOException{
+     public void loadEPortfolio(ePortfolioModel ePortfolioToLoad,String folderFilePath,TabPane siteToolbar,WorkspaceView ui) throws IOException{
         File file = new File(folderFilePath);
         file.mkdir();
        
      //, 
         
         //Let's get that navBar
-        JsonObject HomePage = loadJSONFile(folderFilePath+"HomePage.json");
+        JsonObject HomePage = loadJSONFile(folderFilePath+"/HomePage.json");
        // JsonObject HomePage = loadJSONFile("projects/BenjaminKandov/HomePage.json");
         JsonArray navBarArray = HomePage.getJsonArray("navBar");
         ArrayList<String> names = new ArrayList();
@@ -208,12 +215,42 @@ public class ePortfolioFileManager {
         //Let's get that navBar
         
         ePortfolioToLoad.reset();
+        
+        
+        int ee = siteToolbar.getTabs().size();
+        siteToolbar.getTabs().remove(0, ee);
         for(String name:names){
             
                 Page page = new Page("blank");
-             
-             
-                loadPage(page,folderFilePath + name);
+                Tab tab = new Tab("untitled");
+                page.setTab(tab);
+                siteToolbar.getTabs().add(tab);
+                siteToolbar.getSelectionModel().select(tab);
+               tab.setOnCloseRequest(new EventHandler<Event>(){
+                @Override
+                public void handle(Event t){
+                     ePortfolioToLoad.remove(ePortfolioToLoad.pageByTab(tab));
+                }
+               });
+                 siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+                 @Override
+                public void changed(ObservableValue<? extends Tab> arg0,
+                    Tab arg1, Tab arg2) {
+                    ePortfolioToLoad.selectPage(ePortfolioToLoad.pageByTab(arg2));
+                    if(arg2.getText().equals("HomePage")){
+                        ePortfolioToLoad.selectPage(ePortfolioToLoad.getPages().get(0));
+                    }
+                 
+                     }
+                 });
+                loadPage(page,folderFilePath + SLASH+ name,tab);
+                tab.setText(page.getTitle());
+              //  ui.changePageTitle(page.getTitle());
+                ui.setCurrentTab(tab);
+                ePortfolioToLoad.selectPage(page);
+                ui.loadSelectedPage();
+              
                 ePortfolioToLoad.addPage(page);
                 
            
@@ -224,22 +261,25 @@ public class ePortfolioFileManager {
          
          
      }
-     public void loadPage(Page page,String jsonFilePath) throws IOException{
+     public void loadPage(Page page,String jsonFilePath,Tab tab) throws IOException{
         JsonObject json = loadJSONFile(jsonFilePath + ".json");
         page.setTitle(json.getString("title"));
         page.setBannerImage(json.getString("bannerImg"));
-        
+        tab.setText(json.getString("title"));
         JsonArray jsonComponentsArray = json.getJsonArray("components");
         for(int i =0;i<jsonComponentsArray.size();i++){
             JsonObject componentJso = jsonComponentsArray.getJsonObject(i);
             if(componentJso.getString("type").equals("text")){
                 paragraphComponent para = new paragraphComponent(componentJso.getString("content"),componentJso.getString("font")); 
+                page.addComponent(para);
             }
             else if(componentJso.getString("type").equals("image")){
                 imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"));
+                page.addComponent(image);
             }
             else if(componentJso.getString("type").equals("header")){
                 headerComponent header = new headerComponent(componentJso.getString("content"),componentJso.getString("font"));
+                page.addComponent(header);
             }
         }
         

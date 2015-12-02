@@ -131,6 +131,9 @@ public class WorkspaceView {
         
         studentName.setText(ePortfolio.getStudentName());
     }
+    public void changePageTitle(String t){
+        pageTitle.setText(t);
+    }
    
    
     public WorkspaceView(ePortfolioFileManager initFileManager){
@@ -168,6 +171,9 @@ public class WorkspaceView {
     }
     public ePortfolioModel getEPortfolio(){
         return this.ePortfolio;
+    }
+    public void setCurrentTab(Tab tab){
+        this.currentTab = tab;
     }
     
     public void loadSelectedPage(){
@@ -502,8 +508,12 @@ public class WorkspaceView {
 	    DialogController.chooseComponentFont(ePortfolio);
 	});
         updatePageTitle.setOnAction(e -> {
-        
-	    DialogController.updatePageTitle(ePortfolio);
+            if(ePortfolio.getSelectedPage().getTitle().equals("HomePage")){
+                
+            }else{
+                DialogController.updatePageTitle(ePortfolio);
+            }
+	    
           
 	});
         updateStudentName.setOnAction(e -> {
