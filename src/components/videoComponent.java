@@ -11,14 +11,24 @@ package components;
  */
 public class videoComponent extends component {
     
+    private String caption;
     private String source;
     private int width;
     private int height;
     
-    public videoComponent(String src,int w,int h){
+    public videoComponent(String caption,String src,int w,int h){
+        this.caption=caption;
         this.source = src;
         this.width = w;
         this.height = h;
+    }
+    
+    public void setCaption(String c){
+        this.caption=c;
+    }
+    
+    public String getCaption(){
+        return this.caption;
     }
     
     public void setSource(String src){

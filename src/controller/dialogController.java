@@ -57,25 +57,25 @@ public class dialogController {
         dV.addSlideshowComponent(e);
     }
     public void addVideoComponent(ePortfolioModel e){
-        dV.addVideoComponent("");
+        dV.addVideoComponent(e);
     }
     public void removeComponent(ePortfolioModel e){
         dV.removeComponent(e);
     }
     public void editParagraphComponent(paragraphComponent p){
-        dV.editParagraphComponent(p);
+    //    dV.editParagraphComponent(p);
     }
     public void editImageComponent(ePortfolioModel e){
         dV.addImageComponent(e);
     }
     public void editVideoComponent(String url,ePortfolioModel e){
-        dV.addVideoComponent(url);
+      //  dV.editVideoComponent(url,e);
     }
     public void addTextHyperlink(ePortfolioModel e){
         dV.addTextHyperlink(e);
     }
     public void editListComponent(listComponent list){
-        dV.editListComponent(list);
+        //dV.editListComponent(list);
     }
   
     public void newPortfolio(ePortfolioModel e){

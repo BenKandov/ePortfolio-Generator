@@ -10,6 +10,7 @@ import components.headerComponent;
 import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
+import components.videoComponent;
 import fileManager.ePortfolioFileManager;
 import java.awt.Desktop;
 import java.io.File;
@@ -754,11 +755,12 @@ public class dialogViews {
 	});
            
     }
-        public void editImageComponent(imageComponent image){
+        public void editImageComponent(imageComponent image,ePortfolioModel ePortfolio){
 
         primaryStage.setWidth(600);
 	primaryStage.setHeight(800); 
        ImageView comp = new ImageView();
+       Button remove = new Button("Remove");
          Text r = new Text("Input width: ");
         TextField q = new TextField();
         q.setText(Integer.toString(image.getWidth()));
@@ -801,7 +803,7 @@ public class dialogViews {
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
         Button g = new Button("Okay");
-        VBox body = new VBox(c,caption,comp,fileChoose,dummy,r,q,s,f,g);
+        VBox body = new VBox(remove,c,caption,comp,fileChoose,dummy,r,q,s,f,g);
         body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
@@ -813,7 +815,8 @@ public class dialogViews {
          neither.getStyleClass().add("dialog_button");
          r.getStyleClass().add("dialog_text");
          s.getStyleClass().add("dialog_text");
-           body.setSpacing(20);
+         remove.getStyleClass().add("dialog_button");
+           body.setSpacing(10);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -858,6 +861,12 @@ public class dialogViews {
            image.setHeight(dv.getHeight());
            System.out.println(dv.getFloatValue());
            primaryStage.close();
+	});
+         remove.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().removeComponent(image);
+            primaryStage.close();
+          
+            ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
 	});
            
     }
@@ -976,9 +985,9 @@ public class dialogViews {
           view.setFitWidth(scaledWidth);
           view.setFitHeight(scaledHeight);
     }
-    public void addVideoComponent(String tot){
+    public void addVideoComponent(ePortfolioModel ePortfolio){
         FileChooser fileChooser = new FileChooser();
-        TextField comp = new TextField(tot);
+        TextField comp = new TextField();
        
         primaryStage.setWidth(600);
 	primaryStage.setHeight(600); 
@@ -1012,12 +1021,107 @@ public class dialogViews {
                 @Override
                 public void handle(final ActionEvent e) {
                     File file = fileChooser.showOpenDialog(fileChooserStage);
+                   
+                    
                     if (file != null) {
                        comp.setText(file.getPath());
                              
                     }
                 }
-            });
+           });
+          g.setOnAction(e1 -> {
+            
+              if(comp.getText().equals("")){
+                  
+              }else{
+              if(q.getText().equals("")){
+                  q.setText("100");
+              }
+              if(f.getText().equals("")){
+                  f.setText("100");
+              }
+             videoComponent video = new videoComponent(caption.getText(),comp.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
+             ePortfolio.getSelectedPage().addComponent(video);
+             primaryStage.close();
+              }
+	});
+       
+    }
+      public void editVideoComponent(videoComponent video,ePortfolioModel ePortfolio){
+        FileChooser fileChooser = new FileChooser();
+        TextField comp = new TextField(video.getSource());
+       
+        primaryStage.setWidth(600);
+	primaryStage.setHeight(600); 
+        Text t = new Text("Caption:");
+        
+        Button remove = new Button("Remove");
+        
+        FlowPane topPane = new FlowPane(remove,t);
+        topPane.setHgap(180);
+        Button g = new Button("Okay");
+        Text r = new Text("Input width: ");
+        TextField q = new TextField(Integer.toString(video.getWidth()));
+        Text s = new Text("Input height: ");
+        TextField f = new TextField(Integer.toString(video.getHeight()));
+        TextField caption = new TextField(video.getCaption());
+        
+        Button fileChoose = new Button("Choose:");
+        VBox body = new VBox(topPane,caption,fileChoose,comp,g,r,q,s,f);
+        
+        body.getStylesheets().add("css/style.css");
+        t.getStyleClass().add("dialog_text");
+        body.setAlignment(Pos.TOP_CENTER);
+         body.getStyleClass().add("dialog_box");
+         g.getStyleClass().add("dialog_button");
+        fileChoose.getStyleClass().add("dialog_button");
+         
+         r.getStyleClass().add("dialog_text");
+         s.getStyleClass().add("dialog_text");
+         remove.getStyleClass().add("dialog_button");
+            body.setSpacing(20);
+        primaryScene = new Scene(body);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+       fileChoose.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    File file = fileChooser.showOpenDialog(fileChooserStage);
+                   
+                    
+                    if (file != null) {
+                       comp.setText(file.getPath());
+                             
+                    }
+                }
+           });
+          g.setOnAction(e1 -> {
+            
+              if(comp.getText().equals("")){
+                  
+              }else{
+              if(q.getText().equals("")){
+                  q.setText(Integer.toString(video.getWidth()));
+              }
+              if(f.getText().equals("")){
+                  f.setText(Integer.toString(video.getHeight()));
+              }
+             videoComponent dummy = new videoComponent(caption.getText(),comp.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
+             video.setHeight(dummy.getHeight());
+             video.setWidth(dummy.getWidth());
+             video.setSource(dummy.getSource());
+             video.setCaption(dummy.getCaption());
+             primaryStage.close();
+              }
+	});
+         remove.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().removeComponent(video);
+            primaryStage.close();
+          
+            ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
+	});
+       
     }
     public void removeComponent(ePortfolioModel ePortfolio){
         
@@ -1042,11 +1146,12 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
     }
-    public void editParagraphComponent(paragraphComponent para){
+    public void editParagraphComponent(paragraphComponent para,ePortfolioModel ePortfolio){
        primaryStage.setWidth(600);
 	primaryStage.setHeight(400);
         ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
+        Button remove = new Button("Remove");
         Text t = new Text("Write paragraph:");
         TextArea r = new TextArea();
         r.setText(para.getContent());
@@ -1099,12 +1204,13 @@ public class dialogViews {
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
         
-        VBox body = new VBox(t,r,dummy,g);
+        VBox body = new VBox(remove,t,r,dummy,g);
          body.getStylesheets().add("css/style.css");
          body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
            g.getStyleClass().add("dialog_button");
            t.getStyleClass().add("dialog_text");
+         remove.getStyleClass().add("dialog_button");
              body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
@@ -1116,10 +1222,16 @@ public class dialogViews {
              para.setContent(r.getText());
              primaryStage.close();
 	});
+          remove.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().removeComponent(para);
+            primaryStage.close();
+          
+            ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
+	});
         
     }
     
-    public void editHeaderComponent(headerComponent header){
+    public void editHeaderComponent(headerComponent header, ePortfolioModel ePortfolio){
     
         primaryStage.setWidth(600);
 	primaryStage.setHeight(350); 
@@ -1128,7 +1240,7 @@ public class dialogViews {
         r.setText(header.getContent());
          ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
-       
+        Button remove = new Button("Remove");
         RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
@@ -1177,7 +1289,8 @@ public class dialogViews {
         HBox dummy = new HBox(a,b,c,d,e);
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
-        VBox body = new VBox(t,r,dummy,g);
+        VBox body = new VBox(remove,t,r,dummy,g);
+        remove.getStyleClass().add("dialog_button");
           body.getStylesheets().add("css/style.css");
             body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
@@ -1193,13 +1306,21 @@ public class dialogViews {
              header.setContent(r.getText());
              primaryStage.close();
 	});
+         remove.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().removeComponent(header);
+            primaryStage.close();
+          
+            ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
+	});
     }
     
-    public void editListComponent(listComponent list){
+    public void editListComponent(listComponent list, ePortfolioModel ePortfolio){
         primaryStage.setWidth(300);
 	primaryStage.setHeight(500); 
         VBox body = new VBox();
         ArrayList<TextField> contents = new ArrayList();
+        
+        Button removeComponent = new Button("Remove Component");
         
         ScrollPane scrollPane = new ScrollPane(body);
         scrollPane.setFitToHeight(true);
@@ -1208,7 +1329,7 @@ public class dialogViews {
        
         Button g = new Button("Finished");
       
-        FlowPane rand = new FlowPane(add,g);
+        FlowPane rand = new FlowPane(removeComponent,add,g);
         rand.setHgap(60);
         body.getChildren().add(rand);
         for(int i =0;i<list.getList().size();i++){
@@ -1234,7 +1355,7 @@ public class dialogViews {
         body.getStyleClass().add("dialog_box");
         g.getStyleClass().add("dialog_button");
         add.getStyleClass().add("dialog_button");
-       
+        removeComponent.getStyleClass().add("dialog_button");
         body.setSpacing(20);
         primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
@@ -1271,6 +1392,12 @@ public class dialogViews {
             primaryStage.close();
             
             
+	});
+         removeComponent.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().removeComponent(list);
+            primaryStage.close();
+          
+            ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
 	});
         
         //return du;

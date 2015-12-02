@@ -11,6 +11,7 @@ import components.headerComponent;
 import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
+import components.videoComponent;
 import controller.dialogController;
 import controller.fileController;
 import fileManager.ePortfolioFileManager;
@@ -61,6 +62,8 @@ public class WorkspaceView {
     
     Stage removePageStage;
     Scene removePageScene;
+    
+    ListView componentList;
     
     Text colorTemplate;
     Text layoutTemplate;
@@ -225,9 +228,9 @@ public class WorkspaceView {
          
        //templates
        
-       ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
-       page.getStylesheets().add("css/style.css");
-       page.getSelectionModel().getSelectedItem();
+       componentList = new ListView(ePortfolio.getSelectedPage().getComponents());
+       componentList.getStylesheets().add("css/style.css");
+       componentList.getSelectionModel().getSelectedItem();
        BorderPane body = new BorderPane();
        body.getStylesheets().add("css/style.css");
        pageHead.getStyleClass().add("dialog_box");
@@ -235,7 +238,7 @@ public class WorkspaceView {
        studentName.getStyleClass().add("dialog_text");
        body.setRight(templates);
        body.setTop(pageHead);
-       body.setCenter(page);
+       body.setCenter(componentList);
        FlowPane footer = new FlowPane();
        footer.setAlignment(Pos.CENTER);
        
@@ -248,23 +251,26 @@ public class WorkspaceView {
        currentTab.setContent(body);
        
        dialogViews dum = new dialogViews();
-       page.setOnMouseClicked((MouseEvent event) -> {
-           char index = page.getSelectionModel().getSelectedItem().toString().charAt(page.getSelectionModel().getSelectedItem().toString().length()-1);
+       componentList.setOnMouseClicked((MouseEvent event) -> {
+           char index = componentList.getSelectionModel().getSelectedItem().toString().charAt(componentList.getSelectionModel().getSelectedItem().toString().length()-1);
            int intex = Character.getNumericValue(index);
            component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
            if(selected.getType().equals("Paragraph Component")){
-               dum.editParagraphComponent((paragraphComponent) selected);
+               dum.editParagraphComponent((paragraphComponent) selected,ePortfolio);
            }
            else if(selected.getType().equals("Header Component")){
-               dum.editHeaderComponent((headerComponent) selected);
+               dum.editHeaderComponent((headerComponent) selected,ePortfolio);
            }
            else if(selected.getType().equals("List Component")){
-               dum.editListComponent((listComponent) selected);
+               dum.editListComponent((listComponent) selected,ePortfolio);
            }
            else if(selected.getType().equals("Image Component")){
-               dum.editImageComponent((imageComponent) selected);
+               dum.editImageComponent((imageComponent) selected,ePortfolio);
            }
-           System.out.println(index);
+           else if(selected.getType().equals("Video Component")){
+               dum.editVideoComponent((videoComponent) selected,ePortfolio);
+           }
+           
         });
         
         

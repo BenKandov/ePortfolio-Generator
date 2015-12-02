@@ -108,6 +108,9 @@ public class Page {
     public void setFont(String f){
         this.pageFont=f;
     }
+    public void removeComponent(component c){
+        content.remove(c);
+    }
     
       
 }
