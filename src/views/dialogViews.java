@@ -38,11 +38,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
+import model.Page;
 import model.ePortfolioModel;
 
 /**
@@ -148,41 +150,84 @@ public class dialogViews {
     }
     public void selectBannerImage(ePortfolioModel ePortfolio){
   
-	primaryStage.setWidth(350);
-	primaryStage.setHeight(200); 
-        VBox body = new VBox(20);
-        body.getStylesheets().add("css/style.css");
-        body.getStyleClass().add("dialog_box");
-        Text t = new Text("Select a banner image:");
+	primaryStage.setWidth(600);
+	primaryStage.setHeight(600); 
+       ImageView comp = new ImageView();
+        Image d = new Image("Icons/question.png");
+       if(ePortfolio.getSelectedPage().getBannerImage().equals("Nothing")){
+           comp.setImage(d);
+       }else{
+           System.out.println("yeah it gets here");
+           Image oldImage = new Image(ePortfolio.getSelectedPage().getBannerImage());
+           comp.setImage(oldImage);
+       }
+      
        
-        
-        Button a = new Button("A");
-        Button b = new Button("B");
-        Button c = new Button("C");
-        Button d = new Button("D");
-        Button e = new Button("E");
-        body.getStylesheets().add("css/style.css");
-        body.getStyleClass().add("dialog_box");
-        a.getStyleClass().add("dialog_button");
-        b.getStyleClass().add("dialog_button");
-        c.getStyleClass().add("dialog_button");
-        d.getStyleClass().add("dialog_button");
-        e.getStyleClass().add("dialog_button");
-        
-        HBox dummy = new HBox(a,b,c,d,e);
-        dummy.setSpacing(10);
-        
-        dummy.setAlignment(Pos.CENTER);
-        body.getChildren().add(t);
+       double scaledHeight = 200;
+      double perc = scaledHeight / d.getHeight();
+       double scaledWidth = d.getWidth() * perc;
+        comp.setFitWidth(scaledWidth);
+         comp.setFitHeight(scaledHeight);
        
-         body.getChildren().add(dummy);
-         body.setAlignment(Pos.TOP_CENTER);
-         t.getStyleClass().add("dialog_text");
+        FileChooser fileChooser = new FileChooser();
+        Button fileChoose = new Button("Select Image...");
+        fileChooser.setTitle("Open Resource File");
+     //   fileChooser.showOpenDialog(stage);
+        Button g = new Button("Okay");
+        VBox body = new VBox(comp,fileChoose,g);
+        body.getStylesheets().add("css/style.css");
+        body.setAlignment(Pos.TOP_CENTER);
+         body.getStyleClass().add("dialog_box");
+         g.getStyleClass().add("dialog_button");
+        fileChoose.getStyleClass().add("dialog_button");
+        
+           body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        
+           fileChoose.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    File file = fileChooser.showOpenDialog(fileChooserStage);
+                    if (file != null) {
+                        // GET AND SET THE IMAGE
+                        URL fileURL;
+                        try {
+                            fileURL = file.toURI().toURL();
+                             url = fileURL.toExternalForm();
+                             Image slideImage = new Image(fileURL.toExternalForm());
+                             comp.setImage(slideImage);
+                             
+                             
+                                 double scaledHeight = 200;
+                                 double perc = scaledHeight / slideImage.getHeight();
+                                  double scaledWidth = slideImage.getWidth() * perc;
+                                  comp.setFitWidth(scaledWidth);
+                                  comp.setFitHeight(scaledHeight);
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                      
+	    
+	 
+
+                    }
+                }
+            });
+        g.setOnAction(e1 -> {
+            if(comp.getImage().equals(d)){
+                
+            }else{
+            
+           
+           ePortfolio.getSelectedPage().setBannerImage(url);
+           primaryStage.close();
+            }
+	});
     }
-   ;
+   
     public void chooseComponentFont(ePortfolioModel ePortfolio){
       
 	
@@ -249,6 +294,8 @@ public class dialogViews {
          g.setOnAction(e -> {
 	   ePortfolio.getSelectedPage().setTitle(b.getText());
            primaryStage.close();
+           
+           
            ePortfolio.getUI().loadSelectedPage();
           
            
@@ -273,8 +320,15 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-           g.setOnAction(e -> {
-	   ePortfolio.getSelectedPage().setStudentName(b.getText());
+        g.setOnAction(e -> {
+	   ePortfolio.setStudentName(b.getText());
+          Page placeholder = ePortfolio.getSelectedPage();
+           for(Page page:ePortfolio.getPages()){
+             
+               ePortfolio.selectPage(page);
+               ePortfolio.getUI().loadSelectedPage();
+           }
+           ePortfolio.selectPage(placeholder);
            primaryStage.close();
           ePortfolio.getUI().loadSelectedPage();
            
@@ -394,8 +448,8 @@ public class dialogViews {
         primaryStage.show();
         String font = "";
          g.setOnAction(e1 -> {
-             
-             paragraphComponent para = new paragraphComponent(r.getText(),fonts.getSelectedToggle().toString());
+             RadioButton qw = (RadioButton) fonts.getSelectedToggle();
+             paragraphComponent para = new paragraphComponent(r.getText(),qw.getText());
              ePortfolio.getSelectedPage().addComponent(para);
              primaryStage.close();
 	});
@@ -454,8 +508,8 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
             g.setOnAction(e1 -> {
-             
-             headerComponent header = new headerComponent(r.getText(),fonts.getSelectedToggle().toString());
+             RadioButton clown = (RadioButton) fonts.getSelectedToggle();
+             headerComponent header = new headerComponent(r.getText(),clown.getText());
              ePortfolio.getSelectedPage().addComponent(header);
              primaryStage.close();
 	});
@@ -903,24 +957,39 @@ public class dialogViews {
         RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
-        a.setSelected(true);
+        if(para.getFont().equals("Font A")){
+            a.setSelected(true);
+        }
+        
         a.setToggleGroup(fonts);
         RadioButton b = new RadioButton("Font B");
         b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
-        b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
+        b.setStyle("-fx-font-family: 'Shadows Into Light' ;");       
         b.setToggleGroup(fonts);
+         if(para.getFont().equals("Font B")){
+            b.setSelected(true);
+        }
         RadioButton c = new RadioButton("Font C");
         c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
         c.setStyle("-fx-font-family: 'Indie Flower' ;");
         c.setToggleGroup(fonts);
+        if(para.getFont().equals("Font C")){
+            c.setSelected(true);
+        }
         RadioButton d = new RadioButton("Font D");
         d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
         d.setStyle("-fx-font-family: 'Poiret One' ;");
         d.setToggleGroup(fonts);
+        if(para.getFont().equals("Font D")){
+            d.setSelected(true);
+        }
         RadioButton e = new RadioButton("Font E");
         e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
         e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
         e.setToggleGroup(fonts);
+        if(para.getFont().equals("Font E")){
+            e.setSelected(true);
+        }
         
         a.getStyleClass().add("dialog_button");
         b.getStyleClass().add("dialog_button");
@@ -946,6 +1015,8 @@ public class dialogViews {
         primaryStage.show();
         String font = "";
          g.setOnAction(e1 -> {
+             RadioButton qw = (RadioButton) fonts.getSelectedToggle();
+             para.setFont(qw.getText());
              para.setContent(r.getText());
              primaryStage.close();
 	});
@@ -965,24 +1036,39 @@ public class dialogViews {
         RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
-        a.setSelected(true);
+        if(header.getFont().equals("Font A")){
+             a.setSelected(true);
+        }
+       
         a.setToggleGroup(fonts);
         RadioButton b = new RadioButton("Font B");
         b.getStylesheets().add("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
         b.setStyle("-fx-font-family: 'Shadows Into Light' ;");
         b.setToggleGroup(fonts);
+         if(header.getFont().equals("Font B")){
+             b.setSelected(true);
+        }
         RadioButton c = new RadioButton("Font C");
         c.getStylesheets().add("https://fonts.googleapis.com/css?family=Indie+Flower");
         c.setStyle("-fx-font-family: 'Indie Flower' ;");
         c.setToggleGroup(fonts);
+         if(header.getFont().equals("Font C")){
+             c.setSelected(true);
+        }
         RadioButton d = new RadioButton("Font D");
         d.getStylesheets().add("https://fonts.googleapis.com/css?family=Poiret+One");
         d.setStyle("-fx-font-family: 'Poiret One' ;");
         d.setToggleGroup(fonts);
+         if(header.getFont().equals("Font D")){
+             d.setSelected(true);
+        }
         RadioButton e = new RadioButton("Font E");
         e.getStylesheets().add("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
         e.setStyle("-fx-font-family: 'Ubuntu Condensed'; ");
         e.setToggleGroup(fonts);
+         if(header.getFont().equals("Font E")){
+             e.setSelected(true);
+        }
         
         a.getStyleClass().add("dialog_button");
         b.getStyleClass().add("dialog_button");
@@ -1006,8 +1092,8 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
             g.setOnAction(e1 -> {
-             
-             
+             RadioButton clown = (RadioButton) fonts.getSelectedToggle();
+             header.setFont(clown.getText());
              header.setContent(r.getText());
              primaryStage.close();
 	});
@@ -1149,28 +1235,61 @@ public class dialogViews {
 	});
     }
     public void loadPortfolio(ePortfolioModel ePortfolio){
+        ePortfolioFileManager fm = new ePortfolioFileManager();
+        DirectoryChooser chooser = new DirectoryChooser();
+        Button fileChoose = new Button("Choose portfolio to load");
         
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
-        Text t = new Text("Choose portfolio to load:");
+        
         Button g = new Button("OK");
-        VBox body = new VBox(t,g);
+        VBox body = new VBox(fileChoose,g);
         primaryScene = new Scene(body);
           body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
          g.getStyleClass().add("dialog_button");
-         t.getStyleClass().add("dialog_text");
+         fileChoose.getStyleClass().add("dialog_button");
             body.setSpacing(20);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        
+        fileChoose.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    //File file = chooser.showOpenDialog(fileChooserStage);
+                    File file = chooser.showDialog(fileChooserStage);
+                    if (file != null) {
+                        // GET AND SET THE IMAGE
+                        URL fileURL;
+                        try {
+                            fileURL = file.toURI().toURL();
+                            
+                             url = fileURL.toExternalForm();
+                             url = fileURL.getPath();
+                            fm.loadEPortfolio(ePortfolio, url);
+                             
+                             
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                      
+	    
+	 
+
+                    }
+                }
+            });
     }
     public void savePortfolio(ePortfolioModel ePortfolio) throws IOException{
          
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         ePortfolioFileManager fm = new ePortfolioFileManager();
-        fm.savePage(ePortfolio.getSelectedPage());
+        fm.makeJsonOfProject(ePortfolio);
         Text t = new Text("EPortfolio succesfully Saved:");
         Button g = new Button("OK");
         VBox body = new VBox(t,g);
@@ -1183,6 +1302,10 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        g.setOnAction(e -> {
+           primaryStage.close();
+	});
+        
     }
     public void saveAsPortfolio(ePortfolioModel ePortfolio){
         

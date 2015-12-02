@@ -18,12 +18,15 @@ public class ePortfolioModel {
     ObservableList<Page> pages = FXCollections.observableArrayList();
     Page selectedPage;
     WorkspaceView ui;
+    private String studentName;
+    private String saveAsTitle;
      
     public ePortfolioModel(WorkspaceView ui){
        this.ui=ui;
        Page HomePage = new Page("HomePage");
        pages.add(HomePage);
        this.selectedPage=HomePage;
+       this.studentName = "Student Name";
     }
     
     public void addPage(Page p){
@@ -58,6 +61,12 @@ public class ePortfolioModel {
     }
     public void remove(Page page){
         pages.remove(page);
+    }
+    public void setStudentName(String s){
+        this.studentName=s;
+    }
+    public String getStudentName(){
+        return this.studentName;
     }
 
     

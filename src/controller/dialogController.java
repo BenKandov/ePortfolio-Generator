@@ -7,6 +7,7 @@ package controller;
 
 import components.listComponent;
 import components.paragraphComponent;
+import java.io.IOException;
 import model.ePortfolioModel;
 import views.WorkspaceView;
 import views.dialogViews;
@@ -83,7 +84,7 @@ public class dialogController {
     public void loadPortfolio(ePortfolioModel e){
         dV.loadPortfolio(e);
     }
-    public void savePortfolio(ePortfolioModel e){
+    public void savePortfolio(ePortfolioModel e) throws IOException{
         dV.savePortfolio(e);
     }
     public void saveAsPortfolio(ePortfolioModel e){

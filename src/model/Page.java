@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
+import views.WorkspaceView;
 
 /**
  *
@@ -26,10 +27,12 @@ public class Page {
     private String bannerImage;
     private String footerText;
     private Tab tab;
+    private WorkspaceView UI;
     
     public Page(String title){
         this.footerText = " ";
         this.title = title;
+        this.bannerImage="Nothing";
     }
     public void setTab(Tab tab){
         this.tab = tab;
@@ -88,6 +91,12 @@ public class Page {
     }
     public ArrayList<component> getContent(){
         return this.content;
+    }
+    public WorkspaceView getUI(){
+        return UI;
+    }
+    public void setUI(WorkspaceView ui){
+        this.UI=ui;
     }
             
       

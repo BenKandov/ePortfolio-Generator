@@ -15,6 +15,7 @@ public class headerComponent extends textComponent {
     
     public headerComponent(String content,String font){
         this.content = content;
+        this.font = font;
     }
     public void setContent(String c){
         this.content=c;

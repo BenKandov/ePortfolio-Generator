@@ -1,0 +1,27 @@
+
+{
+    "title":"Page2",
+    "bannerImg":"Nothing",
+    "bannerText":"<h1>Page2</h1",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"Page 1",
+            "dest":"Page 1/index.html"
+        },
+        {
+            "name":"Page2",
+            "dest":"Page2/index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"header",
+            "content":"hrhrhr",
+            "font":"Font D"
+        }
+    ]
+}

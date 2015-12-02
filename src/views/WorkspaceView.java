@@ -17,13 +17,17 @@ import fileManager.ePortfolioFileManager;
 import java.awt.Component;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -54,6 +58,10 @@ import model.ePortfolioModel;
  * @author benkandov
  */
 public class WorkspaceView {
+    
+    Stage removePageStage;
+    Scene removePageScene;
+    
     Text pageTitle;
     Text studentName;
     Text footerText;
@@ -118,7 +126,11 @@ public class WorkspaceView {
     ePortfolioModel ePortfolio;
     //controllers and things
     
-    
+    public void changeStudentName(){
+       Tab currentTab = ePortfolio.getSelectedPage().getTab();
+        
+        studentName.setText(ePortfolio.getStudentName());
+    }
    
    
     public WorkspaceView(ePortfolioFileManager initFileManager){
@@ -161,10 +173,12 @@ public class WorkspaceView {
     public void loadSelectedPage(){
        
        
-        Tab currentTab = siteToolbar.getSelectionModel().getSelectedItem();
+        Tab currentTab = ePortfolio.getSelectedPage().getTab();             
+      
+      //siteToolbar.getSelectionModel().getSelectedItem();
         FlowPane pageHead = new FlowPane();
        pageTitle = new Text(ePortfolio.getSelectedPage().getTitle());
-       studentName = new Text(ePortfolio.getSelectedPage().getStudentName());
+       studentName = new Text(ePortfolio.getStudentName());
        pageHead.getChildren().add(pageTitle);
        pageHead.getChildren().add(studentName);
        pageHead.setAlignment(Pos.CENTER);
@@ -214,8 +228,9 @@ public class WorkspaceView {
         
         Page actualPage = ePortfolio.getSelectedPage();
         pageTitle.setText(actualPage.getTitle());
+        
         actualPage.getTab().setText(actualPage.getTitle());
-        studentName.setText(actualPage.getStudentName());
+        studentName.setText(ePortfolio.getStudentName());
         footerText.setText(actualPage.getFooter());
     }
     public void initWindow(){
@@ -270,7 +285,8 @@ public class WorkspaceView {
         // tab.closableProperty().bind(Bindings.size(tabs).greaterThan(1));
         tabs.add(tabs.size(), tab);
         tabPane.getSelectionModel().select(tab);
-        Page page = new Page("untitled");
+        Page page = new Page("untitled" + ePortfolio.getPages().size());
+        page.setUI(this);
         ePortfolio.addPage(page);
         ePortfolio.selectPage(page);
         page.setTab(tab);
@@ -283,6 +299,12 @@ public class WorkspaceView {
       
         
          currentTab = tab;
+         tab.setOnCloseRequest(new EventHandler<Event>(){
+                @Override
+                public void handle(Event t){
+                     ePortfolio.remove(ePortfolio.pageByTab(tab));
+                }
+        });
          removeTab.setOnAction(e -> {
              tab.getTabPane().getTabs().remove(tab);
              ePortfolio.remove(ePortfolio.pageByTab(tab));
@@ -326,6 +348,7 @@ public class WorkspaceView {
            tabs.add(tabs.size(), tab);
           siteToolbar.getSelectionModel().select(tab); 
           ePortfolio.getSelectedPage().setTab(tab);
+          ePortfolio.getSelectedPage().setUI(this);
           tab.setClosable(false);
          this.loadSelectedPage();
          currentTab =tab;
@@ -481,7 +504,7 @@ public class WorkspaceView {
         updatePageTitle.setOnAction(e -> {
         
 	    DialogController.updatePageTitle(ePortfolio);
-            pageTitle.setText(ePortfolio.getSelectedPage().getTitle());
+          
 	});
         updateStudentName.setOnAction(e -> {
           
@@ -526,7 +549,11 @@ public class WorkspaceView {
 	});
         savePortfolio.setOnAction(e -> {
            
-	   DialogController.savePortfolio(ePortfolio);
+           try {
+               DialogController.savePortfolio(ePortfolio);
+           } catch (IOException ex) {
+               Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           }
 	});
         saveAsPortfolio.setOnAction(e -> {
           
@@ -542,7 +569,33 @@ public class WorkspaceView {
 	   DialogController.exitPortfolio(ePortfolio);
 	});
     }
-    public void dummyComponents(){
+    public void removePageDialog(Page page,Tab tab,TabPane tabs){
+        VBox dialog = new VBox();
+        dialog.setAlignment(Pos.CENTER);
+        Text text = new Text("Are you sure you want to delete this page?");
+        dialog.getChildren().add(text);
+        FlowPane buttonHolder = new FlowPane();
+        buttonHolder.setAlignment(Pos.CENTER);
+        Button Yes = new Button("Yes");
+        Button No = new Button("No");
+        buttonHolder.getChildren().add(Yes);
+        buttonHolder.getChildren().add(No);
+        dialog.getChildren().add(buttonHolder);
+        dialog.getStylesheets().add("css/style.css");
+        dialog.getStyleClass().add("dialog_box");
+        text.getStyleClass().add("dialog_text");
+        Yes.getStyleClass().add("dialog_button");
+        No.getStyleClass().add("dialog_button");
+        removePageScene = new Scene(dialog);
+        removePageStage = new Stage();
+        removePageStage.setScene(removePageScene);
+        Yes.setOnAction(e -> {
+            
+	});
+         No.setOnAction(e -> {
+          
+	});
+        
         
     }
     

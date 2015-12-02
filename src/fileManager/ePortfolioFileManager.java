@@ -14,18 +14,24 @@ import components.paragraphComponent;
 import components.slideshowComponent;
 import components.videoComponent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.collections.ObservableList;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
@@ -49,28 +55,30 @@ public class ePortfolioFileManager {
   
     
     public ePortfolioFileManager(){
-         String dir = "projects";
-        File websiteDirectory = new File(dir,"TestWebsite");
-        websiteDirectory.mkdir();
-    }
-    
-    public void makeJsonOfProject(ePortfolioModel ePortfolio){
-        String dir = "projects";
-        File websiteDirectory = new File(dir,"TestWebsite");
-        websiteDirectory.mkdir();
         
     }
     
-    public void savePage(Page pageToSave) throws IOException {
+    public void makeJsonOfProject(ePortfolioModel ePortfolio) throws IOException{
+        String dir = "projects";
+        File websiteDirectory = new File(dir,ePortfolio.getStudentName());
+        websiteDirectory.mkdir();
+        String path= websiteDirectory.getPath();
+        for(Page page:ePortfolio.getPages() ){
+            savePage(page,path,ePortfolio);
+        }
+        
+    }
+    
+    public void savePage(Page pageToSave,String path,ePortfolioModel ePortfolio) throws IOException {
         StringWriter sw = new StringWriter();
         
         JsonArray componentsJsonArray = makeComponentsJsonArray(pageToSave.getContent());
-        System.out.println(pageToSave.getContent().get(0).getType());
+        
               JsonObject pageJsonObject = Json.createObjectBuilder()
-		.add("title", pageToSave.getTitle())
-                .add("bannerImg","TODO")
-                .add("bannerText","<h1>"+ "TODO" +"</h1")
-		.add("navBar", "TODO")
+		.add("title", pageToSave.getTitle())   
+                .add("bannerImg", pageToSave.getBannerImage())
+                .add("bannerText","<h1>"+ pageToSave.getTitle() +"</h1")
+		.add("navBar", this.makeNavBarJsonArray(ePortfolio.getPages()))
 		.add("components", componentsJsonArray)
 		.build();
               
@@ -84,7 +92,7 @@ public class ePortfolioFileManager {
         
         String pageTitle = "" + pageToSave.getTitle();
         
-        String jsonFilePath = "projects/TestWebsite" + SLASH + pageToSave.getTitle() + JSON_EXT;
+        String jsonFilePath = path + SLASH + pageToSave.getTitle() + JSON_EXT;
         OutputStream os = new FileOutputStream(jsonFilePath);
         JsonWriter jsonFileWriter = Json.createWriter(os);
         jsonFileWriter.writeObject(pageJsonObject);
@@ -137,8 +145,25 @@ public class ePortfolioFileManager {
                  .add("width", video.getWidth())
                  .add("height", video.getHeight()) 
                 .build();
-        return null;
+        return jso;
     }
+     private JsonArray makeNavBarJsonArray(ObservableList<Page> pages){
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for(Page p: pages){
+            JsonObject jso = makeNavItemJsonObject(p);
+            jsb.add(jso);
+        }
+         
+         JsonArray jA = jsb.build();
+         return jA;
+     }
+     private JsonObject makeNavItemJsonObject(Page page){
+            JsonObject jso = Json.createObjectBuilder()
+                    .add("name",page.getTitle() )
+                    .add("dest", page.getTitle()+"/index.html")
+                    .build();
+            return jso; 
+     }
      private JsonObject makeSlideshowComponentJsonObject(slideshowComponent slideshow){
         return null;
     }
@@ -165,6 +190,82 @@ public class ePortfolioFileManager {
          JsonArray jA = jsb.build();
          return jA;
      }
+     public void loadEPortfolio(ePortfolioModel ePortfolioToLoad,String folderFilePath) throws IOException{
+        File file = new File(folderFilePath);
+        file.mkdir();
+       
+     //, 
+        
+        //Let's get that navBar
+        JsonObject HomePage = loadJSONFile(folderFilePath+"HomePage.json");
+       // JsonObject HomePage = loadJSONFile("projects/BenjaminKandov/HomePage.json");
+        JsonArray navBarArray = HomePage.getJsonArray("navBar");
+        ArrayList<String> names = new ArrayList();
+        for(int i =0;i<navBarArray.size();i++){
+            JsonObject navJso = navBarArray.getJsonObject(i);
+            names.add(navJso.getString("name"));
+        }
+        //Let's get that navBar
+        
+        ePortfolioToLoad.reset();
+        for(String name:names){
+            
+                Page page = new Page("blank");
+             
+             
+                loadPage(page,folderFilePath + name);
+                ePortfolioToLoad.addPage(page);
+                
+           
+        }
+        
+         
+       
+         
+         
+     }
+     public void loadPage(Page page,String jsonFilePath) throws IOException{
+        JsonObject json = loadJSONFile(jsonFilePath + ".json");
+        page.setTitle(json.getString("title"));
+        page.setBannerImage(json.getString("bannerImg"));
+        
+        JsonArray jsonComponentsArray = json.getJsonArray("components");
+        for(int i =0;i<jsonComponentsArray.size();i++){
+            JsonObject componentJso = jsonComponentsArray.getJsonObject(i);
+            if(componentJso.getString("type").equals("text")){
+                paragraphComponent para = new paragraphComponent(componentJso.getString("content"),componentJso.getString("font")); 
+            }
+            else if(componentJso.getString("type").equals("image")){
+                imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"));
+            }
+            else if(componentJso.getString("type").equals("header")){
+                headerComponent header = new headerComponent(componentJso.getString("content"),componentJso.getString("font"));
+            }
+        }
+        
+        
+     }
+     public paragraphComponent loadParagraphComponent(component c){
+         return null;
+     }
+     
+     private JsonObject loadJSONFile(String jsonFilePath) throws IOException{
+         InputStream is = new FileInputStream(jsonFilePath);
+         JsonReader jsonReader = Json.createReader(is);
+         JsonObject json = jsonReader.readObject();
+         jsonReader.close();
+         is.close();
+         return json;
+     }
+       private ArrayList<String> loadArrayFromJSONFile(String jsonFilePath, String arrayName) throws IOException {
+	JsonObject json = loadJSONFile(jsonFilePath);
+	ArrayList<String> items = new ArrayList();
+	JsonArray jsonArray = json.getJsonArray(arrayName);
+	for (JsonValue jsV : jsonArray) {
+	    items.add(jsV.toString());
+	}
+	return items;
+    }
     
         
 }
