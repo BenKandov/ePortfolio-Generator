@@ -62,6 +62,12 @@ public class WorkspaceView {
     Stage removePageStage;
     Scene removePageScene;
     
+    Text colorTemplate;
+    Text layoutTemplate;
+    Text pageFont;
+    FlowPane templates;
+    ImageView bannerImage;
+    
     Text pageTitle;
     Text studentName;
     Text footerText;
@@ -190,6 +196,35 @@ public class WorkspaceView {
        pageHead.setAlignment(Pos.CENTER);
        pageHead.setHgap(30);
        
+       //templates
+          templates = new FlowPane(Orientation.VERTICAL);
+          
+          Text bannerImageText = new Text("Banner Image:");
+          
+          Image bannerImg = new Image(ePortfolio.getSelectedPage().getBannerImage());
+              double scaledWidth = 100;
+            double perc = scaledWidth / bannerImg.getWidth();
+            double scaledHeight = bannerImg.getHeight() * perc;
+             bannerImage = new ImageView(bannerImg);
+             bannerImage.setFitWidth(scaledWidth);
+            bannerImage.setFitHeight(scaledHeight);
+         layoutTemplate = new Text(ePortfolio.getSelectedPage().getLayoutTemplate());
+         colorTemplate = new Text(ePortfolio.getSelectedPage().getColorTemplate());
+         pageFont = new Text(ePortfolio.getSelectedPage().getFont());
+         templates.getChildren().add(bannerImageText);
+         templates.getChildren().add(bannerImage);
+         templates.getChildren().add(layoutTemplate);
+         templates.getChildren().add(colorTemplate);
+         templates.getChildren().add(pageFont);
+           pageEditorPane.setRight(templates);
+         templates.getStyleClass().add("dialog_box");
+         layoutTemplate.getStyleClass().add("dialog_text");
+         colorTemplate.getStyleClass().add("dialog_text");
+         pageFont.getStyleClass().add("dialog_text");
+         bannerImageText.getStyleClass().add("dialog_text");
+         
+       //templates
+       
        ListView page = new ListView(ePortfolio.getSelectedPage().getComponents());
        page.getStylesheets().add("css/style.css");
        page.getSelectionModel().getSelectedItem();
@@ -198,6 +233,7 @@ public class WorkspaceView {
        pageHead.getStyleClass().add("dialog_box");
        pageTitle.getStyleClass().add("dialog_text");
        studentName.getStyleClass().add("dialog_text");
+       body.setRight(templates);
        body.setTop(pageHead);
        body.setCenter(page);
        FlowPane footer = new FlowPane();
@@ -388,7 +424,7 @@ public class WorkspaceView {
          setButtonImage(selectLayoutTemplate,"Icons/selectLayoutTemplate.png");
          selectLayoutTemplate.setTooltip(new Tooltip("Select layout template"));
          setButtonImage(selectBannerImage,"Icons/selectBannerImage.png");
-         selectBannerImage.setTooltip(new Tooltip("Select Button Image"));
+         selectBannerImage.setTooltip(new Tooltip("Select Banner Image"));
          setButtonImage(selectColorTemplate,"Icons/selectColorTemplate.png");
          selectColorTemplate.setTooltip(new Tooltip("Select Color Template"));
          setButtonImage(chooseComponentFont,"Icons/chooseComponentFont.png");
@@ -411,11 +447,14 @@ public class WorkspaceView {
          //Buttons
          
          
-         pageEditorPane.setTop(siteToolbar);
+         
+           pageEditorPane.setTop(siteToolbar);
          pageEditorPane.setCenter(currentTab.getContent());
          pageEditorPane.setBottom(pageEditorToolbar);
+       
          pageEditorPane.getStylesheets().add("css/style.css");
          pageEditorPane.getStyleClass().add("page_editor");
+         
    
     }
     public void initSiteViewerWorkspace() throws MalformedURLException{

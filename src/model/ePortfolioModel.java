@@ -18,8 +18,9 @@ public class ePortfolioModel {
     ObservableList<Page> pages = FXCollections.observableArrayList();
     Page selectedPage;
     WorkspaceView ui;
-    private String studentName;
-    private String saveAsTitle;
+    String studentName;
+    String saveAsTitle;
+
      
     public ePortfolioModel(WorkspaceView ui){
        this.ui=ui;
@@ -27,6 +28,7 @@ public class ePortfolioModel {
        pages.add(HomePage);
        this.selectedPage=HomePage;
        this.studentName = "Student Name";
+       
     }
     
     public void addPage(Page p){

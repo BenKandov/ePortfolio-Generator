@@ -274,8 +274,8 @@ public class ePortfolioFileManager {
                 page.addComponent(para);
             }
             else if(componentJso.getString("type").equals("image")){
-                imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"));
-                page.addComponent(image);
+               // imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"));
+                //page.addComponent(image);
             }
             else if(componentJso.getString("type").equals("header")){
                 headerComponent header = new headerComponent(componentJso.getString("content"),componentJso.getString("font"));

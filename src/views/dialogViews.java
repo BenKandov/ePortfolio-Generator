@@ -78,18 +78,18 @@ public class dialogViews {
     }
     public void selectLayoutTemplate(ePortfolioModel ePortfolio){
        
-	primaryStage.setWidth(300);
+	primaryStage.setWidth(600);
 	primaryStage.setHeight(200); 
 
        VBox body = new VBox(20);
         Text t = new Text("Choose a layout template:");
-        Button a = new Button("A");
+        Button a = new Button("Layout A");
         
-        Button b = new Button("B");
+        Button b = new Button("Layout B");
         
-        Button c = new Button("C");
-        Button d = new Button("D");
-        Button e = new Button("E");
+        Button c = new Button("Layout C");
+        Button d = new Button("Layout D");
+        Button e = new Button("Layout E");
         
         body.getStylesheets().add("css/style.css");
         a.getStyleClass().add("dialog_button");
@@ -114,21 +114,46 @@ public class dialogViews {
         
         primaryStage.setScene(primaryScene);
           
-        primaryStage.show();      
+        primaryStage.show();  
+        a.setOnAction(e1 -> {
+            ePortfolio.getSelectedPage().setLayoutTemplate("Layout A");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        b.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().setLayoutTemplate("Layout B");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        c.setOnAction(e3 -> {
+            ePortfolio.getSelectedPage().setLayoutTemplate("Layout C");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        d.setOnAction(e4 -> {
+            ePortfolio.getSelectedPage().setLayoutTemplate("Layout D");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        e.setOnAction(e5 -> {
+            ePortfolio.getSelectedPage().setLayoutTemplate("Layout E");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
     }
     public void selectColorTemplate(ePortfolioModel ePortfolio){
         
-	primaryStage.setWidth(350);
+	primaryStage.setWidth(700);
 	primaryStage.setHeight(200); 
 
           VBox body = new VBox(20);
         Text t = new Text("Choose a color template:");
         
-        Button a = new Button("A");
-        Button b = new Button("B");
-        Button c = new Button("C");
-        Button d = new Button("D");
-        Button e = new Button("E");
+        Button a = new Button("Color A");
+        Button b = new Button("Color B");
+        Button c = new Button("Color C");
+        Button d = new Button("Color D");
+        Button e = new Button("Color E");
         body.getStylesheets().add("css/style.css");
         body.getStyleClass().add("dialog_box");
         a.getStyleClass().add("dialog_button");
@@ -147,17 +172,42 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show(); 
+         a.setOnAction(e1 -> {
+             ePortfolio.getSelectedPage().setColorTemplate("Color A");
+             primaryStage.close();  
+             ePortfolio.getUI().loadSelectedPage();
+	});
+        b.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().setColorTemplate("Color B");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        c.setOnAction(e3 -> {
+            ePortfolio.getSelectedPage().setColorTemplate("Color C");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        d.setOnAction(e4 -> {
+            ePortfolio.getSelectedPage().setColorTemplate("Color D");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        e.setOnAction(e5 -> {
+            ePortfolio.getSelectedPage().setColorTemplate("Color E");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
     }
     public void selectBannerImage(ePortfolioModel ePortfolio){
   
 	primaryStage.setWidth(600);
-	primaryStage.setHeight(600); 
+	primaryStage.setHeight(400); 
        ImageView comp = new ImageView();
         Image d = new Image("Icons/question.png");
-       if(ePortfolio.getSelectedPage().getBannerImage().equals("Nothing")){
+       if(ePortfolio.getSelectedPage().getBannerImage().equals("Icons/question.png")){
            comp.setImage(d);
        }else{
-           System.out.println("yeah it gets here");
+           
            Image oldImage = new Image(ePortfolio.getSelectedPage().getBannerImage());
            comp.setImage(oldImage);
        }
@@ -218,12 +268,14 @@ public class dialogViews {
             });
         g.setOnAction(e1 -> {
             if(comp.getImage().equals(d)){
-                
+                primaryStage.close();
+                ePortfolio.getUI().loadSelectedPage();
             }else{
             
            
-           ePortfolio.getSelectedPage().setBannerImage(url);
-           primaryStage.close();
+                 ePortfolio.getSelectedPage().setBannerImage(url);
+                 primaryStage.close();
+                 ePortfolio.getUI().loadSelectedPage();
             }
 	});
     }
@@ -271,6 +323,31 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show(); 
+         a.setOnAction(e1 -> {
+            ePortfolio.getSelectedPage().setFont("Font A");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        b.setOnAction(e2 -> {
+            ePortfolio.getSelectedPage().setFont("Font B");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        c.setOnAction(e3 -> {
+            ePortfolio.getSelectedPage().setFont("Font C");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        d.setOnAction(e4 -> {
+            ePortfolio.getSelectedPage().setFont("Font D");
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
+        e.setOnAction(e5 -> {
+            ePortfolio.getSelectedPage().setFont("Font E"); 
+            primaryStage.close();
+            ePortfolio.getUI().loadSelectedPage();
+	});
     }
     public void updatePageTitle(ePortfolioModel ePortfolio){
     
@@ -399,7 +476,7 @@ public class dialogViews {
     }
     public void createParagraph(ePortfolioModel ePortfolio){
     
-        primaryStage.setWidth(450);
+        primaryStage.setWidth(600);
 	primaryStage.setHeight(400);
         ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
@@ -460,7 +537,7 @@ public class dialogViews {
     }
     public void createHeader(ePortfolioModel ePortfolio){
     
-        primaryStage.setWidth(450);
+        primaryStage.setWidth(600);
 	primaryStage.setHeight(350); 
         Text t = new Text("Write Header:");
         TextField r = new TextField();
@@ -586,10 +663,14 @@ public class dialogViews {
     public void addImageComponent(ePortfolioModel ePortfolio){
 
         primaryStage.setWidth(600);
-	primaryStage.setHeight(600); 
+	primaryStage.setHeight(800); 
        ImageView comp = new ImageView();
        Image d = new Image("Icons/question.png");
        comp.setImage(d);
+        Text r = new Text("Input width: ");
+        TextField q = new TextField();
+        Text s = new Text("Input height: ");
+        TextField f = new TextField();
        double scaledHeight = 200;
       double perc = scaledHeight / d.getHeight();
        double scaledWidth = d.getWidth() * perc;
@@ -614,7 +695,7 @@ public class dialogViews {
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
         Button g = new Button("Okay");
-        VBox body = new VBox(c,caption,comp,fileChoose,dummy,g);
+        VBox body = new VBox(c,caption,comp,fileChoose,dummy,r,q,s,f,g);
         body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
@@ -624,6 +705,8 @@ public class dialogViews {
          left.getStyleClass().add("dialog_button");
          right.getStyleClass().add("dialog_button");
          neither.getStyleClass().add("dialog_button");
+         r.getStyleClass().add("dialog_text");
+         s.getStyleClass().add("dialog_text");
            body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
@@ -664,7 +747,7 @@ public class dialogViews {
                 
             }else{
             RadioButton aq =  (RadioButton) floats.getSelectedToggle();
-           imageComponent img = new imageComponent(url,aq.getText(),caption.getText());
+           imageComponent img = new imageComponent(url,aq.getText(),caption.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
            ePortfolio.getSelectedPage().addComponent(img);
            primaryStage.close();
             }
@@ -674,8 +757,14 @@ public class dialogViews {
         public void editImageComponent(imageComponent image){
 
         primaryStage.setWidth(600);
-	primaryStage.setHeight(600); 
+	primaryStage.setHeight(800); 
        ImageView comp = new ImageView();
+         Text r = new Text("Input width: ");
+        TextField q = new TextField();
+        q.setText(Integer.toString(image.getWidth()));
+        Text s = new Text("Input height: ");
+        TextField f = new TextField();
+        f.setText(Integer.toString(image.getHeight()));
        Image d = new Image(image.getSource());
        comp.setImage(d);
        double scaledHeight = 200;
@@ -712,7 +801,7 @@ public class dialogViews {
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
         Button g = new Button("Okay");
-        VBox body = new VBox(c,caption,comp,fileChoose,dummy,g);
+        VBox body = new VBox(c,caption,comp,fileChoose,dummy,r,q,s,f,g);
         body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
@@ -722,6 +811,8 @@ public class dialogViews {
          left.getStyleClass().add("dialog_button");
          right.getStyleClass().add("dialog_button");
          neither.getStyleClass().add("dialog_button");
+         r.getStyleClass().add("dialog_text");
+         s.getStyleClass().add("dialog_text");
            body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
@@ -759,10 +850,12 @@ public class dialogViews {
             });
         g.setOnAction(e1 -> {
             RadioButton aq = (RadioButton) floats.getSelectedToggle();
-           imageComponent dv= new imageComponent(url,aq.getText(),caption.getText());
+           imageComponent dv= new imageComponent(url,aq.getText(),caption.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
            image.setCaption(dv.getCaption());
            image.setSource(dv.getSource());
            image.setFloatValue(dv.getFloatValue());
+           image.setWidth(dv.getWidth());
+           image.setHeight(dv.getHeight());
            System.out.println(dv.getFloatValue());
            primaryStage.close();
 	});
@@ -895,9 +988,9 @@ public class dialogViews {
         Text r = new Text("Input width: ");
         TextField q = new TextField();
         Text s = new Text("Input height: ");
-        
-        TextField caption = new TextField();
         TextField f = new TextField();
+        TextField caption = new TextField();
+        
         Button fileChoose = new Button("Choose:");
         VBox body = new VBox(t,caption,fileChoose,comp,g,r,q,s,f);
         
@@ -950,7 +1043,7 @@ public class dialogViews {
         primaryStage.show();
     }
     public void editParagraphComponent(paragraphComponent para){
-       primaryStage.setWidth(450);
+       primaryStage.setWidth(600);
 	primaryStage.setHeight(400);
         ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
@@ -1028,7 +1121,7 @@ public class dialogViews {
     
     public void editHeaderComponent(headerComponent header){
     
-        primaryStage.setWidth(450);
+        primaryStage.setWidth(600);
 	primaryStage.setHeight(350); 
         Text t = new Text("Write Header:");
         TextField r = new TextField();

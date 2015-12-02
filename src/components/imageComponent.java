@@ -13,13 +13,29 @@ public class imageComponent extends component {
     private String source;
     private String floatVal;
     private String caption;
+    private int width;
+    private int height;
     
     
-    
-    public imageComponent(String src,String fl,String c){
+    public imageComponent(String src,String fl,String c,int width, int height){
         this.source=src;   
         this.floatVal=fl;
         this.caption=c;
+        this.width=width;
+        this.height=height;
+    }
+    public void setWidth(int w){
+        this.width=w;
+    }
+    
+    public void setHeight(int h){
+        this.height=h;
+    }
+    public int getWidth(){
+        return this.width;
+    }
+    public int getHeight(){
+        return this.height;
     }
     
     public void setSource(String src){

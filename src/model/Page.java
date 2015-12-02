@@ -24,15 +24,19 @@ public class Page {
     private String studentName;
     private String layoutTemplate;
     private String colorTemplate;
+    private String pageFont;
     private String bannerImage;
     private String footerText;
     private Tab tab;
     private WorkspaceView UI;
     
     public Page(String title){
-        this.footerText = " ";
+        this.footerText = "Footer Text";
         this.title = title;
-        this.bannerImage="Nothing";
+        this.bannerImage="Icons/question.png";
+        this.layoutTemplate="Layout A";
+        this.colorTemplate="Color A";
+        this.pageFont="Font A";
     }
     public void setTab(Tab tab){
         this.tab = tab;
@@ -98,6 +102,12 @@ public class Page {
     public void setUI(WorkspaceView ui){
         this.UI=ui;
     }
-            
+    public String getFont(){
+        return this.pageFont;
+    }        
+    public void setFont(String f){
+        this.pageFont=f;
+    }
+    
       
 }
