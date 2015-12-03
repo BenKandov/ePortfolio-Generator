@@ -1537,11 +1537,12 @@ public class dialogViews {
     public void saveAsPortfolio(ePortfolioModel ePortfolio){
         
         primaryStage.setWidth(300);
-	primaryStage.setHeight(150);
-        Text t = new Text("Select location for ePortfolio");
+	primaryStage.setHeight(190);
+        Text t = new Text("Select name for ePortfolio");
+        TextField saveAsName = new TextField();
         Button g = new Button("Okay");
-        VBox body = new VBox(t,g);
-           body.getStylesheets().add("css/style.css");
+        VBox body = new VBox(t,saveAsName,g);
+        body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
          g.getStyleClass().add("dialog_button");
@@ -1552,6 +1553,7 @@ public class dialogViews {
         primaryStage.show();
         g.setOnAction(e -> {
             try {
+                ePortfolio.setSaveAsTitle(saveAsName.getText());
                 this.savePortfolio(ePortfolio);
             } catch (IOException ex) {
                 Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);

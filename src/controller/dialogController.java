@@ -7,6 +7,7 @@ package controller;
 
 import components.listComponent;
 import components.paragraphComponent;
+import components.videoComponent;
 import java.io.IOException;
 import model.ePortfolioModel;
 import views.WorkspaceView;
@@ -62,14 +63,14 @@ public class dialogController {
     public void removeComponent(ePortfolioModel e){
         dV.removeComponent(e);
     }
-    public void editParagraphComponent(paragraphComponent p){
-    //    dV.editParagraphComponent(p);
+    public void editParagraphComponent(paragraphComponent p, ePortfolioModel ePortfolio){
+      //  dV.editParagraphComponent(p,ePortfolio);
     }
     public void editImageComponent(ePortfolioModel e){
         dV.addImageComponent(e);
     }
-    public void editVideoComponent(String url,ePortfolioModel e){
-      //  dV.editVideoComponent(url,e);
+    public void editVideoComponent(videoComponent v,ePortfolioModel e){
+        dV.editVideoComponent(v,e);
     }
     public void addTextHyperlink(ePortfolioModel e){
         dV.addTextHyperlink(e);

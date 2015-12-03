@@ -30,12 +30,19 @@ public class ePortfolioModel {
        this.studentName = "Student Name";
        
     }
+    public void setSaveAsTitle(String s){
+        this.saveAsTitle=s;
+    }
+    
+    public String getSaveAsTitle(){
+        return this.saveAsTitle;
+    }
     
     public void addPage(Page p){
         pages.add(p);
     }
-    public void getPage(int position){
-        pages.get(position);
+    public Page getPage(int position){
+        return pages.get(position);
     }
     public void selectPage(Page page){
         this.selectedPage=page;

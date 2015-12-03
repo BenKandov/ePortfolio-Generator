@@ -333,6 +333,8 @@ public class WorkspaceView {
         // tab.closableProperty().bind(Bindings.size(tabs).greaterThan(1));
         tabs.add(tabs.size(), tab);
         tabPane.getSelectionModel().select(tab);
+        
+        
         Page page = new Page("untitled" + ePortfolio.getPages().size());
         page.setUI(this);
         ePortfolio.addPage(page);
@@ -351,6 +353,9 @@ public class WorkspaceView {
                 @Override
                 public void handle(Event t){
                      ePortfolio.remove(ePortfolio.pageByTab(tab));
+                     ePortfolio.selectPage(ePortfolio.getPage(0));
+                     currentTab = ePortfolio.getSelectedPage().getTab();
+                     tabPane.getSelectionModel().select(currentTab);
                 }
         });
          removeTab.setOnAction(e -> {
@@ -364,9 +369,18 @@ public class WorkspaceView {
             @Override
             public void changed(ObservableValue<? extends Tab> arg0,
                     Tab arg1, Tab arg2) {
-                    ePortfolio.selectPage(ePortfolio.pageByTab(arg2));
+                  
+                   // 
+                     
                     if(arg2.getText().equals("HomePage")){
                         ePortfolio.selectPage(ePortfolio.getPages().get(0));
+                        currentTab = ePortfolio.getSelectedPage().getTab();
+                       ePortfolio.getUI().loadSelectedPage();
+                         
+                    }else{
+                          ePortfolio.selectPage(ePortfolio.pageByTab(arg2));
+                          currentTab = ePortfolio.getSelectedPage().getTab();
+                           ePortfolio.getUI().loadSelectedPage();
                     }
                  
             }

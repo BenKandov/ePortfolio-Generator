@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class ePortfolioFileManager {
     
     public void makeJsonOfProject(ePortfolioModel ePortfolio) throws IOException{
         String dir = "projects";
-        File websiteDirectory = new File(dir,ePortfolio.getStudentName());
+        File websiteDirectory = new File(dir,ePortfolio.getSaveAsTitle());
         websiteDirectory.mkdir();
         String path= websiteDirectory.getPath();
         for(Page page:ePortfolio.getPages() ){
@@ -83,8 +82,12 @@ public class ePortfolioFileManager {
         
               JsonObject pageJsonObject = Json.createObjectBuilder()
 		.add("title", pageToSave.getTitle())   
+                .add("layoutTemplate", pageToSave.getLayoutTemplate())   
+                .add("colorTemplate", pageToSave.getColorTemplate())   
+                .add("pageFont", pageToSave.getFont())   
+                .add("footer", pageToSave.getFooter())   
                 .add("bannerImg", pageToSave.getBannerImage())
-                .add("bannerText","<h1>"+ pageToSave.getTitle() +"</h1")
+                .add("bannerText", pageToSave.getTitle())
 		.add("navBar", this.makeNavBarJsonArray(ePortfolio.getPages()))
 		.add("components", componentsJsonArray)
 		.build();
@@ -128,13 +131,27 @@ public class ePortfolioFileManager {
         return jso;
     } 
      private JsonObject makeListComponentJsonObject(listComponent list){
+         JsonObject jso = Json.createObjectBuilder()
+                 .add("type","list")
+                 .add("content",makeListComponentJsonArray(list))
+                 .build();
+         return jso;
+     }
+     private JsonArray makeListComponentJsonArray(listComponent list){
         JsonArrayBuilder jsb = Json.createArrayBuilder();
         for(String s : list.getList()){
-            //JsonObject jso = make
+            JsonObject jso = makeListItemJsonObject(s);
+            jsb.add(jso);
         }
                 
         JsonArray jA =   jsb.build();
-        return null;
+        return jA;
+    }
+    private JsonObject makeListItemJsonObject(String s){
+        JsonObject jso = Json.createObjectBuilder()
+                .add("content",s)
+                .build();
+        return jso;
     }
      private JsonObject makeImageComponentJsonObject(imageComponent image){
          JsonObject jso = Json.createObjectBuilder()
@@ -184,8 +201,8 @@ public class ePortfolioFileManager {
                  JsonObject jso = makeHeaderComponentJsonObject((headerComponent) c);
                 jsb.add(jso);
              }else if(c.getType().equals("List Component")){
-        //         JsonObject jso = makeListComponentJsonObject((listComponent) c);
-        //            jsb.add(jso);
+                 JsonObject jso = makeListComponentJsonObject((listComponent) c);
+                    jsb.add(jso);
              }else if(c.getType().equals("Image Component")){
                  JsonObject jso = makeImageComponentJsonObject((imageComponent) c);
                   jsb.add(jso);
