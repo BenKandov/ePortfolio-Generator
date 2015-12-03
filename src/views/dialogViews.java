@@ -120,26 +120,36 @@ public class dialogViews {
             ePortfolio.getSelectedPage().setLayoutTemplate("Layout A");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         b.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().setLayoutTemplate("Layout B");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         c.setOnAction(e3 -> {
             ePortfolio.getSelectedPage().setLayoutTemplate("Layout C");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         d.setOnAction(e4 -> {
             ePortfolio.getSelectedPage().setLayoutTemplate("Layout D");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         e.setOnAction(e5 -> {
             ePortfolio.getSelectedPage().setLayoutTemplate("Layout E");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
     public void selectColorTemplate(ePortfolioModel ePortfolio){
@@ -177,26 +187,37 @@ public class dialogViews {
              ePortfolio.getSelectedPage().setColorTemplate("Color A");
              primaryStage.close();  
              ePortfolio.getUI().loadSelectedPage();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         b.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().setColorTemplate("Color B");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         c.setOnAction(e3 -> {
             ePortfolio.getSelectedPage().setColorTemplate("Color C");
             primaryStage.close();
+            
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         d.setOnAction(e4 -> {
             ePortfolio.getSelectedPage().setColorTemplate("Color D");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         e.setOnAction(e5 -> {
             ePortfolio.getSelectedPage().setColorTemplate("Color E");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
     public void selectBannerImage(ePortfolioModel ePortfolio){
@@ -271,12 +292,16 @@ public class dialogViews {
             if(comp.getImage().equals(d)){
                 primaryStage.close();
                 ePortfolio.getUI().loadSelectedPage();
+                     ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             }else{
             
            
                  ePortfolio.getSelectedPage().setBannerImage(url);
                  primaryStage.close();
                  ePortfolio.getUI().loadSelectedPage();
+                      ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             }
 	});
     }
@@ -328,26 +353,36 @@ public class dialogViews {
             ePortfolio.getSelectedPage().setFont("Font A");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         b.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().setFont("Font B");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         c.setOnAction(e3 -> {
             ePortfolio.getSelectedPage().setFont("Font C");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         d.setOnAction(e4 -> {
             ePortfolio.getSelectedPage().setFont("Font D");
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         e.setOnAction(e5 -> {
             ePortfolio.getSelectedPage().setFont("Font E"); 
             primaryStage.close();
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
     public void updatePageTitle(ePortfolioModel ePortfolio){
@@ -378,7 +413,8 @@ public class dialogViews {
            
            
            ePortfolio.getUI().loadSelectedPage();
-          
+               ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
            
 	});
     }
@@ -412,6 +448,8 @@ public class dialogViews {
            ePortfolio.selectPage(placeholder);
            primaryStage.close();
           ePortfolio.getUI().loadSelectedPage();
+               ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
            
 	});
     }
@@ -437,6 +475,8 @@ public class dialogViews {
 	   ePortfolio.getSelectedPage().setFooter(b.getText());
            primaryStage.close();
           ePortfolio.getUI().loadSelectedPage();
+               ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
            
 	});
     }
@@ -533,6 +573,8 @@ public class dialogViews {
              paragraphComponent para = new paragraphComponent(r.getText(),qw.getText());
              ePortfolio.getSelectedPage().addComponent(para);
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         
     }
@@ -593,6 +635,8 @@ public class dialogViews {
              headerComponent header = new headerComponent(r.getText(),clown.getText());
              ePortfolio.getSelectedPage().addComponent(header);
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
    
@@ -659,6 +703,8 @@ public class dialogViews {
             System.out.println(l.getItem(0));
             ePortfolio.getSelectedPage().addComponent(l);
             primaryStage.close();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
     public void addImageComponent(ePortfolioModel ePortfolio){
@@ -751,6 +797,8 @@ public class dialogViews {
            imageComponent img = new imageComponent(url,aq.getText(),caption.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
            ePortfolio.getSelectedPage().addComponent(img);
            primaryStage.close();
+                ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             }
 	});
            
@@ -861,13 +909,16 @@ public class dialogViews {
            image.setHeight(dv.getHeight());
            System.out.println(dv.getFloatValue());
            primaryStage.close();
+                ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
          remove.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().removeComponent(image);
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
-            
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
          });
            
     }
@@ -968,6 +1019,8 @@ public class dialogViews {
         primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+             ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
         
          
     }
@@ -1048,6 +1101,8 @@ public class dialogViews {
             // ePortfolio.getUI().componentList.getSelectionModel().getSelectedIndex();
              ePortfolio.getSelectedPage().addComponent(video);
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
               }
 	});
        
@@ -1118,6 +1173,8 @@ public class dialogViews {
              video.setSource(dummy.getSource());
              video.setCaption(dummy.getCaption());
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
               }
 	});
          remove.setOnAction(e2 -> {
@@ -1126,6 +1183,8 @@ public class dialogViews {
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
                    ePortfolio.getUI().loadSelectedPage();
+                        ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
          });
        
     }
@@ -1151,6 +1210,7 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        
     }
     public void editParagraphComponent(paragraphComponent para,ePortfolioModel ePortfolio){
        primaryStage.setWidth(600);
@@ -1227,6 +1287,8 @@ public class dialogViews {
              para.setFont(qw.getText());
              para.setContent(r.getText());
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
           remove.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().removeComponent(para);
@@ -1234,6 +1296,8 @@ public class dialogViews {
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
           });
         
     }
@@ -1312,6 +1376,8 @@ public class dialogViews {
              header.setFont(clown.getText());
              header.setContent(r.getText());
              primaryStage.close();
+                  ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
          remove.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().removeComponent(header);
@@ -1319,6 +1385,8 @@ public class dialogViews {
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
             ePortfolio.getUI().loadSelectedPage();
+              ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
          });
     }
     
@@ -1398,7 +1466,8 @@ public class dialogViews {
                 list.addItem(i, du.getItem(i));
             }
             primaryStage.close();
-            
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             
 	});
          removeComponent.setOnAction(e2 -> {
@@ -1407,6 +1476,8 @@ public class dialogViews {
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
             ePortfolio.getUI().loadSelectedPage();
+                 ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
         
         //return du;
@@ -1442,6 +1513,8 @@ public class dialogViews {
            body.getChildren().add(s);
            Button r = new Button("Okay");
            body.getChildren().add(r);
+             ePortfolio.setSaved(true);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
 	});
     }
   
@@ -1449,22 +1522,28 @@ public class dialogViews {
       
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
-        Text t = new Text("New EPortfolio Created:");
-        Button g = new Button("OK");
-        VBox body = new VBox(t,g);
-        body.getStylesheets().add("css/style.css");
-        body.setAlignment(Pos.TOP_CENTER);
-         body.getStyleClass().add("dialog_box");
-         g.getStyleClass().add("dialog_button");
-         t.getStyleClass().add("dialog_text");
-            body.setSpacing(20);
-        primaryScene = new Scene(body);
-        primaryStage.setScene(primaryScene);
-        primaryStage.show();
-         g.setOnAction(e -> {
-           primaryStage.close();
-          
-	});
+        if(ePortfolio.isSaved()){
+              Text t = new Text("New EPortfolio Created:");
+              Button g = new Button("OK");
+              VBox body = new VBox(t,g);
+              body.getStylesheets().add("css/style.css");
+              body.setAlignment(Pos.TOP_CENTER);
+              body.getStyleClass().add("dialog_box");
+              g.getStyleClass().add("dialog_button");
+              t.getStyleClass().add("dialog_text");
+              body.setSpacing(20);
+              primaryScene = new Scene(body);
+              primaryStage.setScene(primaryScene);
+              primaryStage.show();
+              g.setOnAction(e -> {
+                primaryStage.close();
+                });
+        }else{
+             Text areYouSure = new Text("Would you like to save first?");
+             
+        }
+       
+      
     }
     public void loadPortfolio(ePortfolioModel ePortfolio){
         ePortfolioFileManager fm = new ePortfolioFileManager();
@@ -1505,7 +1584,8 @@ public class dialogViews {
                          //    url = fileURL.getPath();
                            url = file.getName();
                             fm.loadEPortfolio(ePortfolio, "projects"+"/"+url,ePortfolio.getUI().siteToolbar,ePortfolio.getUI());
-                             
+                               ePortfolio.setSaved(true);
+                              ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
                              
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
@@ -1527,6 +1607,8 @@ public class dialogViews {
 	primaryStage.setHeight(150);
         ePortfolioFileManager fm = new ePortfolioFileManager();
         fm.makeJsonOfProject(ePortfolio);
+          ePortfolio.setSaved(true);
+       ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
         Text t = new Text("EPortfolio succesfully Saved:");
         Button g = new Button("OK");
         VBox body = new VBox(t,g);
@@ -1565,6 +1647,8 @@ public class dialogViews {
             try {
                 ePortfolio.setSaveAsTitle(saveAsName.getText());
                 this.savePortfolio(ePortfolio);
+                ePortfolio.setSaved(true);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             } catch (IOException ex) {
                 Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1588,7 +1672,9 @@ public class dialogViews {
         primaryStage.show();
     }
     public void exitPortfolio(ePortfolioModel ePortfolio){
-
+        if(ePortfolio.isSaved()){
+            System.exit(0);
+        }
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Do you wish to save before exiting?");
@@ -1618,6 +1704,17 @@ public class dialogViews {
             });
         }else{
                yes.setOnAction(e -> {
+               if(ePortfolio.getSaveAsTitle()==null){
+                   this.saveAsPortfolio(ePortfolio);
+                   
+               }else{
+                   try {
+                       this.savePortfolio(ePortfolio);
+                       
+                   } catch (IOException ex) {
+                       Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               }
                Text saved = new Text("Succesfully Saved!");
                body.getChildren().remove(t);
                body.getChildren().remove(dummy);
@@ -1626,6 +1723,7 @@ public class dialogViews {
                body.getChildren().add(g);
                g.getStyleClass().add("dialog_button");
                saved.getStyleClass().add("dialog_text");
+               
                g.setOnAction(e1 -> {
                       System.exit(0);
                 });

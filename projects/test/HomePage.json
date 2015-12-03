@@ -16,6 +16,19 @@
     "components":[
         {
             "type":"text",
+            "content":"this works",
+            "font":"Font D"
+        },
+        {
+            "type":"list",
+            "content":[
+                {
+                    "content":"List Item"
+                }
+            ]
+        },
+        {
+            "type":"text",
             "content":"",
             "font":"Font A"
         }

@@ -272,6 +272,7 @@ public class WorkspaceView {
                dum.editVideoComponent((videoComponent) selected,ePortfolio);
            }
            ePortfolio.setSaved(false);
+           this.updateDisabledButtons(ePortfolio.isSaved());
            
         });
         
@@ -555,29 +556,29 @@ public class WorkspaceView {
            selectLayoutTemplate.setOnAction(e -> {
             
 	    DialogController.selectLayoutTemplate(ePortfolio);
-            ePortfolio.setSaved(false);
+           
 	});
            selectColorTemplate.setOnAction(e -> {
             
 	    DialogController.selectColorTemplate(ePortfolio);
-            ePortfolio.setSaved(false);
+          
 	});
            selectBannerImage.setOnAction(e -> {
             
 	    DialogController.selectBannerImage(ePortfolio);
-            ePortfolio.setSaved(false);
+            
 	});
         chooseComponentFont.setOnAction(e -> {
           
 	    DialogController.chooseComponentFont(ePortfolio);
-            ePortfolio.setSaved(false);
+          
 	});
         updatePageTitle.setOnAction(e -> {
             if(ePortfolio.getSelectedPage().getTitle().equals("HomePage")){
                 
             }else{
                 DialogController.updatePageTitle(ePortfolio);
-                ePortfolio.setSaved(false);
+               
             }
 	    
           
@@ -587,35 +588,35 @@ public class WorkspaceView {
            
 	   DialogController.updateStudentName(ePortfolio);
            studentName.setText(ePortfolio.getSelectedPage().getStudentName());
-           ePortfolio.setSaved(false);
+          
 	});
         updateFooter.setOnAction(e -> {
          
 	   DialogController.updateFooter(ePortfolio);
-           ePortfolio.setSaved(false);
+      
 	});
       
         addTextComponent.setOnAction(e -> {
           
                  
 	   DialogController.addTextComponent(ePortfolio);
-           ePortfolio.setSaved(false);
+         
 	});
         
         addImageComponent.setOnAction(e -> {
            
 	   DialogController.addImageComponent(ePortfolio);
-           ePortfolio.setSaved(false);
+          
 	});
         addSlideshowComponent.setOnAction(e -> {
            
 	   DialogController.addSlideShowComponent(ePortfolio);
-           ePortfolio.setSaved(false);
+         
 	});
         addVideoComponent.setOnAction(e -> {
         
 	   DialogController.addVideoComponent(ePortfolio);
-           ePortfolio.setSaved(false);
+          
 	});
        
         
@@ -624,13 +625,13 @@ public class WorkspaceView {
           
            fileControl.handleNewEportfolioRequest();
 	   DialogController.newPortfolio(ePortfolio);
-           ePortfolio.setSaved(false);
+         
            
 	});
         loadPortfolio.setOnAction(e -> {
            
 	   DialogController.loadPortfolio(ePortfolio);
-           ePortfolio.setSaved(true);
+    
 	});
         savePortfolio.setOnAction(e -> {
            if(ePortfolio.getSaveAsTitle()!=null){
@@ -641,28 +642,31 @@ public class WorkspaceView {
                 }
                 f.delete();
                DialogController.savePortfolio(ePortfolio);
-               ePortfolio.setSaved(true);
+             
            } catch (IOException ex) {
                Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
            }
            }else{
                DialogController.saveAsPortfolio(ePortfolio);
-                ePortfolio.setSaved(true);
+                
            }
 	});
         saveAsPortfolio.setOnAction(e -> {
           
 	   DialogController.saveAsPortfolio(ePortfolio);
-           ePortfolio.setSaved(true);
+          
+         
 	});
         exportPortfolio.setOnAction(e -> {
            
           
 	   DialogController.exportPortfolio(ePortfolio);
+          
 	});
         exitPortfolio.setOnAction(e -> {
           
 	   DialogController.exitPortfolio(ePortfolio);
+        
 	});
     }
     
