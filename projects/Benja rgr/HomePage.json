@@ -1,0 +1,30 @@
+
+{
+    "title":"HomePage",
+    "layoutTemplate":"Layout A",
+    "colorTemplate":"Color A",
+    "pageFont":"Font A",
+    "footer":"Footer Text",
+    "bannerImg":"Icons/question.png",
+    "bannerText":"HomePage",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"hey ",
+            "dest":"hey /index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"image",
+            "width":999,
+            "height":787,
+            "src":"file:/Users/benkandov/Documents/1418168696640.jpg",
+            "float":"Float Right",
+            "caption":""
+        }
+    ]
+}

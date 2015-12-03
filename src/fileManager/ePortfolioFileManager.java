@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -156,6 +157,8 @@ public class ePortfolioFileManager {
      private JsonObject makeImageComponentJsonObject(imageComponent image){
          JsonObject jso = Json.createObjectBuilder()
                  .add("type","image")
+                 .add("width", image.getWidth())
+                 .add("height", image.getHeight()) 
                  .add("src",image.getSource())
                  .add("float", image.getFloatValue())
                  .add("caption", image.getCaption()) 
@@ -165,6 +168,7 @@ public class ePortfolioFileManager {
      private JsonObject makeVideoComponentJsonObject(videoComponent video){
             JsonObject jso = Json.createObjectBuilder()
                  .add("type","video")
+                 .add("caption", video.getCaption())
                  .add("src",video.getSource())
                  .add("width", video.getWidth())
                  .add("height", video.getHeight()) 
@@ -237,12 +241,15 @@ public class ePortfolioFileManager {
         int ee = siteToolbar.getTabs().size();
         siteToolbar.getTabs().remove(0, ee);
         for(String name:names){
-            
+                
                 Page page = new Page("blank");
                 Tab tab = new Tab("untitled");
                 page.setTab(tab);
                 siteToolbar.getTabs().add(tab);
                 siteToolbar.getSelectionModel().select(tab);
+                if(name.equals("HomePage")){
+                    tab.setClosable(false);
+                }
                tab.setOnCloseRequest(new EventHandler<Event>(){
                 @Override
                 public void handle(Event t){
@@ -254,9 +261,18 @@ public class ePortfolioFileManager {
                  @Override
                 public void changed(ObservableValue<? extends Tab> arg0,
                     Tab arg1, Tab arg2) {
-                    ePortfolioToLoad.selectPage(ePortfolioToLoad.pageByTab(arg2));
-                    if(arg2.getText().equals("HomePage")){
+                    
+                    
+                    
+                     if(arg2.getText().equals("HomePage")){
                         ePortfolioToLoad.selectPage(ePortfolioToLoad.getPages().get(0));
+                      //  ePortfolioToLoad.getUI().currentTab = ePortfolioToLoad.getSelectedPage().getTab();
+                       ePortfolioToLoad.getUI().loadSelectedPage();
+                         
+                    }else{
+                          ePortfolioToLoad.selectPage(ePortfolioToLoad.pageByTab(arg2));
+                       //   currentTab = ePortfolioToLoad.getSelectedPage().getTab();
+                           ePortfolioToLoad.getUI().loadSelectedPage();
                     }
                  
                      }
@@ -282,6 +298,11 @@ public class ePortfolioFileManager {
         JsonObject json = loadJSONFile(jsonFilePath + ".json");
         page.setTitle(json.getString("title"));
         page.setBannerImage(json.getString("bannerImg"));
+        page.setLayoutTemplate(json.getString("layoutTemplate"));
+        page.setColorTemplate(json.getString("colorTemplate"));
+        page.setFont(json.getString("pageFont"));
+        page.setFooter(json.getString("footer"));
+        
         tab.setText(json.getString("title"));
         JsonArray jsonComponentsArray = json.getJsonArray("components");
         for(int i =0;i<jsonComponentsArray.size();i++){
@@ -291,12 +312,28 @@ public class ePortfolioFileManager {
                 page.addComponent(para);
             }
             else if(componentJso.getString("type").equals("image")){
-               // imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"));
-                //page.addComponent(image);
+                imageComponent image = new imageComponent(componentJso.getString("src"),componentJso.getString("float"),componentJso.getString("caption"),componentJso.getInt("width"),componentJso.getInt("height"));
+                page.addComponent(image);
             }
             else if(componentJso.getString("type").equals("header")){
                 headerComponent header = new headerComponent(componentJso.getString("content"),componentJso.getString("font"));
                 page.addComponent(header);
+            }
+            else if(componentJso.getString("type").equals("video")){
+                videoComponent video = new videoComponent(componentJso.getString("caption"),componentJso.getString("src"),componentJso.getInt("width"),componentJso.getInt("height"));
+                page.addComponent(video);
+            }
+            else if(componentJso.getString("type").equals("list")){
+                JsonArray listItemsArray = componentJso.getJsonArray("content");
+                
+                //
+                ArrayList<String> listItems = new ArrayList();
+                for(int j = 0;j<listItemsArray.size();j++){
+                    JsonObject js = listItemsArray.getJsonObject(j);
+                    listItems.add(js.getString("content"));
+                }
+                listComponent list = new listComponent(listItems);
+                page.addComponent(list);
             }
         }
         

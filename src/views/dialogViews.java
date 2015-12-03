@@ -867,7 +867,8 @@ public class dialogViews {
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
-	});
+            
+         });
            
     }
     public void addSlideshowComponent(ePortfolioModel ePortfolio){
@@ -1041,6 +1042,10 @@ public class dialogViews {
                   f.setText("100");
               }
              videoComponent video = new videoComponent(caption.getText(),comp.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
+             int index = 0;
+             index = ePortfolio.getUI().componentList.getSelectionModel().getSelectedIndex();
+             
+            // ePortfolio.getUI().componentList.getSelectionModel().getSelectedIndex();
              ePortfolio.getSelectedPage().addComponent(video);
              primaryStage.close();
               }
@@ -1120,7 +1125,8 @@ public class dialogViews {
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
-	});
+                   ePortfolio.getUI().loadSelectedPage();
+         });
        
     }
     public void removeComponent(ePortfolioModel ePortfolio){
@@ -1227,7 +1233,8 @@ public class dialogViews {
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
-	});
+            ePortfolio.getUI().loadSelectedPage();
+          });
         
     }
     
@@ -1311,7 +1318,8 @@ public class dialogViews {
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
-	});
+            ePortfolio.getUI().loadSelectedPage();
+         });
     }
     
     public void editListComponent(listComponent list, ePortfolioModel ePortfolio){
@@ -1398,6 +1406,7 @@ public class dialogViews {
             primaryStage.close();
           
             ePortfolio.getUI().componentList.getItems().remove(ePortfolio.getUI().componentList.getSelectionModel().getSelectedItem());
+            ePortfolio.getUI().loadSelectedPage();
 	});
         
         //return du;

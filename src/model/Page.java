@@ -52,8 +52,9 @@ public class Page {
     }
     public void addComponent(component c){
         content.add(c);
-        components.add(c.getType() + content.size());
+        components.add(c.getType());
     }
+    
     public component findComponent(int position){
         return content.get(position);
     }

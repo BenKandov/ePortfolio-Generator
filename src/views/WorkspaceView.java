@@ -252,9 +252,10 @@ public class WorkspaceView {
        
        dialogViews dum = new dialogViews();
        componentList.setOnMouseClicked((MouseEvent event) -> {
-           char index = componentList.getSelectionModel().getSelectedItem().toString().charAt(componentList.getSelectionModel().getSelectedItem().toString().length()-1);
-           int intex = Character.getNumericValue(index);
-           component selected = ePortfolio.getSelectedPage().findComponent(intex-1);
+          // char index = componentList.getSelectionModel().getSelectedItem().toString().charAt(componentList.getSelectionModel().getSelectedItem().toString().length()-1);
+           //Character.getNumericValue(index);
+           int intex = componentList.getSelectionModel().getSelectedIndex();
+           component selected = ePortfolio.getSelectedPage().findComponent(intex);
            if(selected.getType().equals("Paragraph Component")){
                dum.editParagraphComponent((paragraphComponent) selected,ePortfolio);
            }
