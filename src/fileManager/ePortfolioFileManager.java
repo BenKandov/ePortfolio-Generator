@@ -30,6 +30,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javax.json.Json;
@@ -240,6 +241,21 @@ public class ePortfolioFileManager {
         
         int ee = siteToolbar.getTabs().size();
         siteToolbar.getTabs().remove(0, ee);
+        
+        Tab addTab = new Tab("+");
+        addTab.setClosable(false);
+        siteToolbar.getTabs().add(addTab);
+        
+        
+          siteToolbar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+                public void changed(ObservableValue<? extends Tab> observable,
+                     Tab oldSelectedTab, Tab newSelectedTab) {
+                    if (newSelectedTab == addTab) {
+                          ePortfolioToLoad.getUI().createAndSelectNewTab(siteToolbar, "Untitled");
+                     }
+             }
+             });
         for(String name:names){
                 
                 Page page = new Page("blank");
@@ -360,6 +376,8 @@ public class ePortfolioFileManager {
 	}
 	return items;
     }
+       
+      
     
         
 }

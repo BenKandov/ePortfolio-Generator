@@ -328,7 +328,7 @@ public class WorkspaceView {
         
         initWindow();
     }
-   private Tab createAndSelectNewTab(final TabPane tabPane, final String title) {
+   public Tab createAndSelectNewTab(final TabPane tabPane, final String title) {
         Tab tab = new Tab(title);
         final ObservableList<Tab> tabs = tabPane.getTabs();
         // tab.closableProperty().bind(Bindings.size(tabs).greaterThan(1));
