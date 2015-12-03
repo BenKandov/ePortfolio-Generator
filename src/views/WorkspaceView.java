@@ -271,6 +271,7 @@ public class WorkspaceView {
            else if(selected.getType().equals("Video Component")){
                dum.editVideoComponent((videoComponent) selected,ePortfolio);
            }
+           ePortfolio.setSaved(false);
            
         });
         
@@ -554,24 +555,29 @@ public class WorkspaceView {
            selectLayoutTemplate.setOnAction(e -> {
             
 	    DialogController.selectLayoutTemplate(ePortfolio);
+            ePortfolio.setSaved(false);
 	});
            selectColorTemplate.setOnAction(e -> {
             
 	    DialogController.selectColorTemplate(ePortfolio);
+            ePortfolio.setSaved(false);
 	});
            selectBannerImage.setOnAction(e -> {
             
 	    DialogController.selectBannerImage(ePortfolio);
+            ePortfolio.setSaved(false);
 	});
         chooseComponentFont.setOnAction(e -> {
           
 	    DialogController.chooseComponentFont(ePortfolio);
+            ePortfolio.setSaved(false);
 	});
         updatePageTitle.setOnAction(e -> {
             if(ePortfolio.getSelectedPage().getTitle().equals("HomePage")){
                 
             }else{
                 DialogController.updatePageTitle(ePortfolio);
+                ePortfolio.setSaved(false);
             }
 	    
           
@@ -581,29 +587,35 @@ public class WorkspaceView {
            
 	   DialogController.updateStudentName(ePortfolio);
            studentName.setText(ePortfolio.getSelectedPage().getStudentName());
+           ePortfolio.setSaved(false);
 	});
         updateFooter.setOnAction(e -> {
          
 	   DialogController.updateFooter(ePortfolio);
+           ePortfolio.setSaved(false);
 	});
       
         addTextComponent.setOnAction(e -> {
           
                  
 	   DialogController.addTextComponent(ePortfolio);
+           ePortfolio.setSaved(false);
 	});
         
         addImageComponent.setOnAction(e -> {
            
 	   DialogController.addImageComponent(ePortfolio);
+           ePortfolio.setSaved(false);
 	});
         addSlideshowComponent.setOnAction(e -> {
            
 	   DialogController.addSlideShowComponent(ePortfolio);
+           ePortfolio.setSaved(false);
 	});
         addVideoComponent.setOnAction(e -> {
         
 	   DialogController.addVideoComponent(ePortfolio);
+           ePortfolio.setSaved(false);
 	});
        
         
@@ -612,22 +624,36 @@ public class WorkspaceView {
           
            fileControl.handleNewEportfolioRequest();
 	   DialogController.newPortfolio(ePortfolio);
+           ePortfolio.setSaved(false);
+           
 	});
         loadPortfolio.setOnAction(e -> {
            
 	   DialogController.loadPortfolio(ePortfolio);
+           ePortfolio.setSaved(true);
 	});
         savePortfolio.setOnAction(e -> {
-           
+           if(ePortfolio.getSaveAsTitle()!=null){
            try {
+                 File f = new File("projects/" + ePortfolio.getSaveAsTitle()); 
+                for(File fe: f.listFiles()){
+                      fe.delete();
+                }
+                f.delete();
                DialogController.savePortfolio(ePortfolio);
+               ePortfolio.setSaved(true);
            } catch (IOException ex) {
                Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           }else{
+               DialogController.saveAsPortfolio(ePortfolio);
+                ePortfolio.setSaved(true);
            }
 	});
         saveAsPortfolio.setOnAction(e -> {
           
 	   DialogController.saveAsPortfolio(ePortfolio);
+           ePortfolio.setSaved(true);
 	});
         exportPortfolio.setOnAction(e -> {
            
@@ -639,6 +665,20 @@ public class WorkspaceView {
 	   DialogController.exitPortfolio(ePortfolio);
 	});
     }
+    
+    public void updateDisabledButtons(Boolean isSaved){
+        if(isSaved){
+            savePortfolio.setDisable(true);
+           
+            
+        }
+        else{
+            savePortfolio.setDisable(false);
+            
+            
+        }
+    }
+    
     public void removePageDialog(Page page,Tab tab,TabPane tabs){
         VBox dialog = new VBox();
         dialog.setAlignment(Pos.CENTER);
@@ -668,6 +708,7 @@ public class WorkspaceView {
         
         
     }
+    
     
   
     

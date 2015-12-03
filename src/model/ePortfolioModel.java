@@ -20,9 +20,11 @@ public class ePortfolioModel {
     WorkspaceView ui;
     String studentName;
     String saveAsTitle;
+    Boolean isSaved;
 
      
     public ePortfolioModel(WorkspaceView ui){
+       isSaved = false;
        this.ui=ui;
        Page HomePage = new Page("HomePage");
        pages.add(HomePage);
@@ -30,6 +32,15 @@ public class ePortfolioModel {
        this.studentName = "Student Name";
        
     }
+    
+    public boolean isSaved(){
+        return this.isSaved;
+    }
+    
+    public void setSaved(Boolean b){
+        this.isSaved=b;
+    }
+    
     public void setSaveAsTitle(String s){
         this.saveAsTitle=s;
     }

@@ -238,7 +238,7 @@ public class ePortfolioFileManager {
         
         ePortfolioToLoad.reset();
         
-        
+        ePortfolioToLoad.setSaveAsTitle(folderFilePath.substring(9));
         int ee = siteToolbar.getTabs().size();
         siteToolbar.getTabs().remove(0, ee);
         

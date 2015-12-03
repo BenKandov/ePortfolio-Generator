@@ -1477,13 +1477,13 @@ public class dialogViews {
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         
-        Button g = new Button("OK");
-        VBox body = new VBox(fileChoose,g);
+    //    Button g = new Button("OK");
+        VBox body = new VBox(fileChoose);
         primaryScene = new Scene(body);
           body.getStylesheets().add("css/style.css");
         body.setAlignment(Pos.TOP_CENTER);
          body.getStyleClass().add("dialog_box");
-         g.getStyleClass().add("dialog_button");
+     //    g.getStyleClass().add("dialog_button");
          fileChoose.getStyleClass().add("dialog_button");
             body.setSpacing(20);
         primaryStage.setScene(primaryScene);
@@ -1521,7 +1521,8 @@ public class dialogViews {
             });
     }
     public void savePortfolio(ePortfolioModel ePortfolio) throws IOException{
-         
+      
+        
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         ePortfolioFileManager fm = new ePortfolioFileManager();
@@ -1591,10 +1592,11 @@ public class dialogViews {
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Do you wish to save before exiting?");
+        
+        
         Button yes = new Button("Yes");
         Button no = new Button("No");
-           HBox dummy = new HBox(yes,no);
-        
+        HBox dummy = new HBox(yes,no);
         dummy.setSpacing(10);
         dummy.setAlignment(Pos.CENTER);
         VBox body = new VBox(t,dummy);
@@ -1605,19 +1607,41 @@ public class dialogViews {
          yes.getStyleClass().add("dialog_button");
         no.getStyleClass().add("dialog_button");
         t.getStyleClass().add("dialog_text");
+        if(ePortfolio.isSaved()){
+            t.setText("Are you sure you want to exit?");
+               yes.setOnAction(e -> {
+	  
+               System.exit(0);
+             });
+             no.setOnAction(e -> {
+                 primaryStage.close();
+            });
+        }else{
+               yes.setOnAction(e -> {
+               Text saved = new Text("Succesfully Saved!");
+               body.getChildren().remove(t);
+               body.getChildren().remove(dummy);
+               body.getChildren().add(saved);
+               Button g = new Button("Okay");
+               body.getChildren().add(g);
+               g.getStyleClass().add("dialog_button");
+               saved.getStyleClass().add("dialog_text");
+               g.setOnAction(e1 -> {
+                      System.exit(0);
+                });
+               
+            });
+             no.setOnAction(e -> {
+             System.exit(0);
+            });
+        }
+           
+        
+        
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-        yes.setOnAction(e -> {
-	   Text saved = new Text("Succesfully Saved!");
-           body.getChildren().remove(t);
-           body.getChildren().remove(dummy);
-           body.getChildren().add(saved);
-           System.exit(0);
-	});
-        no.setOnAction(e -> {
-           System.exit(0);
-	});
+       
         
     }
      private void openFile(File file) {

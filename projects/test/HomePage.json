@@ -11,20 +11,13 @@
         {
             "name":"HomePage",
             "dest":"HomePage/index.html"
-        },
-        {
-            "name":"hey ",
-            "dest":"hey /index.html"
         }
     ],
     "components":[
         {
-            "type":"image",
-            "width":999,
-            "height":787,
-            "src":"file:/Users/benkandov/Documents/1418168696640.jpg",
-            "float":"Float Right",
-            "caption":""
+            "type":"text",
+            "content":"",
+            "font":"Font A"
         }
     ]
 }
