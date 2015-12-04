@@ -9,6 +9,7 @@ import components.listComponent;
 import components.paragraphComponent;
 import components.videoComponent;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import model.ePortfolioModel;
 import views.WorkspaceView;
 import views.dialogViews;
@@ -79,7 +80,7 @@ public class dialogController {
         //dV.editListComponent(list);
     }
   
-    public void newPortfolio(ePortfolioModel e){
+    public void newPortfolio(ePortfolioModel e) throws MalformedURLException{
         dV.newPortfolio(e);
     }
     public void loadPortfolio(ePortfolioModel e){
@@ -91,7 +92,7 @@ public class dialogController {
     public void saveAsPortfolio(ePortfolioModel e){
         dV.saveAsPortfolio(e);
     }
-    public void exportPortfolio(ePortfolioModel e){
+    public void exportPortfolio(ePortfolioModel e) throws IOException{
         dV.exportPortfolio(e);
     }
     public void exitPortfolio(ePortfolioModel e){

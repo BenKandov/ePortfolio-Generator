@@ -11,6 +11,7 @@ import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
 import components.videoComponent;
+import controller.exportController;
 import fileManager.ePortfolioFileManager;
 import java.awt.Desktop;
 import java.io.File;
@@ -1518,11 +1519,12 @@ public class dialogViews {
 	});
     }
   
-    public void newPortfolio(ePortfolioModel ePortfolio){
+    public void newPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException{
       
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         if(ePortfolio.isSaved()){
+              this.resetEPortfolio(ePortfolio);
               Text t = new Text("New EPortfolio Created:");
               Button g = new Button("OK");
               VBox body = new VBox(t,g);
@@ -1536,14 +1538,64 @@ public class dialogViews {
               primaryStage.setScene(primaryScene);
               primaryStage.show();
               g.setOnAction(e -> {
+                  
                 primaryStage.close();
                 });
         }else{
              Text areYouSure = new Text("Would you like to save first?");
+             Button yes = new Button("Yes");
+             Button no = new Button("No");
+             FlowPane choice = new FlowPane(yes,no);
+             choice.setAlignment(Pos.CENTER);
+             choice.setHgap(20);
+             VBox body = new VBox(areYouSure,choice);
+             body.getStylesheets().add("css/style.css");
+              body.setAlignment(Pos.TOP_CENTER);
+              body.getStyleClass().add("dialog_box");
+              yes.getStyleClass().add("dialog_button");
+              no.getStyleClass().add("dialog_button");
+              areYouSure.getStyleClass().add("dialog_text");
+              primaryScene = new Scene(body);
+              primaryStage.setScene(primaryScene);
+              primaryStage.show();
+              
+              yes.setOnAction(e -> {
+                primaryStage.close();
+                if(ePortfolio.getSaveAsTitle()!=null){
+                  try {
+                      this.savePortfolio(ePortfolio);
+                  } catch (IOException ex) {
+                      Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+                }else{
+                    this.saveAsPortfolio(ePortfolio);
+                }
+              });
+              no.setOnAction(e -> {
+                 try {
+                     this.resetEPortfolio(ePortfolio);
+                 } catch (MalformedURLException ex) {
+                     Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+              });
              
         }
        
       
+    }
+    public void resetEPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException{
+            ePortfolio.reset();
+              ePortfolioFileManager fileManager = new ePortfolioFileManager();
+              int ee = ePortfolio.getUI().siteToolbar.getTabs().size();
+              
+              ePortfolio.getUI().siteToolbar.getTabs().remove(0, ee);
+              ePortfolio.getUI().primaryStage.close();
+              WorkspaceView ui = new WorkspaceView(fileManager);
+              ePortfolioModel ePort = new ePortfolioModel(ui);
+              ePortfolio = ePort;
+              ePortfolio.setUI(ui);
+              ePortfolio.getUI().startUI();
+              ePortfolio.getUI().loadSelectedPage();
     }
     public void loadPortfolio(ePortfolioModel ePortfolio){
         ePortfolioFileManager fm = new ePortfolioFileManager();
@@ -1554,7 +1606,7 @@ public class dialogViews {
         Button fileChoose = new Button("Choose portfolio to load");
         
         primaryStage.setWidth(300);
-	primaryStage.setHeight(150);
+	primaryStage.setHeight(100);
         
     //    Button g = new Button("OK");
         VBox body = new VBox(fileChoose);
@@ -1586,7 +1638,7 @@ public class dialogViews {
                             fm.loadEPortfolio(ePortfolio, "projects"+"/"+url,ePortfolio.getUI().siteToolbar,ePortfolio.getUI());
                                ePortfolio.setSaved(true);
                               ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
-                             
+                             primaryStage.close();
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException ex) {
@@ -1654,8 +1706,9 @@ public class dialogViews {
             }
 	});
     }
-    public void exportPortfolio(ePortfolioModel ePortfolio){
-           
+    public void exportPortfolio(ePortfolioModel ePortfolio) throws IOException{
+        exportController eC = new exportController();
+        eC.exportProject(ePortfolio);
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
         Text t = new Text("Portfolio succesfully exported");
@@ -1670,6 +1723,9 @@ public class dialogViews {
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        g.setOnAction(e -> {
+             primaryStage.close();
+        });
     }
     public void exitPortfolio(ePortfolioModel ePortfolio){
         if(ePortfolio.isSaved()){

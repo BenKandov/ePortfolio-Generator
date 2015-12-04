@@ -9,32 +9,32 @@ var obj;
 var navBar;
 var components;
 var numSlideShows=0;
-$.getJSON("json/SampleSite.json",function(data){
+$.getJSON("file.json",function(data){
     
     $.each(data, function( key, val ) {
         items.push(key + val);    
       
     });
-    obj = data.sites;
-    navBar = obj[0].navBar;
-    components = obj[0].components;
+  //  obj = data.sites;
+    navBar = data.navBar;
+    components = data.components;
     
-    title.innerHTML = obj[0].title;
-    banner.innerHTML = obj[0].bannerText;
-    bannerImg.setAttribute("src",obj[0].bannerImg);
+    title.innerHTML = data.title;
+    banner.innerHTML = data.bannerText;
+    bannerImg.setAttribute("src",data.bannerImg);
     var i = 0;
     while(navBar[i]!=null){
         if(navBar[i].dest == "none"){
             $("#navBar").append("<div class=pageRef>" + navBar[i].name + "</div>");
         }else{
-            $("#navBar").append("<div class=pageRef> <a href="+ navBar[i].dest + ">" + navBar[i].name + "</a> </div> ");
+            $("#navBar").append("<div class=pageRef> <a href="+ "../" + navBar[i].dest + ">" + navBar[i].name + "</a> </div> ");
         }   
         i++;
     }
     i= 0;
     while(components[i]!=null){
         if(components[i].type=="text"){
-            $("#content").append("<div class='component' class='text'>" + components[i].contents + "</div>");
+            $("#content").append("<div class='component' class='text'>" + components[i].content + "</div>");
         }
                 if(components[i].type=="ordered list"){
             list = components[i].items;

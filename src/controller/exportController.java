@@ -27,17 +27,18 @@ public class exportController {
         
         File websiteDirectory = new File(sitesDir,ePortfolio.getSaveAsTitle());
         for(Page page : ePortfolio.getPages()){
-            exportPage(page,websiteDirectory);
+            exportPage(ePortfolio,page,websiteDirectory);
         }
              
     }
     
-    public void exportPage(Page page, File websiteDirectory) throws IOException{
+    public void exportPage(ePortfolioModel ePortfolio,Page page, File websiteDirectory) throws IOException{
        File templatesDir = new File("templates");
         File pageFont;
         File layoutTemplate;
         File colorTemplate;
-        File htmlTemplate = new File(websiteDirectory,"index.html");
+        File jsonFile = new File("projects/"+ePortfolio.getSaveAsTitle()+"/",page.getTitle()+".json");
+        File htmlTemplate = new File("templates/","index.html");
         
         pageFont = new File("blah");
         if(page.getFont().equals("Font A")){
@@ -93,16 +94,22 @@ public class exportController {
         String colorText = FileUtils.readFileToString(colorTemplate);
         String fontText = FileUtils.readFileToString(pageFont);
         String htmlText = FileUtils.readFileToString(htmlTemplate);
+        String jsonText = FileUtils.readFileToString(jsonFile);
         
-        File newHtml = new File(websiteDirectory,"index.html");
-        File newLayout = new File(websiteDirectory,"layout.css");
-        File newColor = new File(websiteDirectory,"color.css");
-        File newFont = new File(websiteDirectory,"font.css");
+        File pageDirectory = new File(websiteDirectory,page.getTitle());
+        pageDirectory.mkdir();
+        
+        File newHtml = new File(pageDirectory,"index.html");
+        File newLayout = new File(pageDirectory,"layout.css");
+        File newColor = new File(pageDirectory,"color.css");
+        File newFont = new File(pageDirectory,"font.css");
+        File newJson = new File(pageDirectory,"file.json");
         
         FileUtils.writeStringToFile(newLayout, layoutText);
         FileUtils.writeStringToFile(newColor, colorText);
         FileUtils.writeStringToFile(newFont, fontText);
         FileUtils.writeStringToFile(newHtml, htmlText);
+        FileUtils.writeStringToFile(newJson ,jsonText);
         
         
         

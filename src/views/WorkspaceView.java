@@ -660,7 +660,11 @@ public class WorkspaceView {
         exportPortfolio.setOnAction(e -> {
            
           
-	   DialogController.exportPortfolio(ePortfolio);
+           try {
+               DialogController.exportPortfolio(ePortfolio);
+           } catch (IOException ex) {
+               Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           }
           
 	});
         exitPortfolio.setOnAction(e -> {

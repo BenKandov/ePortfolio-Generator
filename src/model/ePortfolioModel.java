@@ -88,6 +88,9 @@ public class ePortfolioModel {
     public String getStudentName(){
         return this.studentName;
     }
+    public void setUI(WorkspaceView ui){
+        this.ui=ui;
+    }
 
     
     

@@ -187,9 +187,12 @@ public class ePortfolioFileManager {
          return jA;
      }
      private JsonObject makeNavItemJsonObject(Page page){
+             String newStr = page.getTitle().replaceAll(" ","%20");
             JsonObject jso = Json.createObjectBuilder()
+                    //TODO if page title has spaces, make appropriate accomodations with that % sign bullshit
                     .add("name",page.getTitle() )
-                    .add("dest", page.getTitle()+"/index.html")
+                    
+                    .add("dest", newStr+"/index.html")
                     .build();
             return jso; 
      }
