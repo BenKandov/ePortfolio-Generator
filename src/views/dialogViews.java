@@ -15,6 +15,9 @@ import controller.exportController;
 import fileManager.ePortfolioFileManager;
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -269,8 +272,20 @@ public class dialogViews {
                         URL fileURL;
                         try {
                             fileURL = file.toURI().toURL();
-                             url = fileURL.toExternalForm();
-                             Image slideImage = new Image(fileURL.toExternalForm());
+                             
+                             File imgToCopy = new File(file.getPath());
+                             String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                             FileInputStream fis = new FileInputStream(imgToCopy);
+                             FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                             byte[] buff = new byte[fis.available()];
+                             fis.read(buff);
+                             fos.write(buff);
+                             File dummy = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                             url = dummy.toURI().toURL().toExternalForm();
                              comp.setImage(slideImage);
                              
                              
@@ -280,6 +295,10 @@ public class dialogViews {
                                   comp.setFitWidth(scaledWidth);
                                   comp.setFitHeight(scaledHeight);
                         } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                         }
                       
@@ -770,8 +789,20 @@ public class dialogViews {
                         URL fileURL;
                         try {
                             fileURL = file.toURI().toURL();
-                             url = fileURL.toExternalForm();
-                             Image slideImage = new Image(fileURL.toExternalForm());
+                                  File imgToCopy = new File(file.getPath());
+                             String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                             FileInputStream fis = new FileInputStream(imgToCopy);
+                             FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                             byte[] buff = new byte[fis.available()];
+                             fis.read(buff);
+                             fos.write(buff);
+                             File dummy = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                             url = dummy.toURI().toURL().toExternalForm();
+                             comp.setImage(slideImage);
                              comp.setImage(slideImage);
                              
                              
@@ -781,6 +812,10 @@ public class dialogViews {
                                   comp.setFitWidth(scaledWidth);
                                   comp.setFitHeight(scaledHeight);
                         } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                         }
                       
@@ -880,8 +915,20 @@ public class dialogViews {
                         URL fileURL;
                         try {
                             fileURL = file.toURI().toURL();
-                             url = fileURL.toExternalForm();
-                             Image slideImage = new Image(fileURL.toExternalForm());
+                                  File imgToCopy = new File(file.getPath());
+                             String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                             FileInputStream fis = new FileInputStream(imgToCopy);
+                             FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                             byte[] buff = new byte[fis.available()];
+                             fis.read(buff);
+                             fos.write(buff);
+                             File dummy = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                             url = dummy.toURI().toURL().toExternalForm();
+                             comp.setImage(slideImage);
                              comp.setImage(slideImage);
                              
                              
@@ -891,6 +938,10 @@ public class dialogViews {
                                   comp.setFitWidth(scaledWidth);
                                   comp.setFitHeight(scaledHeight);
                         } catch (MalformedURLException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
                             Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                         }
                       
@@ -1075,12 +1126,34 @@ public class dialogViews {
             new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(final ActionEvent e) {
-                    File file = fileChooser.showOpenDialog(fileChooserStage);
-                   
-                    
-                    if (file != null) {
-                       comp.setText(file.getPath());
-                             
+                    FileInputStream fis = null;
+                    try {
+                        File file = fileChooser.showOpenDialog(fileChooserStage);
+                        File imgToCopy = new File(file.getPath());
+                        String name = imgToCopy.getName();
+                        //      File dest = new File("Icons",name);
+                        fis = new FileInputStream(imgToCopy);
+                        FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                        byte[] buff = new byte[fis.available()];
+                        fis.read(buff);
+                        fos.write(buff);
+                        File dummy = new File("imgs/"+name);
+                        Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                        url = dummy.toURI().toURL().toExternalForm();
+                        if (file != null) {
+                            comp.setText(dummy.getPath());
+                            
+                        }
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            fis.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
            });
@@ -1148,12 +1221,33 @@ public class dialogViews {
             new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(final ActionEvent e) {
-                    File file = fileChooser.showOpenDialog(fileChooserStage);
-                   
-                    
-                    if (file != null) {
-                       comp.setText(file.getPath());
-                             
+                    FileInputStream fis = null;
+                    try {
+                        File file = fileChooser.showOpenDialog(fileChooserStage);
+                        File imgToCopy = new File(file.getPath());
+                        String name = imgToCopy.getName();
+                        //      File dest = new File("Icons",name);
+                        fis = new FileInputStream(imgToCopy);
+                        FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                        byte[] buff = new byte[fis.available()];
+                        fis.read(buff);
+                        fos.write(buff);
+                        File dummy = new File("imgs/"+name);
+                        Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                        if (file != null) {
+                            comp.setText(dummy.getPath());
+                            
+                        }
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            fis.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
            });
@@ -1696,6 +1790,9 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         g.setOnAction(e -> {
+            if(saveAsName.getText().equals("")){
+                
+            }else{
             try {
                 ePortfolio.setSaveAsTitle(saveAsName.getText());
                 this.savePortfolio(ePortfolio);
@@ -1703,6 +1800,7 @@ public class dialogViews {
                 ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
             } catch (IOException ex) {
                 Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
 	});
     }

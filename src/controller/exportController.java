@@ -25,7 +25,11 @@ public class exportController {
         File sitesDir = new File("sites");
         
         
+        
+        
         File websiteDirectory = new File(sitesDir,ePortfolio.getSaveAsTitle());
+      
+        
         for(Page page : ePortfolio.getPages()){
             exportPage(ePortfolio,page,websiteDirectory);
         }
@@ -104,6 +108,9 @@ public class exportController {
         File newColor = new File(pageDirectory,"color.css");
         File newFont = new File(pageDirectory,"font.css");
         File newJson = new File(pageDirectory,"file.json");
+        File d = new File(pageDirectory,"imgs"); 
+        File oldImgs = new File("imgs");
+        FileUtils.copyDirectory(oldImgs,d);
         
         FileUtils.writeStringToFile(newLayout, layoutText);
         FileUtils.writeStringToFile(newColor, colorText);

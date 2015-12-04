@@ -2,7 +2,7 @@
 {
     "title":"HomePage",
     "layoutTemplate":"Layout A",
-    "colorTemplate":"Color A",
+    "colorTemplate":"Color B",
     "pageFont":"Font A",
     "footer":"Footer Text",
     "bannerImg":"Icons/question.png",
@@ -11,26 +11,16 @@
         {
             "name":"HomePage",
             "dest":"HomePage/index.html"
+        },
+        {
+            "name":"title with spaces",
+            "dest":"title%20with%20spaces/index.html"
+        },
+        {
+            "name":"liz is Bae",
+            "dest":"liz%20is%20Bae/index.html"
         }
     ],
     "components":[
-        {
-            "type":"text",
-            "content":"this works",
-            "font":"Font D"
-        },
-        {
-            "type":"list",
-            "content":[
-                {
-                    "content":"List Item"
-                }
-            ]
-        },
-        {
-            "type":"text",
-            "content":"",
-            "font":"Font A"
-        }
     ]
 }

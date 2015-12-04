@@ -359,6 +359,8 @@ public class WorkspaceView {
                      ePortfolio.selectPage(ePortfolio.getPage(0));
                      currentTab = ePortfolio.getSelectedPage().getTab();
                      tabPane.getSelectionModel().select(currentTab);
+                     ePortfolio.setSaved(false);
+                     ePortfolio.getUI().updateDisabledButtons(false);
                 }
         });
          removeTab.setOnAction(e -> {
@@ -624,7 +626,11 @@ public class WorkspaceView {
         newPortfolio.setOnAction(e -> {
           
            fileControl.handleNewEportfolioRequest();
-	   DialogController.newPortfolio(ePortfolio);
+           try {
+               DialogController.newPortfolio(ePortfolio);
+           } catch (MalformedURLException ex) {
+               Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           }
          
            
 	});

@@ -71,6 +71,9 @@ public class ePortfolioFileManager {
         File websiteDirectory = new File(dir,ePortfolio.getSaveAsTitle());
         websiteDirectory.mkdir();
         String path= websiteDirectory.getPath();
+        File imgDir = new File(websiteDirectory,"imgs");
+        imgDir.mkdir();
+        
         for(Page page:ePortfolio.getPages() ){
             savePage(page,path,ePortfolio);
         }
