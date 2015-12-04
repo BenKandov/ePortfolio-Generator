@@ -34,7 +34,7 @@ and open the template in the editor.
     
     color:white;
     border: solid 5px;
-    font-family: 'Architects Daughter', cursive;
+    
     font-size:24px;
   
    
@@ -46,12 +46,8 @@ a{
 #notLink{
   
 }
-body{
-    font-family: 'Architects Daughter', cursive;
-    
-    background-color:#8eb999;
-   
-}
+
+
 .text{
     font-size:24px;
     color:white;
