@@ -33,28 +33,31 @@ $.getJSON("file.json",function(data){
     }
     i= 0;
     while(components[i]!=null){
+    	if(components[i].type=="header"){
+    		$("#content").append("<div class='component' class='text'> <h1>" + components[i].content + "</h2></div>");
+    	}
         if(components[i].type=="text"){
             $("#content").append("<div class='component' class='text'>" + components[i].content + "</div>");
         }
-                if(components[i].type=="ordered list"){
-            list = components[i].items;
+    	if(components[i].type=="list"){
+            list = components[i].content;
             $("#content").append("<ol>");
             var j = 0;
             while(list[j]!=null){
-                 $("#content").append("<li>" + list[j].contents +"</li>");
+                 $("#content").append("<li>" + list[j].content +"</li>");
                  j++;
             }
              $("#content").append("</ol>");
         }
         if(components[i].type=="video"){
-            var ext = components[i].ext;
+         //   var ext = components[i].ext;
             var src = components[i].src;
-            $("#content").append("<video width='320' height='240' controls> <source src='" + src +"' type='" + ext+ "'> </video>");
+            $("#content").append("<video width='"+ components[i].width + "' height='" + components[i].height +"' controls> <source src='" + src +"' type='" +"video/mp4"+ "'> </video>");
            
          
         }
         if(components[i].type=="image"){
-            $("#content").append("<img src='"+ components[i].src +"'/>");
+            $("#content").append("<img width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");
         }
         if(components[i].type=="slideshow"){
             var slides = [];

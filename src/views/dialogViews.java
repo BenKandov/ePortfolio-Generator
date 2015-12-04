@@ -49,6 +49,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
+import static javax.imageio.ImageIO.getReaderFileSuffixes;
 import model.Page;
 import model.ePortfolioModel;
 
@@ -746,6 +747,8 @@ public class dialogViews {
        Text c = new Text("Caption");
        TextField caption = new TextField();
         FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
         Button fileChoose = new Button("Select Image...");
         fileChooser.setTitle("Open Resource File");
      //   fileChooser.showOpenDialog(stage);
@@ -829,6 +832,12 @@ public class dialogViews {
             if(comp.getImage().equals(d)){
                 
             }else{
+             if(q.getText().equals("")){
+                  q.setText("100");
+            }
+            if(f.getText().equals("")){
+                  f.setText("100");
+            }
             RadioButton aq =  (RadioButton) floats.getSelectedToggle();
            imageComponent img = new imageComponent(url,aq.getText(),caption.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
            ePortfolio.getSelectedPage().addComponent(img);
@@ -862,6 +871,8 @@ public class dialogViews {
        TextField caption = new TextField();
        caption.setText(image.getCaption());
         FileChooser fileChooser = new FileChooser();
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
         Button fileChoose = new Button("Select Image...");
         fileChooser.setTitle("Open Resource File");
      //   fileChooser.showOpenDialog(stage);
@@ -952,6 +963,15 @@ public class dialogViews {
                 }
             });
         g.setOnAction(e1 -> {
+            
+                  
+              
+              if(q.getText().equals("")){
+                  q.setText("100");
+              }
+              if(f.getText().equals("")){
+                  f.setText("100");
+              }
             RadioButton aq = (RadioButton) floats.getSelectedToggle();
            imageComponent dv= new imageComponent(url,aq.getText(),caption.getText(),Integer.parseInt(q.getText()),Integer.parseInt(f.getText()));
            image.setCaption(dv.getCaption());
@@ -959,10 +979,11 @@ public class dialogViews {
            image.setFloatValue(dv.getFloatValue());
            image.setWidth(dv.getWidth());
            image.setHeight(dv.getHeight());
-           System.out.println(dv.getFloatValue());
+         //  System.out.println(dv.getFloatValue());
            primaryStage.close();
                 ePortfolio.setSaved(false);
                 ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+            
 	});
          remove.setOnAction(e2 -> {
             ePortfolio.getSelectedPage().removeComponent(image);
@@ -977,6 +998,8 @@ public class dialogViews {
     public void addSlideshowComponent(ePortfolioModel ePortfolio){
         
         FileChooser fileChooser = new FileChooser();
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
         primaryStage.setWidth(900);
 	primaryStage.setHeight(1000); 
         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/3);
@@ -1107,6 +1130,8 @@ public class dialogViews {
         TextField caption = new TextField();
         
         Button fileChoose = new Button("Choose:");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Video Files","*.mp4");
+        fileChooser.getExtensionFilters().add(extFilter);
         VBox body = new VBox(t,caption,fileChoose,comp,g,r,q,s,f);
         
         body.getStylesheets().add("css/style.css");
@@ -1201,6 +1226,8 @@ public class dialogViews {
         TextField caption = new TextField(video.getCaption());
         
         Button fileChoose = new Button("Choose:");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Video Files","*.mp4");
+         fileChooser.getExtensionFilters().add(extFilter);
         VBox body = new VBox(topPane,caption,fileChoose,comp,g,r,q,s,f);
         
         body.getStylesheets().add("css/style.css");
