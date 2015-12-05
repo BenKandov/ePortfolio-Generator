@@ -10,6 +10,7 @@ import components.headerComponent;
 import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
+import components.slideshowComponent;
 import components.videoComponent;
 import controller.exportController;
 import fileManager.ePortfolioFileManager;
@@ -426,7 +427,16 @@ public class dialogViews {
         primaryStage.setScene(primaryScene);
         primaryStage.show();
          g.setOnAction(e -> {
-           
+             boolean proceed = true;
+           if(b.getText().equals("")){
+               proceed=false;
+           }
+           for(Page page:ePortfolio.getPages()){
+               if(page.getTitle().equals(b.getText())){
+                   proceed=false;
+               }
+           }
+           if(proceed){
             ePortfolio.getSelectedPage().setTitle(b.getText());
            
 	  
@@ -436,7 +446,7 @@ public class dialogViews {
            ePortfolio.getUI().loadSelectedPage();
                ePortfolio.setSaved(false);
                 ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
-           
+           }
 	});
     }
     public void updateStudentName(ePortfolioModel ePortfolio){
@@ -1007,7 +1017,9 @@ public class dialogViews {
      
         
         ArrayList<ImageView> images = new ArrayList();
+        ArrayList<String> imageSources = new ArrayList();
         ArrayList<Text> captions = new ArrayList();
+        ArrayList<String> captionText = new ArrayList();
         ArrayList<Button> buttons = new ArrayList();
         ArrayList<Button> removes = new ArrayList();
         
@@ -1072,6 +1084,7 @@ public class dialogViews {
                     
                     try {
                         imageFileToImageView(img,fileURL,file);
+                     //   imageSources.get(counter-1)= file.getName()
                     } catch (MalformedURLException ex) {
                         Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1079,9 +1092,11 @@ public class dialogViews {
             });
             r.setOnAction(e2 -> {
                 images.remove(counter-1);
+                imageSources.remove(counter-1);
                 removes.remove(counter-1);
                 buttons.remove(counter-1);
                 captions.remove(counter-1);
+                captionText.remove(counter-1);
                 counter--;
                 body.getChildren().remove(dummy);
             });
@@ -1094,8 +1109,13 @@ public class dialogViews {
         primaryScene = new Scene(scrollPane);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-             ePortfolio.setSaved(false);
-                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+        
+        g.setOnAction(e -> {
+            slideshowComponent slideshow = new slideshowComponent(imageSources,captionText);
+            
+            ePortfolio.setSaved(false);
+            ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+        });
         
          
     }

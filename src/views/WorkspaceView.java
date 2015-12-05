@@ -486,6 +486,7 @@ public class WorkspaceView {
     }
     public void initSiteViewerWorkspace() throws MalformedURLException, IOException{
          siteViewerPane = new WebView();
+         
     //    siteViewerPane.getStylesheets().add("css/style.css");
       //  siteViewerPane.getStyleClass().add("site_viewer");
    //      File dir = new File("sites");
@@ -551,6 +552,7 @@ public class WorkspaceView {
                workspaceModeToolbar.getChildren().add(selectPageEditorWorkspace);
                
                mainPane.setCenter(siteViewerPane);
+              
                
                File oldDir = new File("tempSite","tempProject");
                if(oldDir.isDirectory()){
@@ -560,20 +562,23 @@ public class WorkspaceView {
                exportController ec = new exportController();
                ePortfolioFileManager em = new ePortfolioFileManager();
                
-               
+              
                
                em.makeTemporaryJsonOfProject(ePortfolio);
                ec.exportTempPortfolio(ePortfolio);
+               File source;
+               source = new File("tempSite/tempProject/"+ ePortfolio.getSelectedPage().getTitle() +"/index.html");
                
-                File source = new File("tempSite/tempProject/"+ ePortfolio.getSelectedPage().getTitle() +"/index.html");
-               siteViewerPane.setCache(false);
+               
     //      URL urlHello = getClass().getResource("sites/index.html");
-        
-        
-                siteViewerPane.getEngine().load(source.toURI().toURL().toString());
-                siteViewerPane.getEngine().reload();
+              //  
+              
+               
+              siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+               //siteViewerPane.getEngine().reload();
+             
                 
-                
+              
                 
                
            } catch (IOException ex) {
@@ -583,16 +588,16 @@ public class WorkspaceView {
         selectPageEditorWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectPageEditorWorkspace);
             workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
+               siteViewerPane.getEngine().load(null);
                File oldDir = new File("tempSite","tempProject");
-               
                if(oldDir.isDirectory()){
                 try {
                     FileUtils.cleanDirectory(oldDir);
-                    siteViewerPane.getEngine().reload();
                 } catch (IOException ex) {
                     Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                }
+              // siteViewerPane.getEngine().reload();
               mainPane.setCenter(pageEditorPane);
 	});
            selectLayoutTemplate.setOnAction(e -> {
