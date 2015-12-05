@@ -1,0 +1,39 @@
+
+{
+    "title":"HomePage",
+    "layoutTemplate":"Layout A",
+    "colorTemplate":"Color C",
+    "pageFont":"Font A",
+    "footer":"Footer Text",
+    "bannerImg":"Icons/question.png",
+    "bannerText":"HomePage",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"Layout B",
+            "dest":"Layout%20B/index.html"
+        },
+        {
+            "name":"Layout C",
+            "dest":"Layout%20C/index.html"
+        },
+        {
+            "name":"Layout D",
+            "dest":"Layout%20D/index.html"
+        },
+        {
+            "name":"Layout E",
+            "dest":"Layout%20E/index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"text",
+            "content":"some content",
+            "font":"Font A"
+        }
+    ]
+}

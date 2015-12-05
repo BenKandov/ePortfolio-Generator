@@ -1,0 +1,22 @@
+
+{
+    "title":"untitled1",
+    "layoutTemplate":"Layout A",
+    "colorTemplate":"Color A",
+    "pageFont":"Font A",
+    "footer":"Footer Text",
+    "bannerImg":"Icons/question.png",
+    "bannerText":"untitled1",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"untitled1",
+            "dest":"untitled1/index.html"
+        }
+    ],
+    "components":[
+    ]
+}

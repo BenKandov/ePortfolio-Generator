@@ -1,0 +1,61 @@
+
+{
+    "title":"Layout E",
+    "layoutTemplate":"Layout E",
+    "colorTemplate":"Color D",
+    "pageFont":"Font A",
+    "footer":"Footer Text",
+    "bannerImg":"Icons/question.png",
+    "bannerText":"Layout E",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"Layout B",
+            "dest":"Layout%20B/index.html"
+        },
+        {
+            "name":"Layout C",
+            "dest":"Layout%20C/index.html"
+        },
+        {
+            "name":"Layout D",
+            "dest":"Layout%20D/index.html"
+        },
+        {
+            "name":"Layout E",
+            "dest":"Layout%20E/index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"list",
+            "content":[
+                {
+                    "content":"liz is bae"
+                },
+                {
+                    "content":"test lel"
+                },
+                {
+                    "content":"nik drke"
+                }
+            ]
+        },
+        {
+            "type":"text",
+            "content":"add another component lel",
+            "font":"Font A"
+        },
+        {
+            "type":"image",
+            "width":420,
+            "height":353,
+            "src":"file:/Users/benkandov/Documents/Lectures/CSE%20219.01/ePortfoloGenerator/imgs/abnormal.jpeg",
+            "float":"Float Right",
+            "caption":"another one"
+        }
+    ]
+}

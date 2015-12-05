@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+    jQuery('#bannerImage').bind('load', function() {
+        jQuery('div').imagefit();
+    });
+    
 var items = [];
 var obj;
 var navBar;
@@ -21,30 +24,35 @@ $.getJSON("file.json",function(data){
     
     title.innerHTML = data.title;
     banner.innerHTML = data.bannerText;
-    bannerImg.setAttribute("src",data.bannerImg);
+    if(data.bannerImg == "Icons/question.png"){
+    	bannerImg.setAttribute("src","imgs/blueBanner.jpg");
+    }else{
+    	bannerImg.setAttribute("src",data.bannerImg);
+    }
+   
     var i = 0;
     while(navBar[i]!=null){
         if(navBar[i].dest == "none"){
             $("#navBar").append("<div class=pageRef>" + navBar[i].name + "</div>");
         }else{
-            $("#navBar").append("<div class=pageRef> <a href="+ "../" + navBar[i].dest + ">" + navBar[i].name + "</a> </div> ");
+            $("#navBar").append("<div class=pageRef>     <a href="+ "../" + navBar[i].dest + ">" + navBar[i].name + "          </a> </div> ");
         }   
         i++;
     }
     i= 0;
     while(components[i]!=null){
     	if(components[i].type=="header"){
-    		$("#content").append("<div class='component' class='text'> <h1>" + components[i].content + "</h2></div>");
+    		$("#content").append("<div style='padding-bottom:9%' class='text'> <h1>" + components[i].content + "</h2></div>");
     	}
         if(components[i].type=="text"){
-            $("#content").append("<div class='component' class='text'>" + components[i].content + "</div>");
+            $("#content").append("<div style='padding-bottom:9%' class='text'>" + components[i].content + "</div>");
         }
     	if(components[i].type=="list"){
             list = components[i].content;
-            $("#content").append("<ol>");
+            $("#content").append("<ol style='padding-bottom:9%' >");
             var j = 0;
             while(list[j]!=null){
-                 $("#content").append("<li>" + list[j].content +"</li>");
+                 $("#content").append("<li'>" + list[j].content +"</li>");
                  j++;
             }
              $("#content").append("</ol>");
@@ -52,12 +60,23 @@ $.getJSON("file.json",function(data){
         if(components[i].type=="video"){
          //   var ext = components[i].ext;
             var src = components[i].src;
+            $("#content").append("<div style='padding-bottom:9%; text-align:center'>"+ components[i].caption);
             $("#content").append("<video width='"+ components[i].width + "' height='" + components[i].height +"' controls> <source src='" + src +"' type='" +"video/mp4"+ "'> </video>");
-           
+           $("#content").append("</div>");
          
         }
         if(components[i].type=="image"){
+        	$("#content").append("<div style='padding-bottom:9%; text-align:center'>"+ components[i].caption);
+        	
+        	if(components[i].float == "Float Right"){
+        	$("#content").append("<img  style='float:right' width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");	
+        	}else if(components[i].float == "Float Left"){
+        	$("#content").append("<img style='float:left' width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");
+        	}else{
             $("#content").append("<img width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");
+       		
+       		}
+       		$("#content").append("</div>");
         }
         if(components[i].type=="slideshow"){
             var slides = [];

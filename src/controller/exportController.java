@@ -24,6 +24,14 @@ public class exportController {
     public void exportProject(ePortfolioModel ePortfolio) throws IOException{
         File sitesDir = new File("sites");
         
+         File f = new File("sites/" + ePortfolio.getSaveAsTitle()); 
+         if(f.isDirectory()){
+                for(File fe: f.listFiles()){
+                fe.delete();
+                  }
+             f.delete(); 
+         }
+        
         
         
         

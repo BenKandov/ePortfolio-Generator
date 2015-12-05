@@ -1,0 +1,42 @@
+
+{
+    "title":"Layout C",
+    "layoutTemplate":"Layout C",
+    "colorTemplate":"Color A",
+    "pageFont":"Font A",
+    "footer":"Footer Text",
+    "bannerImg":"Icons/question.png",
+    "bannerText":"Layout C",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"Layout B",
+            "dest":"Layout%20B/index.html"
+        },
+        {
+            "name":"Layout C",
+            "dest":"Layout%20C/index.html"
+        },
+        {
+            "name":"Layout D",
+            "dest":"Layout%20D/index.html"
+        },
+        {
+            "name":"Layout E",
+            "dest":"Layout%20E/index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"image",
+            "width":320,
+            "height":240,
+            "src":"file:/Users/benkandov/Documents/Lectures/CSE%20219.01/ePortfoloGenerator/imgs/Based%20Pascal.gif",
+            "float":"Float Right",
+            "caption":"lel out loud"
+        }
+    ]
+}

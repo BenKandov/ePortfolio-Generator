@@ -230,8 +230,8 @@ public class dialogViews {
 	primaryStage.setWidth(600);
 	primaryStage.setHeight(400); 
        ImageView comp = new ImageView();
-        Image d = new Image("Icons/question.png");
-       if(ePortfolio.getSelectedPage().getBannerImage().equals("Icons/question.png")){
+        Image d = new Image("imgs/question.png");
+       if(ePortfolio.getSelectedPage().getBannerImage().equals("imgs/question.png")){
            comp.setImage(d);
        }else{
            
