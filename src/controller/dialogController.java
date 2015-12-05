@@ -80,7 +80,7 @@ public class dialogController {
         //dV.editListComponent(list);
     }
   
-    public void newPortfolio(ePortfolioModel e) throws MalformedURLException{
+    public void newPortfolio(ePortfolioModel e) throws MalformedURLException, IOException{
         dV.newPortfolio(e);
     }
     public void loadPortfolio(ePortfolioModel e){

@@ -4,66 +4,40 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Nov 4, 2015, 7:18:36 PM
+    Created on : Oct 31, 2015, 5:55:28 PM
     Author     : benkandov
 */
 
-#navBar{
-    position:absolute;
-  
-    top:35%;
-    left:0%;
-}
-.pageRef{
-    padding:9%;
-
-    position:relative;
-   
-}
 #bannerImg{
     position:absolute;
     left:0;
-    top:1%;
+    top:0;
     width:100%;
     height:10%;
 }
 #banner{
     position:absolute;
-    left:40%;
-    width:100%;
+    left:25%;
     top:0;
 
 }
-
-#notLink{
-  
-}
-#content{
+#navBar{
     position:absolute;
-    top:25%;
-    left:19%;
-    width:auto;
-    height:80%;
-    overflow:auto;
-}
-
-.startStop{
-    position:relative;
+    right:0;
     top:35%;
-    right:40%;
-}
-.next{
-    position:relative;
-    top:3%;
-}
-.prev{
-    position:relative;
-    top:3%;
+   
+    font-size: 24px;
 }
 body{
     white-space:nowrap;
 }
-.slide{
-    position:relative;
-   
+#content{
+    position:absolute;
+    top:35%;
+    left:0;
+    width:80%;
+  height:auto;
+}
+#footer{
+    position: relative;
 }

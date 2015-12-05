@@ -65,6 +65,21 @@ public class ePortfolioFileManager {
     public ePortfolioFileManager(){
         
     }
+     public void makeTemporaryJsonOfProject(ePortfolioModel ePortfolio) throws IOException{
+         String dir = "tempSite";
+         File websiteDirectory = new File(dir,"tempProject");
+         websiteDirectory.mkdir();
+         String path = websiteDirectory.getPath();
+         File imgDir = new File(websiteDirectory,"imgs");
+         imgDir.mkdir();
+         
+         for(Page page: ePortfolio.getPages()){
+             savePage(page,path,ePortfolio);
+             
+         }
+         
+     }
+       
     
     public void makeJsonOfProject(ePortfolioModel ePortfolio) throws IOException{
         String dir = "projects";
@@ -382,7 +397,7 @@ public class ePortfolioFileManager {
 	}
 	return items;
     }
-       
+    
       
     
         

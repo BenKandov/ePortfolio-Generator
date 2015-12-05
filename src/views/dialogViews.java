@@ -1640,7 +1640,7 @@ public class dialogViews {
 	});
     }
   
-    public void newPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException{
+    public void newPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException, IOException{
       
         primaryStage.setWidth(300);
 	primaryStage.setHeight(150);
@@ -1697,6 +1697,8 @@ public class dialogViews {
                      this.resetEPortfolio(ePortfolio);
                  } catch (MalformedURLException ex) {
                      Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                 } catch (IOException ex) {
+                     Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                  }
               });
              
@@ -1704,7 +1706,7 @@ public class dialogViews {
        
       
     }
-    public void resetEPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException{
+    public void resetEPortfolio(ePortfolioModel ePortfolio) throws MalformedURLException, IOException{
             ePortfolio.reset();
               ePortfolioFileManager fileManager = new ePortfolioFileManager();
               int ee = ePortfolio.getUI().siteToolbar.getTabs().size();

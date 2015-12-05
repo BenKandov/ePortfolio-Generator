@@ -13,6 +13,7 @@ import components.listComponent;
 import components.paragraphComponent;
 import components.videoComponent;
 import controller.dialogController;
+import controller.exportController;
 import controller.fileController;
 import fileManager.ePortfolioFileManager;
 import java.awt.Component;
@@ -53,6 +54,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Page;
 import model.ePortfolioModel;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -316,7 +318,7 @@ public class WorkspaceView {
 	return primaryStage;
     }
     
-    public void startUI() throws MalformedURLException{
+    public void startUI() throws MalformedURLException, IOException{
         initWorkspaceModeToolbar();
         
         initFileToolbar();
@@ -482,15 +484,16 @@ public class WorkspaceView {
          
    
     }
-    public void initSiteViewerWorkspace() throws MalformedURLException{
+    public void initSiteViewerWorkspace() throws MalformedURLException, IOException{
          siteViewerPane = new WebView();
     //    siteViewerPane.getStylesheets().add("css/style.css");
       //  siteViewerPane.getStyleClass().add("site_viewer");
-         File dir = new File("sites");
-         File source = new File("sites/index.html");
+   //      File dir = new File("sites");
+     //    File source = new File("sites/index.html");
     //      URL urlHello = getClass().getResource("sites/index.html");
         
-       siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+        
+     //  siteViewerPane.getEngine().load(source.toURI().toURL().toString());
         //  siteViewerPane.getEngine().load("https://www.ic.sunysb.edu/Stu/bkandov/Layouts/index.html");
      //   siteViewerPane.getEngine().load("file:///"+"/sites/index.html");
      //  siteViewerPane.getEngine().load(urlHello.toExternalForm());
@@ -543,16 +546,53 @@ public class WorkspaceView {
        DialogController = new dialogController(this,dialogs);
        
        selectSiteViewerWorkspace.setOnAction(e -> {
-	    workspaceModeToolbar.getChildren().remove(selectSiteViewerWorkspace);
-            workspaceModeToolbar.getChildren().add(selectPageEditorWorkspace);
-         
-            mainPane.setCenter(siteViewerPane);
-             System.out.println("Hello");
+           try {
+               workspaceModeToolbar.getChildren().remove(selectSiteViewerWorkspace);
+               workspaceModeToolbar.getChildren().add(selectPageEditorWorkspace);
+               
+               mainPane.setCenter(siteViewerPane);
+               
+               File oldDir = new File("tempSite","tempProject");
+               if(oldDir.isDirectory()){
+                   FileUtils.cleanDirectory(oldDir);
+               }
+               
+               exportController ec = new exportController();
+               ePortfolioFileManager em = new ePortfolioFileManager();
+               
+               
+               
+               em.makeTemporaryJsonOfProject(ePortfolio);
+               ec.exportTempPortfolio(ePortfolio);
+               
+                File source = new File("tempSite/tempProject/"+ ePortfolio.getSelectedPage().getTitle() +"/index.html");
+               siteViewerPane.setCache(false);
+    //      URL urlHello = getClass().getResource("sites/index.html");
+        
+        
+                siteViewerPane.getEngine().load(source.toURI().toURL().toString());
+                siteViewerPane.getEngine().reload();
+                
+                
+                
+               
+           } catch (IOException ex) {
+               Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           }
 	});
         selectPageEditorWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectPageEditorWorkspace);
             workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
-            
+               File oldDir = new File("tempSite","tempProject");
+               
+               if(oldDir.isDirectory()){
+                try {
+                    FileUtils.cleanDirectory(oldDir);
+                    siteViewerPane.getEngine().reload();
+                } catch (IOException ex) {
+                    Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               }
               mainPane.setCenter(pageEditorPane);
 	});
            selectLayoutTemplate.setOnAction(e -> {
@@ -629,6 +669,8 @@ public class WorkspaceView {
            try {
                DialogController.newPortfolio(ePortfolio);
            } catch (MalformedURLException ex) {
+               Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (IOException ex) {
                Logger.getLogger(WorkspaceView.class.getName()).log(Level.SEVERE, null, ex);
            }
          

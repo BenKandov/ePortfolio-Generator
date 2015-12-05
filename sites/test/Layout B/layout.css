@@ -72,4 +72,7 @@ body{
 }
 .slide{
     position:relative;
-   
+}
+#footer{
+    position: relative;
+}

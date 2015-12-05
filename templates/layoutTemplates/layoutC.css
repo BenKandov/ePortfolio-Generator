@@ -38,3 +38,6 @@ body{
     width:80%;
   height:auto;
 }
+#footer{
+    position: relative;
+}
