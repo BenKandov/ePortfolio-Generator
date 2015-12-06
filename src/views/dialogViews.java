@@ -1067,6 +1067,184 @@ static ArrayList<ImageView> images = new ArrayList();
         primaryStage.setX(bounds.getMinX()+bounds.getWidth()/3);
 	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
      
+  
+        VBox body = new VBox(15);
+        ScrollPane scrollPane = new ScrollPane(body);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        
+        
+        body.getStylesheets().add("css/style.css");
+        
+        body.getStyleClass().add("dialog_box");
+        
+        Button g = new Button("Finished");
+        Button newSlide = new Button("Add Slide");
+        newSlide.getStyleClass().add("dialog_button");
+        body.getChildren().add(newSlide);
+        body.getChildren().add(g);
+        g.getStyleClass().add("dialog_button");
+        body.setSpacing(10);
+        newSlide.setOnAction(e -> {
+            counter++;
+            FlowPane dummy = new FlowPane();
+            Button bt = new Button("Choose...");
+            Button r = new Button("Remove");
+            buttons.add(bt);
+            removes.add(r);
+           ImageView img = new ImageView();
+           this.addImageView(img);
+           
+            Image d = new Image("imgs/question.png");
+            this.addImageSource("imgs/question.png");
+            
+             img.setImage(d);
+              double scaledWidth = 300;
+          double perc = scaledWidth / d.getWidth();
+          double scaledHeight = d.getHeight() * perc;
+          img.setFitWidth(scaledWidth);
+          img.setFitHeight(scaledHeight);
+            
+            Text txt = new Text();
+           // this.addCaption(txt);
+            
+            Text c = new Text("Caption:");
+            TextField cap = new TextField();
+            this.addCaption(cap);
+            //caps.add(cap);
+            dummy.getChildren().add(bt);
+            dummy.getChildren().add(img);
+            dummy.getChildren().add(c);
+            dummy.getChildren().add(cap);
+            dummy.getChildren().add(r);
+            
+            dummy.setHgap(20);
+            body.getChildren().add(dummy);
+            c.getStyleClass().add("dialog_text");
+            bt.getStyleClass().add("dialog_button");
+            r.getStyleClass().add("dialog_button");
+            
+            bt.setOnAction((final ActionEvent e1) -> {
+                File file = fileChooser.showOpenDialog(fileChooserStage);
+                if (file != null) {
+                    // GET AND SET THE IMAGE
+                    URL fileURL = null;
+                    
+                    try {
+                                          
+                        fileURL = file.toURI().toURL();
+                                  File imgToCopy = new File(file.getPath());
+                        String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                        FileInputStream fis = new FileInputStream(imgToCopy);
+                        FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                        byte[] buff = new byte[fis.available()];
+                        fis.read(buff);
+                        fos.write(buff);
+                        File dum = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dum.toURI().toURL().toExternalForm());
+                        url = dum.toURI().toURL().toExternalForm();
+                        
+                        
+                        
+                        
+                       
+                             
+                         
+                        img.setImage(slideImage);
+                        
+                       
+                        this.replaceImageSource(this.getImageViewIndex(img), "imgs/"+name);
+                        
+                        // System.out.println(imageSources.get(0));
+                         
+                         img.setFitWidth(scaledWidth);
+                         img.setFitHeight(scaledHeight);
+                        
+                        
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            r.setOnAction(e2 -> {
+                this.removeFromCaption(counter-1);
+                this.removeFromImageView(counter-1);
+                this.removeFromImageSrc(counter-1);
+               // imageSources.remove(counter-1);
+                removes.remove(counter-1);
+                buttons.remove(counter-1);
+                
+                //captionText.remove(counter-1);
+                counter--;
+                body.getChildren().remove(dummy);
+            });
+                
+            
+            
+	});
+        
+ 
+        primaryScene = new Scene(scrollPane);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        
+        g.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                for (TextField t : caps) {
+                    dialogViews.this.addCaptionText(t.getText());
+                    //   captionText.add(t.getText());
+                }
+                for(ImageView i: images){
+                    //  this.addImageSource(i.getImage();
+                    //  imageSources.add( i.getImage().toString());
+                   
+                }
+                dialogViews.makeSlideshow(imageSources,captionText,ePortfolio);
+                //  slideshowComponent slideshow = new slideshowComponent(imageSources,captionText);
+                //   ePortfolio.getSelectedPage().addComponent(slideshow);
+                //    System.out.println( slideshow.getImageSources().get(0));
+                ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+                primaryStage.close();
+            }
+        });
+        
+         
+    }
+    public static void makeSlideshow(ArrayList<String> i,ArrayList<String> c,ePortfolioModel ePortfolio){
+        ArrayList<String> dummy = (ArrayList<String>) i.clone();
+        ArrayList<String> dum = (ArrayList<String>) c.clone();
+        slideshowComponent slideshow = new slideshowComponent(dummy,dum);
+        slideshow.setImageSources(dummy);
+        
+        slideshow.setCaptions(dum);
+        ePortfolio.getSelectedPage().addComponent(slideshow);
+        
+        imageSources.clear();
+        captionText.clear();
+        images.clear();
+        captions.clear();
+       //  System.out.println(slideshow.getImageSources().get(0));
+    }
+       public void editSlideshowComponent(slideshowComponent slideshow,ePortfolioModel ePortfolio){
+        counter = 0;
+           
+        
+        FileChooser fileChooser = new FileChooser();
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+        primaryStage.setWidth(900);
+	primaryStage.setHeight(1000); 
+        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/3);
+	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+     
         
         
         
@@ -1090,6 +1268,109 @@ static ArrayList<ImageView> images = new ArrayList();
         body.getChildren().add(g);
         g.getStyleClass().add("dialog_button");
         body.setSpacing(10);
+        int startingAmount = slideshow.getImageSources().size();
+        
+        for(int i = 0;i<startingAmount;i++){
+            counter++;
+            FlowPane dummy = new FlowPane();
+            Button bt = new Button("Choose...");
+            Button r = new Button("Remove");
+            buttons.add(bt);
+            removes.add(r);
+           ImageView img = new ImageView();
+           this.addImageView(img);
+           
+           System.out.println(slideshow.getImageSources().get(i));
+            Image d = new Image("file:"+slideshow.getImageSources().get(i));
+            this.addImageSource(slideshow.getImageSources().get(i));
+            
+             img.setImage(d);
+              double scaledWidth = 300;
+          double perc = scaledWidth / d.getWidth();
+          double scaledHeight = d.getHeight() * perc;
+          img.setFitWidth(scaledWidth);
+          img.setFitHeight(scaledHeight);
+            
+            Text txt = new Text();
+           // this.addCaption(txt);
+            
+            Text c = new Text("Caption:");
+            TextField cap = new TextField(slideshow.getCaptions().get(i));
+            this.addCaption(cap);
+            //caps.add(cap);
+            dummy.getChildren().add(bt);
+            dummy.getChildren().add(img);
+            dummy.getChildren().add(c);
+            dummy.getChildren().add(cap);
+            dummy.getChildren().add(r);
+            
+            dummy.setHgap(20);
+            body.getChildren().add(dummy);
+            c.getStyleClass().add("dialog_text");
+            bt.getStyleClass().add("dialog_button");
+            r.getStyleClass().add("dialog_button");
+            
+            bt.setOnAction((final ActionEvent e1) -> {
+                File file = fileChooser.showOpenDialog(fileChooserStage);
+                if (file != null) {
+                    // GET AND SET THE IMAGE
+                    URL fileURL = null;
+                    
+                    try {
+                       
+                        
+                        
+                        fileURL = file.toURI().toURL();
+                                  File imgToCopy = new File(file.getPath());
+                        String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                        FileInputStream fis = new FileInputStream(imgToCopy);
+                        FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                        byte[] buff = new byte[fis.available()];
+                        fis.read(buff);
+                        fos.write(buff);
+                        File dum = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dum.toURI().toURL().toExternalForm());
+                        url = dum.toURI().toURL().toExternalForm();
+                         
+                        img.setImage(slideImage);
+                        
+                       
+                        this.replaceImageSource(this.getImageViewIndex(img), "imgs/"+name);
+                        
+                        // System.out.println(imageSources.get(0));
+                         
+                         img.setFitWidth(scaledWidth);
+                         img.setFitHeight(scaledHeight);
+                        
+                        
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            r.setOnAction(e2 -> {
+                this.removeFromCaption(counter-1);
+                this.removeFromImageView(counter-1);
+                this.removeFromImageSrc(counter-1);
+               // imageSources.remove(counter-1);
+                removes.remove(counter-1);
+                buttons.remove(counter-1);
+                
+                //captionText.remove(counter-1);
+                counter--;
+                body.getChildren().remove(dummy);
+            });
+        }
+        
+        
+        
+        
+        
         newSlide.setOnAction(e -> {
             counter++;
             FlowPane dummy = new FlowPane();
@@ -1213,7 +1494,16 @@ static ArrayList<ImageView> images = new ArrayList();
                     //  imageSources.add( i.getImage().toString());
                    
                 }
-                dialogViews.makeSlideshow(imageSources,captionText,ePortfolio);
+               // dialogViews.makeSlideshow(imageSources,captionText,ePortfolio);
+                ArrayList<String> liz = (ArrayList<String>) captionText.clone();
+                ArrayList<String> ben = (ArrayList<String>) imageSources.clone();
+                
+                slideshow.setCaptions(liz);
+                slideshow.setImageSources(ben);
+                  imageSources.clear();
+               captionText.clear();
+             images.clear();
+                captions.clear();
                 //  slideshowComponent slideshow = new slideshowComponent(imageSources,captionText);
                 //   ePortfolio.getSelectedPage().addComponent(slideshow);
                 //    System.out.println( slideshow.getImageSources().get(0));
@@ -1225,21 +1515,9 @@ static ArrayList<ImageView> images = new ArrayList();
         
          
     }
-    public static void makeSlideshow(ArrayList<String> i,ArrayList<String> c,ePortfolioModel ePortfolio){
-        ArrayList<String> dummy = (ArrayList<String>) i.clone();
-        ArrayList<String> dum = (ArrayList<String>) c.clone();
-        slideshowComponent slideshow = new slideshowComponent(dummy,dum);
-        slideshow.setImageSources(dummy);
-        
-        slideshow.setCaptions(dum);
-        ePortfolio.getSelectedPage().addComponent(slideshow);
-        
-        imageSources.clear();
-        captionText.clear();
-        images.clear();
-        captions.clear();
-       //  System.out.println(slideshow.getImageSources().get(0));
-    }
+    
+    
+    
     
      
     
@@ -1763,9 +2041,7 @@ static ArrayList<ImageView> images = new ArrayList();
         //return du;
     }
     
-    public void editSlideshowComponent(ePortfolioModel ePortfolio){
-        
-    }
+   
    
     public void addTextHyperlink(ePortfolioModel ePortfolio){
         

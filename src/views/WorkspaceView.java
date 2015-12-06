@@ -276,7 +276,7 @@ public class WorkspaceView {
            }
            else if(selected.getType().equals("Slideshow Component")){
               
-            //   dum.editSlideshowComponent((slideshowComponent) selected, ePortfolio);
+               dum.editSlideshowComponent((slideshowComponent) selected, ePortfolio);
            }
            ePortfolio.setSaved(false);
            this.updateDisabledButtons(ePortfolio.isSaved());
