@@ -1,0 +1,33 @@
+
+{
+    "title":"Video Page",
+    "layoutTemplate":"Layout C",
+    "colorTemplate":"Color C",
+    "pageFont":"Font A",
+    "footer":"Made by ben kandov",
+    "bannerImg":"file:/Users/benkandov/Documents/Lectures/CSE%20219.01/ePortfoloGenerator/imgs/1414549090119.jpg",
+    "bannerText":"Video Page",
+    "navBar":[
+        {
+            "name":"HomePage",
+            "dest":"HomePage/index.html"
+        },
+        {
+            "name":"Video Page",
+            "dest":"Video%20Page/index.html"
+        },
+        {
+            "name":"super text page",
+            "dest":"super%20text%20page/index.html"
+        }
+    ],
+    "components":[
+        {
+            "type":"video",
+            "caption":"here's a video",
+            "src":"imgs/monk.mp4",
+            "width":320,
+            "height":240
+        }
+    ]
+}
