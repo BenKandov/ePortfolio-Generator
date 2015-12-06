@@ -1306,12 +1306,12 @@ static ArrayList<ImageView> images = new ArrayList();
                         fis.read(buff);
                         fos.write(buff);
                         File dummy = new File("imgs/"+name);
-                        Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
+                     //   Image slideImage = new Image(dummy.toURI().toURL().toExternalForm());
                         url = dummy.toURI().toURL().toExternalForm();
-                        if (file != null) {
+                      
                             comp.setText(dummy.getPath());
                             
-                        }
+                        
                     } catch (FileNotFoundException ex) {
                         Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {

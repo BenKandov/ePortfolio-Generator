@@ -475,7 +475,7 @@ public class WorkspaceView {
          addSlideshowComponent.setTooltip(new Tooltip("Add Slideshow Component"));
          setButtonImage(addVideoComponent,"Icons/addVideoComponent.png");
          addVideoComponent.setTooltip(new Tooltip("Add Video Component"));
-
+          exportPortfolio.setDisable(true);   
          //Buttons
          
          
@@ -558,6 +558,11 @@ public class WorkspaceView {
                
                mainPane.setCenter(siteViewerPane);
               
+               exportPortfolio.setDisable(true);
+               savePortfolio.setDisable(true);
+               saveAsPortfolio.setDisable(true);
+               loadPortfolio.setDisable(true);
+               newPortfolio.setDisable(true);
                
                File oldDir = new File("tempSite","tempProject");
                if(oldDir.isDirectory()){
@@ -603,7 +608,11 @@ public class WorkspaceView {
         selectPageEditorWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectPageEditorWorkspace);
             workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
-               
+               exportPortfolio.setDisable(false);
+               savePortfolio.setDisable(false);
+               saveAsPortfolio.setDisable(false);
+               loadPortfolio.setDisable(false);
+               newPortfolio.setDisable(false);
              
                File oldDir = new File("tempSite","tempProject");
                if(oldDir.isDirectory()){
@@ -746,12 +755,12 @@ public class WorkspaceView {
     public void updateDisabledButtons(Boolean isSaved){
         if(isSaved){
             savePortfolio.setDisable(true);
-           
+            exportPortfolio.setDisable(false);
             
         }
         else{
             savePortfolio.setDisable(false);
-            
+            exportPortfolio.setDisable(true);
             
         }
     }
