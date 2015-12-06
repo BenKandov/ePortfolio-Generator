@@ -62,7 +62,7 @@ import org.apache.commons.io.FileUtils;
  * @author benkandov
  */
 public class WorkspaceView {
-    
+    static Page oldSelected;
     Stage removePageStage;
     Scene removePageScene;
     
@@ -276,7 +276,7 @@ public class WorkspaceView {
            }
            else if(selected.getType().equals("Slideshow Component")){
               
-               dum.editSlideshowComponent((slideshowComponent) selected, ePortfolio);
+            //   dum.editSlideshowComponent((slideshowComponent) selected, ePortfolio);
            }
            ePortfolio.setSaved(false);
            this.updateDisabledButtons(ePortfolio.isSaved());
@@ -566,22 +566,32 @@ public class WorkspaceView {
                
                exportController ec = new exportController();
                ePortfolioFileManager em = new ePortfolioFileManager();
+               if(ePortfolio.getSelectedPage().equals(oldSelected)){
+                   
+               }else{
+                   siteViewerPane.getEngine().load(null);
+               }
+                
                
-              
                
                em.makeTemporaryJsonOfProject(ePortfolio);
                ec.exportTempPortfolio(ePortfolio);
                File source;
                source = new File("tempSite/tempProject/"+ ePortfolio.getSelectedPage().getTitle() +"/index.html");
                
+              
                
     //      URL urlHello = getClass().getResource("sites/index.html");
               //  
               
                
               siteViewerPane.getEngine().load(source.toURI().toURL().toString());
-               //siteViewerPane.getEngine().reload();
-             
+              if(ePortfolio.getSelectedPage().equals(oldSelected)){
+                   siteViewerPane.getEngine().reload();
+               }
+                oldSelected = ePortfolio.getSelectedPage();
+            
+                  
                 
               
                 
@@ -593,7 +603,8 @@ public class WorkspaceView {
         selectPageEditorWorkspace.setOnAction(e -> {
 	    workspaceModeToolbar.getChildren().remove(selectPageEditorWorkspace);
             workspaceModeToolbar.getChildren().add(selectSiteViewerWorkspace);
-               siteViewerPane.getEngine().load(null);
+               
+             
                File oldDir = new File("tempSite","tempProject");
                if(oldDir.isDirectory()){
                 try {
