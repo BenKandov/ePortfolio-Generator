@@ -11,6 +11,7 @@ import components.headerComponent;
 import components.imageComponent;
 import components.listComponent;
 import components.paragraphComponent;
+import components.slideshowComponent;
 import components.videoComponent;
 import controller.dialogController;
 import controller.exportController;
@@ -272,6 +273,10 @@ public class WorkspaceView {
            }
            else if(selected.getType().equals("Video Component")){
                dum.editVideoComponent((videoComponent) selected,ePortfolio);
+           }
+           else if(selected.getType().equals("Slideshow Component")){
+              
+               dum.editSlideshowComponent((slideshowComponent) selected, ePortfolio);
            }
            ePortfolio.setSaved(false);
            this.updateDisabledButtons(ePortfolio.isSaved());

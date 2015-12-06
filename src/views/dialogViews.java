@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -60,6 +61,14 @@ import model.ePortfolioModel;
  */
 public class dialogViews {
     int counter=0;
+    
+static ArrayList<ImageView> images = new ArrayList();
+    static        ArrayList<String> imageSources = new ArrayList();
+     static    ArrayList<Text> captions = new ArrayList();
+    static        ArrayList<String> captionText = new ArrayList();
+       static   ArrayList<TextField> caps = new ArrayList();
+    static     ArrayList<Button> buttons = new ArrayList();
+   static      ArrayList<Button> removes = new ArrayList();
     
     private String url;
     private listComponent du;
@@ -1005,7 +1014,44 @@ public class dialogViews {
          });
            
     }
+        /*
+        static ArrayList<ImageView> images = new ArrayList();
+         static        ArrayList<String> imageSources = new ArrayList();
+     static    ArrayList<Text> captions = new ArrayList();
+    static        ArrayList<String> captionText = new ArrayList();
+       static   ArrayList<TextField> caps = new ArrayList();
+    static     ArrayList<Button> buttons = new ArrayList();
+   static      ArrayList<Button> removes = new ArrayList();
+        */
+        
+    public void addImageView(ImageView o){
+        images.add(o);
+    }   
+    public void addImageSource(String o){
+        imageSources.add(o);
+    }  
+    public void replaceImageSource(int index,String o){
+        imageSources.set(index, o);
+    }
+    public void addCaption(TextField o){
+        caps.add(o);
+    }  
+    public void addCaptionText(String o){
+        captionText.add(o);
+    }  
+    public void removeFromImageView(int o){
+        images.remove(o);
+    }
+     public void removeFromCaption(int o){
+        caps.remove(o);
+    }
+     public void removeFromImageSrc(int o){
+         imageSources.remove(o);
+     }
+  
     public void addSlideshowComponent(ePortfolioModel ePortfolio){
+        counter = 0;
+           
         
         FileChooser fileChooser = new FileChooser();
          FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
@@ -1016,12 +1062,7 @@ public class dialogViews {
 	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
      
         
-        ArrayList<ImageView> images = new ArrayList();
-        ArrayList<String> imageSources = new ArrayList();
-        ArrayList<Text> captions = new ArrayList();
-        ArrayList<String> captionText = new ArrayList();
-        ArrayList<Button> buttons = new ArrayList();
-        ArrayList<Button> removes = new ArrayList();
+        
         
         VBox body = new VBox(15);
         ScrollPane scrollPane = new ScrollPane(body);
@@ -1051,8 +1092,185 @@ public class dialogViews {
             buttons.add(bt);
             removes.add(r);
            ImageView img = new ImageView();
+           this.addImageView(img);
+           
+            Image d = new Image("imgs/question.png");
+            this.addImageSource("imgs/question.png");
+             img.setImage(d);
+              double scaledWidth = 300;
+          double perc = scaledWidth / d.getWidth();
+          double scaledHeight = d.getHeight() * perc;
+          img.setFitWidth(scaledWidth);
+          img.setFitHeight(scaledHeight);
+            
+            Text txt = new Text();
+           // this.addCaption(txt);
+            
+            Text c = new Text("Caption:");
+            TextField cap = new TextField();
+            this.addCaption(cap);
+            //caps.add(cap);
+            dummy.getChildren().add(bt);
+            dummy.getChildren().add(img);
+            dummy.getChildren().add(c);
+            dummy.getChildren().add(cap);
+            dummy.getChildren().add(r);
+            
+            dummy.setHgap(20);
+            body.getChildren().add(dummy);
+            c.getStyleClass().add("dialog_text");
+            bt.getStyleClass().add("dialog_button");
+            r.getStyleClass().add("dialog_button");
+            
+            buttons.get(counter-1).setOnAction((final ActionEvent e1) -> {
+                File file = fileChooser.showOpenDialog(fileChooserStage);
+                if (file != null) {
+                    // GET AND SET THE IMAGE
+                    URL fileURL = null;
+                    
+                    try {
+                       
+                        
+                        
+                        fileURL = file.toURI().toURL();
+                                  File imgToCopy = new File(file.getPath());
+                        String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+                        FileInputStream fis = new FileInputStream(imgToCopy);
+                        FileOutputStream fos = new FileOutputStream("imgs/"+name);
+                        byte[] buff = new byte[fis.available()];
+                        fis.read(buff);
+                        fos.write(buff);
+                        File dum = new File("imgs/"+name);
+                             
+                             Image slideImage = new Image(dum.toURI().toURL().toExternalForm());
+                        url = dum.toURI().toURL().toExternalForm();
+                        this.replaceImageSource(counter-1, "imgs/"+name);
+                             
+                         
+                        img.setImage(slideImage);
+                        
+                        // System.out.println(imageSources.get(0));
+                         
+                         img.setFitWidth(scaledWidth);
+                         img.setFitHeight(scaledHeight);
+                        
+                        
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            r.setOnAction(e2 -> {
+                this.removeFromCaption(counter-1);
+                this.removeFromImageView(counter-1);
+                this.removeFromImageSrc(counter-1);
+               // imageSources.remove(counter-1);
+                removes.remove(counter-1);
+                buttons.remove(counter-1);
+                
+                //captionText.remove(counter-1);
+                counter--;
+                body.getChildren().remove(dummy);
+            });
+                
+            
+            
+	});
+        
+ 
+        primaryScene = new Scene(scrollPane);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+        
+        g.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                for (TextField t : caps) {
+                    dialogViews.this.addCaptionText(t.getText());
+                    //   captionText.add(t.getText());
+                }
+                for(ImageView i: images){
+                    //  this.addImageSource(i.getImage();
+                    //  imageSources.add( i.getImage().toString());
+                   
+                }
+                dialogViews.makeSlideshow(imageSources,captionText,ePortfolio);
+                //  slideshowComponent slideshow = new slideshowComponent(imageSources,captionText);
+                //   ePortfolio.getSelectedPage().addComponent(slideshow);
+                //    System.out.println( slideshow.getImageSources().get(0));
+                ePortfolio.setSaved(false);
+                ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+                primaryStage.close();
+            }
+        });
+        
+         
+    }
+    public static void makeSlideshow(ArrayList<String> i,ArrayList<String> c,ePortfolioModel ePortfolio){
+        ArrayList<String> dummy = (ArrayList<String>) i.clone();
+        ArrayList<String> dum = (ArrayList<String>) c.clone();
+        slideshowComponent slideshow = new slideshowComponent(dummy,dum);
+        slideshow.setImageSources(imageSources);
+        slideshow.setCaptions(captionText);
+        ePortfolio.getSelectedPage().addComponent(slideshow);
+        
+       //  System.out.println(slideshow.getImageSources().get(0));
+    }
+    
+     public void editSlideshowComponent(slideshowComponent slideshow, ePortfolioModel ePortfolio){
+ 
+        
+        counter = 0;
+        FileChooser fileChooser = new FileChooser();
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.jpeg","*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+        primaryStage.setWidth(900);
+	primaryStage.setHeight(1000); 
+        primaryStage.setX(bounds.getMinX()+bounds.getWidth()/3);
+	primaryStage.setY(bounds.getMinY()+bounds.getHeight()/3);
+     
+        
+        
+        
+        VBox body = new VBox(15);
+        ScrollPane scrollPane = new ScrollPane(body);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        
+        
+        body.getStylesheets().add("css/style.css");
+        
+        body.getStyleClass().add("dialog_box");
+        
+  
+ 
+ 
+        Button g = new Button("Finished");
+        Button newSlide = new Button("Add Slide");
+        newSlide.getStyleClass().add("dialog_button");
+        body.getChildren().add(newSlide);
+        body.getChildren().add(g);
+        g.getStyleClass().add("dialog_button");
+        body.setSpacing(10);
+        
+        for(String s: slideshow.getImageSources()){
+            counter++;
+            FlowPane dummy = new FlowPane();
+            Button bt = new Button("Choose...");
+            Button r = new Button("Remove");
+            buttons.add(bt);
+            removes.add(r);
+           ImageView img = new ImageView();
             images.add(img);
-            Image d = new Image("Icons/question.png");
+                 System.out.println(slideshow.getImageSources().get(counter-1));
+                
+            Image d = new Image("file:"+slideshow.getImageSources().get(counter-1));
+            
              img.setImage(d);
               double scaledWidth = 300;
           double perc = scaledWidth / d.getWidth();
@@ -1063,7 +1281,8 @@ public class dialogViews {
             Text txt = new Text();
             captions.add(txt);
             Text c = new Text("Caption:");
-            TextField cap = new TextField();
+            TextField cap = new TextField(slideshow.getCaptions().get(counter-1));
+            caps.add(cap);
             dummy.getChildren().add(bt);
             dummy.getChildren().add(img);
             dummy.getChildren().add(c);
@@ -1084,8 +1303,73 @@ public class dialogViews {
                     
                     try {
                         imageFileToImageView(img,fileURL,file);
-                     //   imageSources.get(counter-1)= file.getName()
+                        imageSources.set(counter-1,url);
                     } catch (MalformedURLException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            r.setOnAction(e2 -> {
+                images.remove(counter-1);
+                imageSources.remove(counter-1);
+                removes.remove(counter-1);
+                buttons.remove(counter-1);
+                captions.remove(counter-1);
+                captionText.remove(counter-1);
+                counter--;
+                body.getChildren().remove(dummy);
+            });
+        }
+        
+        
+        newSlide.setOnAction(e -> {
+            counter++;
+            FlowPane dummy = new FlowPane();
+            Button bt = new Button("Choose...");
+            Button r = new Button("Remove");
+            buttons.add(bt);
+            removes.add(r);
+           ImageView img = new ImageView();
+            images.add(img);
+            Image d = new Image("Icons/question.png");
+             img.setImage(d);
+              double scaledWidth = 300;
+          double perc = scaledWidth / d.getWidth();
+          double scaledHeight = d.getHeight() * perc;
+          img.setFitWidth(scaledWidth);
+          img.setFitHeight(scaledHeight);
+            
+            Text txt = new Text();
+            captions.add(txt);
+            Text c = new Text("Caption:");
+            TextField cap = new TextField();
+            caps.add(cap);
+            dummy.getChildren().add(bt);
+            dummy.getChildren().add(img);
+            dummy.getChildren().add(c);
+            dummy.getChildren().add(cap);
+            dummy.getChildren().add(r);
+            
+            dummy.setHgap(20);
+            body.getChildren().add(dummy);
+            c.getStyleClass().add("dialog_text");
+            bt.getStyleClass().add("dialog_button");
+            r.getStyleClass().add("dialog_button");
+            
+            buttons.get(counter-1).setOnAction((final ActionEvent e1) -> {
+                File file = fileChooser.showOpenDialog(fileChooserStage);
+                if (file != null) {
+                    // GET AND SET THE IMAGE
+                    URL fileURL = null;
+                    
+                    try {
+                        imageFileToImageView(img,fileURL,file);
+                        imageSources.set(counter-1,url);
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
                         Logger.getLogger(dialogViews.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -1111,18 +1395,40 @@ public class dialogViews {
         primaryStage.show();
         
         g.setOnAction(e -> {
-            slideshowComponent slideshow = new slideshowComponent(imageSources,captionText);
+            for(TextField t:caps){
+                captionText.add(t.getText());
+            }
             
+            slideshowComponent dummy = new slideshowComponent(imageSources,captionText);
+            slideshow.setCaptions(dummy.getCaptions());
+            slideshow.setImageSources(dummy.getImageSources());
+           // ePortfolio.getSelectedPage().addComponent(slideshow);
             ePortfolio.setSaved(false);
             ePortfolio.getUI().updateDisabledButtons(ePortfolio.isSaved());
+            primaryStage.close();
         });
         
          
     }
-    public void imageFileToImageView(ImageView view ,URL fileURL,File file) throws MalformedURLException{
+    
+    public void imageFileToImageView(ImageView view ,URL fileURL,File file) throws MalformedURLException, FileNotFoundException, IOException{
         fileURL = file.toURI().toURL();
          Image slideImage = new Image(fileURL.toExternalForm());
           view.setImage(slideImage);      
+          
+          File imgToCopy = new File(file.getPath());
+                             String name = imgToCopy.getName();
+                       //      File dest = new File("Icons",name);
+                             
+            FileInputStream fis = new FileInputStream(imgToCopy);
+             FileOutputStream fos = new FileOutputStream("imgs/"+name);
+              byte[] buff = new byte[fis.available()];
+               fis.read(buff);
+             fos.write(buff);
+             File dummy = new File("imgs/"+name);
+                             
+                             
+             url = dummy.toURI().toURL().toExternalForm();
           
            
           

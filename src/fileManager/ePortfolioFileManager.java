@@ -214,9 +214,17 @@ public class ePortfolioFileManager {
                     .build();
             return jso; 
      }
-     private JsonObject makeSlideshowComponentJsonObject(slideshowComponent slideshow){
+     private JsonObject makeSlideshowJsonObject(){
+         return null;
+     }
+     
+     private JsonArray makeSlideshowComponentJsonObject(slideshowComponent slideshow){
         return null;
     }
+     private JsonObject makeSlideJsonObject(){
+         
+         return null;
+     }
      private JsonArray makeComponentsJsonArray(ArrayList<component> components){
          JsonArrayBuilder jsb = Json.createArrayBuilder();
          for(component c: components ){
