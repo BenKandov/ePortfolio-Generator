@@ -7,6 +7,9 @@ and open the template in the editor.
     Created on : Nov 4, 2015, 7:18:36 PM
     Author     : benkandov
 */
+body{
+      text-align:center;
+}
 
 #navBar{
     position:absolute;
@@ -50,7 +53,7 @@ and open the template in the editor.
 
 .startStop{
     position:relative;
-    top:35%;
+    top:45%;
     right:40%;
 }
 .next{

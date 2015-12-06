@@ -1026,9 +1026,15 @@ static ArrayList<ImageView> images = new ArrayList();
         
     public void addImageView(ImageView o){
         images.add(o);
-    }   
+    }  
+    public int getImageViewIndex(ImageView o){
+        return images.indexOf(o);
+    }
     public void addImageSource(String o){
         imageSources.add(o);
+    }  
+    public void addImageSource(int i,String o){
+        imageSources.add(i,o);
     }  
     public void replaceImageSource(int index,String o){
         imageSources.set(index, o);
@@ -1096,6 +1102,7 @@ static ArrayList<ImageView> images = new ArrayList();
            
             Image d = new Image("imgs/question.png");
             this.addImageSource("imgs/question.png");
+            
              img.setImage(d);
               double scaledWidth = 300;
           double perc = scaledWidth / d.getWidth();
@@ -1122,7 +1129,7 @@ static ArrayList<ImageView> images = new ArrayList();
             bt.getStyleClass().add("dialog_button");
             r.getStyleClass().add("dialog_button");
             
-            buttons.get(counter-1).setOnAction((final ActionEvent e1) -> {
+            bt.setOnAction((final ActionEvent e1) -> {
                 File file = fileChooser.showOpenDialog(fileChooserStage);
                 if (file != null) {
                     // GET AND SET THE IMAGE
@@ -1146,10 +1153,17 @@ static ArrayList<ImageView> images = new ArrayList();
                              
                              Image slideImage = new Image(dum.toURI().toURL().toExternalForm());
                         url = dum.toURI().toURL().toExternalForm();
-                        this.replaceImageSource(counter-1, "imgs/"+name);
+                        
+                        
+                        
+                        
+                       
                              
                          
                         img.setImage(slideImage);
+                        
+                       
+                        this.replaceImageSource(this.getImageViewIndex(img), "imgs/"+name);
                         
                         // System.out.println(imageSources.get(0));
                          
@@ -1216,6 +1230,7 @@ static ArrayList<ImageView> images = new ArrayList();
         ArrayList<String> dum = (ArrayList<String>) c.clone();
         slideshowComponent slideshow = new slideshowComponent(dummy,dum);
         slideshow.setImageSources(dummy);
+        
         slideshow.setCaptions(dum);
         ePortfolio.getSelectedPage().addComponent(slideshow);
         

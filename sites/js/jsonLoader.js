@@ -110,7 +110,9 @@ $.getJSON("file.json",function(data){
          //   var ext = components[i].ext;
             var src = components[i].src;
             $("#content").append("<div style='padding-bottom:5%; text-align:center'>"+ components[i].caption);
+            $("#content").append("<div align='center'>");
             $("#content").append("<video width='"+ components[i].width + "' height='" + components[i].height +"' controls> <source src='" + src +"' type='" +"video/mp4"+ "'> </video>");
+          	$("#content").append("</div>");
            $("#content").append("</div>");
          numComponents++;
         }
@@ -133,21 +135,26 @@ $.getJSON("file.json",function(data){
         }
         if(components[i].type=="slideshow"){
             var slides = [];
-            var dummy2 = components[i].images;
+            var captions = [];
+            var dummy2 = components[i].content;
             var k = 0;
             while(dummy2[k]!=null){
                 slides[k]=dummy2[k].src;
+                captions[k] = dummy2[k].caption;
                 k++;
             }
+            $("#content").append("<div style ='text-align:center'> <p id='caption" + numSlideShows + "'>"+ captions[0] + "</p>");
             $("#content").append("<img class='prev' id='prev" + numSlideShows  + "'" + "src='imgs/Prev.png'/>");
-            $("#content").append("<img class='slide' id='slide"+ numSlideShows  + "'" + "src='imgs/Slide1.jpg' />");
+            $("#content").append("<img class='slide' id='slide"+ numSlideShows  + "'" + "src='"+ slides[0] +"' />");
             $("#content").append(" <img class='next'  id='next"+ numSlideShows  + "'" + "src='imgs/Next.png'/>");
             $("#content").append("<img class='startStop' id='startStop"+ numSlideShows  + "'" + "src='imgs/start.png' />");
+            $("#content").append("</div>");
+            var caption = "caption" + numSlideShows;
             var prev = "prev"+numSlideShows;
             var slide = "slide"+numSlideShows;
             var next= "next"+numSlideShows;
             var startStop = "startStop"+numSlideShows;  
-            slideshow(slides,prev,slide,next,startStop);
+            slideshow(captions,slides,prev,slide,caption,next,startStop);
             numSlideShows++;
             numComponents++;
         }
@@ -159,17 +166,19 @@ $.getJSON("file.json",function(data){
     
  });
  
-function slideshow(ImageArray,prev,slide,next,startStop){
+function slideshow(captionArray,ImageArray,prev,slide,caption,next,startStop){
     var slide = document.getElementById(slide.toString());
     var next = document.getElementById(next.toString());
     var prev = document.getElementById(prev.toString());
     var startStop = document.getElementById(startStop.toString());
+    var caption = document.getElementById(caption.toString());
+    
     var dummy;
     var started = false;
 
 
-
     var imageIndex = 0;
+    
 
     function nextImage(){
         imageIndex++;
@@ -177,6 +186,7 @@ function slideshow(ImageArray,prev,slide,next,startStop){
             imageIndex=0;
         }
         slide.setAttribute("src",ImageArray[imageIndex]);
+		caption.innerHTML = captionArray[imageIndex];
 
     }
 

@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -214,16 +213,29 @@ public class ePortfolioFileManager {
                     .build();
             return jso; 
      }
-     private JsonObject makeSlideshowJsonObject(){
-         return null;
+     private JsonObject makeSlideshowJsonObject(slideshowComponent slideshow){
+              JsonObject jso = Json.createObjectBuilder()
+                 .add("type","slideshow")
+                 .add("content",makeSlideshowComponentJsonArray(slideshow))
+                 .build();
+         return jso;  
      }
      
-     private JsonArray makeSlideshowComponentJsonObject(slideshowComponent slideshow){
-        return null;
+     private JsonArray makeSlideshowComponentJsonArray(slideshowComponent slideshow){
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for(int i = 0;i<slideshow.getImageSources().size();i++){
+            JsonObject jso = makeSlideJsonObject(slideshow.getImageSources().get(i), slideshow.getCaptions().get(i));
+            jsb.add(jso);
+        }                
+        JsonArray jA =   jsb.build();
+        return jA;
     }
-     private JsonObject makeSlideJsonObject(){
-         
-         return null;
+     private JsonObject makeSlideJsonObject(String src,String caption){
+          JsonObject jso = Json.createObjectBuilder()
+                .add("src",src)
+                .add("caption",caption)
+                .build();
+        return jso;
      }
      private JsonArray makeComponentsJsonArray(ArrayList<component> components){
          JsonArrayBuilder jsb = Json.createArrayBuilder();
@@ -243,6 +255,9 @@ public class ePortfolioFileManager {
              }else if(c.getType().equals("Video Component")){
                  JsonObject jso = makeVideoComponentJsonObject((videoComponent) c);
                   jsb.add(jso);
+             }else if(c.getType().equals("Slideshow Component")){
+                 JsonObject jso = makeSlideshowJsonObject((slideshowComponent) c);
+                 jsb.add(jso);
              }
          }
          JsonArray jA = jsb.build();
@@ -379,6 +394,20 @@ public class ePortfolioFileManager {
                 }
                 listComponent list = new listComponent(listItems);
                 page.addComponent(list);
+            }
+            else if(componentJso.getString("type").equals("slideshow")){
+                JsonArray slidesArray = componentJso.getJsonArray("content");
+                
+                ArrayList<String> imageSources = new ArrayList();
+                ArrayList<String> captions = new ArrayList();
+                
+                for(int j =0;j<slidesArray.size();j++){
+                    JsonObject js = slidesArray.getJsonObject(j);
+                    imageSources.add(js.getString("src"));
+                    captions.add(js.getString("caption"));
+                }
+                slideshowComponent slideshow = new slideshowComponent(imageSources,captions);
+                page.addComponent(slideshow);
             }
         }
         

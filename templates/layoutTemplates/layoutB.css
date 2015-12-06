@@ -8,6 +8,9 @@ and open the template in the editor.
     Author     : benkandov
 */
 
+body{
+      text-align:center;
+}
 #bannerImg{
     position:absolute;
     
@@ -77,4 +80,24 @@ body{
     position: fixed;
     bottom: 0;
 
+}
+.startStop{
+    position:relative;
+    top:45%;
+    right:40%;
+}
+.next{
+    position:relative;
+    top:3%;
+}
+.prev{
+    position:relative;
+    top:3%;
+}
+body{
+    white-space:nowrap;
+}
+.slide{
+    position:relative;
+   
 }

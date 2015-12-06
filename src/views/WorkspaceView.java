@@ -571,11 +571,13 @@ public class WorkspaceView {
                
                exportController ec = new exportController();
                ePortfolioFileManager em = new ePortfolioFileManager();
+               if((oldSelected!=null)&&(ePortfolio.getSelectedPage()!=null)){
                if(ePortfolio.getSelectedPage().equals(oldSelected)){
                    
                }else{
                    siteViewerPane.getEngine().load(null);
                }
+           }
                 
                
                
