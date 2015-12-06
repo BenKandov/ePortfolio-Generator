@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 #navBar{
-    position:absolute;
+    position:fixed;
   
     top:35%;
     left:0%;
@@ -68,5 +68,7 @@ body{
    
 }
 #footer{
-    position: relative;
+    position: fixed;
+    bottom: 0;
+
 }

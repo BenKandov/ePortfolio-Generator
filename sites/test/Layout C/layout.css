@@ -39,5 +39,7 @@ body{
   height:auto;
 }
 #footer{
-    position: relative;
+    position: fixed;
+    bottom: 0;
+
 }

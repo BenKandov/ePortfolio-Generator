@@ -45,24 +45,24 @@ $.getJSON("file.json",function(data){
     	if(components[i].type=="header"){
     		
     		if(components[i].font=="Font A"){
-        		$("#content").append("<div id='component"+ numComponents  +"' style='padding-bottom:9%' class='text' > <h1>" + components[i].content + "</h1></div>");
+        		$("#content").append("<div id='component"+ numComponents  +"' style='padding-bottom:5%' class='text' > <h1>" + components[i].content + "</h1></div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Architects Daughter', cursive";
         	}
         	
        	    if(components[i].font=="Font B"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'> <h1>" + components[i].content + "</h1></div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'> <h1>" + components[i].content + "</h1></div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Shadows Into Light', cursive";
         	}
         	if(components[i].font=="Font C"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'> <h1>" + components[i].content + "</h1></div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'> <h1>" + components[i].content + "</h1></div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Indie Flower', cursive";
         	}
        		if(components[i].font=="Font D"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'><h1>" + components[i].content + "</h1></div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'><h1>" + components[i].content + "</h1></div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Poiret One', cursive";
         	}
         	if(components[i].font=="Font E"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%; font-family: 'Ubuntu Condensed', sans-serif;' class='text'><h1>" + components[i].content + "</h1></div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%; font-family: 'Ubuntu Condensed', sans-serif;' class='text'><h1>" + components[i].content + "</h1></div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Ubuntu Condensed', sans-serif";
         	}
         	numComponents++;
@@ -72,24 +72,24 @@ $.getJSON("file.json",function(data){
     	}
         if(components[i].type=="text"){
         	if(components[i].font=="Font A"){
-        		$("#content").append("<div id='component"+ numComponents  +"' style='padding-bottom:9%' class='text'>" + components[i].content + "</div>");
+        		$("#content").append("<div id='component"+ numComponents  +"' style='padding-bottom:5%' class='text'>" + components[i].content + "</div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Architects Daughter', cursive";
         	}
         	
        	    if(components[i].font=="Font B"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'>" + components[i].content + "</div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'>" + components[i].content + "</div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Shadows Into Light', cursive";
         	}
         	if(components[i].font=="Font C"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'>" + components[i].content + "</div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'>" + components[i].content + "</div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Indie Flower', cursive";
         	}
        		if(components[i].font=="Font D"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%' class='text'>" + components[i].content + "</div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%' class='text'>" + components[i].content + "</div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Poiret One', cursive";
         	}
         	if(components[i].font=="Font E"){
-        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:9%; font-family: 'Ubuntu Condensed', sans-serif;' class='text'>" + components[i].content + "</div>");
+        		$("#content").append("<div id='component"+ numComponents  +"'style='padding-bottom:5%; font-family: 'Ubuntu Condensed', sans-serif;' class='text'>" + components[i].content + "</div>");
         		document.getElementById("component"+numComponents).style["font-family"] = "'Ubuntu Condensed', sans-serif";
         	}
         	numComponents++;
@@ -97,7 +97,7 @@ $.getJSON("file.json",function(data){
         }
     	if(components[i].type=="list"){
             list = components[i].content;
-            $("#content").append("<div style='padding-bottom:9%' > <ol>");
+            $("#content").append("<div style='padding-bottom:5%' > <ol>");
             var j = 0;
             while(list[j]!=null){
                  $("#content").append("<li>" + list[j].content +"</li>");
@@ -109,19 +109,22 @@ $.getJSON("file.json",function(data){
         if(components[i].type=="video"){
          //   var ext = components[i].ext;
             var src = components[i].src;
-            $("#content").append("<div style='padding-bottom:9%; text-align:center'>"+ components[i].caption);
+            $("#content").append("<div style='padding-bottom:5%; text-align:center'>"+ components[i].caption);
             $("#content").append("<video width='"+ components[i].width + "' height='" + components[i].height +"' controls> <source src='" + src +"' type='" +"video/mp4"+ "'> </video>");
            $("#content").append("</div>");
          numComponents++;
         }
         if(components[i].type=="image"){
-        	$("#content").append("<div style='padding-bottom:9%; text-align:center'>"+ components[i].caption);
+        	
         	
         	if(components[i].float == "Float Right"){
+        	$("#content").append("<div style='padding-bottom:5%; text-align:center; float:right'>"+ components[i].caption);
         	$("#content").append("<img  style='float:right' width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");	
         	}else if(components[i].float == "Float Left"){
+        	$("#content").append("<div style='padding-bottom:5%; text-align:center; float:left'>"+ components[i].caption);
         	$("#content").append("<img style='float:left' width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");
         	}else{
+        	$("#content").append("<div style='padding-bottom:5%; text-align:center'>"+ components[i].caption);
             $("#content").append("<img width='"+ components[i].width + "' height='" + components[i].height +"' src='"+ components[i].src +"'/>");
        		
        		}
@@ -150,7 +153,7 @@ $.getJSON("file.json",function(data){
         }
         i++;
     }
-    $("#content").append("<p style='padding-top:10%; position:relative'>" + data.footer + "</p>");
+    $("#footer").append("<p style='padding-top:10%; position:relative'>" + data.footer + "</p>");
     
     
     

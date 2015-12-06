@@ -51,7 +51,7 @@ public class exportController {
       
         
         for(Page page : ePortfolio.getPages()){
-            exportTempPage(ePortfolio,page,websiteDirectory);
+            exportPage(ePortfolio,page,websiteDirectory);
         }
              
     }
@@ -62,6 +62,8 @@ public class exportController {
         File colorTemplate;
         File jsonFile = new File("projects/"+ePortfolio.getSaveAsTitle()+"/",page.getTitle()+".json");
         File htmlTemplate = new File("templates/","index.html");
+        File jQuery = new File("sites/js","jquery-2.1.4.min.js");
+        File jsonLoader = new File("sites/js","jsonLoader.js");
         
         pageFont = new File("blah");
         if(page.getFont().equals("Font A")){
@@ -118,9 +120,17 @@ public class exportController {
         String fontText = FileUtils.readFileToString(pageFont);
         String htmlText = FileUtils.readFileToString(htmlTemplate);
         String jsonText = FileUtils.readFileToString(jsonFile);
+          String jsonLoaderText = FileUtils.readFileToString(jsonLoader);
+        String jqueryText = FileUtils.readFileToString(jQuery);
         
         File pageDirectory = new File(websiteDirectory,page.getTitle());
         pageDirectory.mkdir();
+        
+         File jsDirectory = new File(websiteDirectory,"js");
+        jsDirectory.mkdir();
+        
+        File newJsonLoader = new File(jsDirectory,"jsonLoader.js");
+        File newJquery = new File(jsDirectory,"jquery-2.1.4.min.js");
         
         File newHtml = new File(pageDirectory,"index.html");
         File newLayout = new File(pageDirectory,"layout.css");
@@ -131,6 +141,8 @@ public class exportController {
         File oldImgs = new File("imgs");
         FileUtils.copyDirectory(oldImgs,d);
         
+         FileUtils.writeStringToFile(newJsonLoader, jsonLoaderText);
+        FileUtils.writeStringToFile(newJquery, jqueryText);
         FileUtils.writeStringToFile(newLayout, layoutText);
         FileUtils.writeStringToFile(newColor, colorText);
         FileUtils.writeStringToFile(newFont, fontText);
@@ -211,7 +223,7 @@ public class exportController {
         
         File pageDirectory = new File(websiteDirectory,page.getTitle());
         pageDirectory.mkdir();
-        File jsDirectory = new File("tempSite","js");
+        File jsDirectory = new File("tempSite/tempProject","js");
         jsDirectory.mkdir();
         
         File newJsonLoader = new File(jsDirectory,"jsonLoader.js");
