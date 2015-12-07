@@ -78,6 +78,8 @@ static ArrayList<ImageView> images = new ArrayList();
     Scene fileScene;
     Stage primaryStage;
     Scene primaryScene;
+    Stage secondaryStage;
+    Scene secondaryScene;
     Screen screen = Screen.getPrimary();
     Rectangle2D bounds = screen.getVisualBounds();
     public dialogViews(){
@@ -86,7 +88,7 @@ static ArrayList<ImageView> images = new ArrayList();
 	fileChooserStage.setWidth(bounds.getWidth()/6);
 	fileChooserStage.setHeight(bounds.getHeight()/7); 
         
-        
+        secondaryStage = new Stage();
         primaryStage = new Stage();
       
 	primaryStage.setWidth(bounds.getWidth()/6);
@@ -1543,13 +1545,24 @@ static ArrayList<ImageView> images = new ArrayList();
     }
     public void editParagraphComponent(paragraphComponent para,ePortfolioModel ePortfolio){
        primaryStage.setWidth(600);
-	primaryStage.setHeight(400);
+	primaryStage.setHeight(450);
+        /*
+        Button addHyperLink = new Button("Add Hyperlink");
+     */
         ToggleGroup fonts = new ToggleGroup();
         Button g = new Button("Okay");
         Button remove = new Button("Remove");
         Text t = new Text("Write paragraph:");
+       
         TextArea r = new TextArea();
         r.setText(para.getContent());
+        /**
+        addHyperLink.setOnAction(e2 -> {
+            this.addHyperLink(r.getSelectedText(),para);
+            r.replaceSelection("<html><font color=\\\"red\\\">"+ r.getSelectedText() + "</font></html>\"");
+           
+        });
+        * **/
         RadioButton a = new RadioButton("Font A");
         a.getStylesheets().add("https://fonts.googleapis.com/css?family=Architects+Daughter");
         a.setStyle("-fx-font-family: 'Architects Daughter' ;");
@@ -1606,6 +1619,7 @@ static ArrayList<ImageView> images = new ArrayList();
            g.getStyleClass().add("dialog_button");
            t.getStyleClass().add("dialog_text");
          remove.getStyleClass().add("dialog_button");
+       // addHyperLink.getStyleClass().add("dialog_button");
              body.setSpacing(20);
         primaryScene = new Scene(body);
         primaryStage.setScene(primaryScene);
@@ -2140,4 +2154,33 @@ static ArrayList<ImageView> images = new ArrayList();
                 );
         }
     }
+    public void addHyperLink(String s, paragraphComponent para){
+        
+        secondaryStage.setWidth(300);
+	secondaryStage.setHeight(150);
+        
+        Text link = new Text("url");
+        TextField linkSpace = new TextField();
+       Button finished = new Button("Finished");
+        FlowPane f = new FlowPane(link,linkSpace);
+        f.setAlignment(Pos.CENTER);
+        VBox body = new VBox();
+        body.setAlignment(Pos.CENTER);
+        body.getStylesheets().add("css/style.css");
+        body.getStyleClass().add("dialog_box");
+        body.getChildren().add(f);
+        body.getChildren().add(finished);
+        link.getStyleClass().add("dialog_text");
+        finished.getStyleClass().add("dialog_button");
+        
+        secondaryScene = new Scene(body);
+        secondaryStage.setScene(secondaryScene);
+        secondaryStage.show();
+        
+           finished.setOnAction(e -> {
+             secondaryStage.close();
+             para.addHyperLink(s, linkSpace.getText());
+            });
+    }
+    
 }

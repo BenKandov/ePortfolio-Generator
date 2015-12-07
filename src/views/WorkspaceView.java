@@ -697,7 +697,7 @@ public class WorkspaceView {
         
         newPortfolio.setOnAction(e -> {
           
-           fileControl.handleNewEportfolioRequest();
+         //  fileControl.handleNewEportfolioRequest();
            try {
                DialogController.newPortfolio(ePortfolio);
            } catch (MalformedURLException ex) {

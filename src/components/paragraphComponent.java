@@ -5,6 +5,8 @@
  */
 package components;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author benkandov
@@ -12,11 +14,17 @@ package components;
 public class paragraphComponent extends textComponent {
     private String content;
     private String font;
+    private ArrayList<String> hyperlinks;
+    private ArrayList<String> urls;
     
     
     public paragraphComponent(String content,String font){
         this.content=content;
         this.font = font;
+    }
+    public void addHyperLink(String link,String url){
+        hyperlinks.add(link);
+        urls.add(url);
     }
     
     public void setContent(String c){
