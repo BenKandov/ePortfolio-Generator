@@ -1097,7 +1097,7 @@ static ArrayList<ImageView> images = new ArrayList();
            ImageView img = new ImageView();
            this.addImageView(img);
            
-            Image d = new Image("imgs/question.png");
+            Image d = new Image("file:imgs/question.png");
             this.addImageSource("imgs/question.png");
             
              img.setImage(d);
