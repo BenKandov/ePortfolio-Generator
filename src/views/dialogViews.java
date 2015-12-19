@@ -242,7 +242,7 @@ static ArrayList<ImageView> images = new ArrayList();
 	primaryStage.setWidth(600);
 	primaryStage.setHeight(400); 
        ImageView comp = new ImageView();
-        Image d = new Image("imgs/question.png");
+        Image d = new Image("file:imgs/question.png");
        if(ePortfolio.getSelectedPage().getBannerImage().equals("imgs/question.png")){
            comp.setImage(d);
        }else{
@@ -881,7 +881,7 @@ static ArrayList<ImageView> images = new ArrayList();
         Text s = new Text("Input height: ");
         TextField f = new TextField();
         f.setText(Integer.toString(image.getHeight()));
-       Image d = new Image(image.getSource());
+       Image d = new Image("file://"+image.getSource());
        comp.setImage(d);
        double scaledHeight = 200;
       double perc = scaledHeight / d.getHeight();
